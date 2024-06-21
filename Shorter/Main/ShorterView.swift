@@ -37,11 +37,6 @@ struct ShorterView: View {
     }
 }
 
-struct ProfileCreationView: View {
-    var body: some View {
-        Text("hi")
-            .task {
-                await ShorterModel.realmManager.checkProfile()
-            }
-    }
+#Preview {
+    ShorterView()
 }

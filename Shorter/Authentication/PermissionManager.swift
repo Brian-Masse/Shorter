@@ -12,6 +12,7 @@ import RealmSwift
 //they are used when adding / removing queries
 enum QuerySubKey: String, CaseIterable {
     case shorterPostQuery
+    case shorterProfileQuery
 }
 
 //MARK: QueryPermission

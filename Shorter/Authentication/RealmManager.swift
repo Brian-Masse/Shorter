@@ -52,6 +52,9 @@ final class RealmManager: ObservableObject {
     @MainActor lazy var shorterPostQuery: (QueryPermission<ShorterPost>) = QueryPermission { query in
         query.ownerId == ShorterModel.ownerId || query.sharedOwnerIds.contains( ShorterModel.ownerId )
     }
+    @MainActor lazy var shorterProfileQuery: (QueryPermission<ShorterProfile>) = QueryPermission { query in
+        query.ownerId == ShorterModel.ownerId
+    }
     
     
     init() {
@@ -204,8 +207,21 @@ final class RealmManager: ObservableObject {
     //    if not it will trigger the ProfileCreationScene
     @MainActor
     func checkProfile() async {
-        //        TODO: Check if the person has a profile or not, and if not go through the process to create one
-        self.setState(.complete)
+        if let profile: ShorterProfile = RealmManager.retrieveObject(where: { query in
+            query.ownerId == ShorterModel.ownerId
+        }).first {
+            self.registerProfile(profile)
+            if profile.isComplete {
+                self.setState(.complete)
+            }
+            
+        } else {
+            let templateProfile = ShorterProfile(ownerId: ShorterModel.ownerId, email: self.email)
+            
+            RealmManager.addObject(templateProfile)
+            
+            self.registerProfile(templateProfile)
+        }
     }
     
     //    If the user does not have an index, create one and add it to the database
@@ -215,8 +231,8 @@ final class RealmManager: ObservableObject {
     
     //    whether you're loading the profile from the databae or creating at startup, it should go throught this function to
     //    let the model know that the profile now has a profile and send that profile object to the model
-    private func registerProfile() {
-        //        TODO: Save a reference of the profile into the model
+    private func registerProfile(_ profile: ShorterProfile) {
+        ShorterModel.shared.profile = profile
     }
     
     //    MARK: Realm Loading Functions
@@ -226,8 +242,8 @@ final class RealmManager: ObservableObject {
         self.realm = realm
         await self.addSubcriptions()
         
-        await self.checkProfile()
         self.setState(.creatingProfile)
+        await self.checkProfile()
     }
     
     //    MARK: Subscription Functions
@@ -238,6 +254,8 @@ final class RealmManager: ObservableObject {
         
         let _ : ShorterPost? = await addGenericSubcriptions(name: QuerySubKey.shorterPostQuery.rawValue,
                                                                          query: shorterPostQuery.baseQuery)
+        let _ : ShorterProfile? = await addGenericSubcriptions(name: QuerySubKey.shorterProfileQuery.rawValue,
+                                                                         query: shorterProfileQuery.baseQuery)
     }
     
     //    MARK: Helper Functions

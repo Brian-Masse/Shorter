@@ -14,4 +14,6 @@ struct ShorterModel {
     static var ownerId: String { ShorterModel.realmManager.user?.id ?? "" }
     
     static var realmManager: RealmManager = RealmManager()
+    
+    var profile: ShorterProfile? = nil
 }

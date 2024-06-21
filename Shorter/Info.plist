@@ -35,5 +35,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow Shorter to Access Your Contacts</string>
 </dict>
 </plist>
