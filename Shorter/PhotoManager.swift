@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RealmSwift
 import SwiftUI
 import PhotosUI
 import UIKit
@@ -18,14 +17,21 @@ import UIKit
 class PhotoManager: ObservableObject {
 
     static func decodeImage(from data: Data) -> Image? {
-        if let uiImage = UIImage(data: data) {
+        if let uiImage: UIImage = decodeUIImage(from: data) {
             return Image(uiImage: uiImage)
         }
         return nil
     }
     
-    static func encodeImage( _ image: UIImage? ) -> Data {
-        if let image { return image.jpegData(compressionQuality: 0.9) ?? Data() }
+    static func decodeUIImage(from data: Data) -> UIImage? {
+        if let uiImage = UIImage(data: data) {
+            return uiImage
+        }
+        return nil
+    }
+    
+    static func encodeImage( _ image: UIImage?, compressionQuality: Double = 0.9) -> Data {
+        if let image { return image.jpegData(compressionQuality: compressionQuality) ?? Data() }
         return Data()
     }
 }

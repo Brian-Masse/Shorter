@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
+import WidgetKit
 
 struct MainView: View {
     
@@ -50,6 +51,20 @@ struct MainView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 100)
+                    }
+                }
+                .onTapGesture {
+                    if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
+                        
+                        if let uiImage = PhotoManager.decodeUIImage(from: post.imageData) {
+                            let imageData = PhotoManager.encodeImage(uiImage, compressionQuality: 0.5)
+                            
+                            defaults.setValue( post.title, forKey: WidgetKeys.imageWidgetDataKey )
+                            
+                            defaults.setValue( imageData, forKey: WidgetKeys.imageWidgetImageDataKey)
+                            
+                            WidgetCenter.shared.reloadTimelines(ofKind: "ShorterWidgets")
+                        }
                     }
                 }
             }

@@ -30,6 +30,17 @@
 		C90374D72C2605D3007DCA5E /* MessagingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374D62C2605D3007DCA5E /* MessagingManager.swift */; };
 		C90374DF2C260A34007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90374DE2C260A34007DCA5E /* RealmSwift */; };
 		C90374E02C260AB3007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90374DE2C260A34007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C90374E92C261D7C007DCA5E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90374E82C261D7C007DCA5E /* WidgetKit.framework */; };
+		C90374EB2C261D7D007DCA5E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90374EA2C261D7C007DCA5E /* SwiftUI.framework */; };
+		C90374EE2C261D7D007DCA5E /* ShorterWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374ED2C261D7D007DCA5E /* ShorterWidgetsBundle.swift */; };
+		C90374F02C261D7D007DCA5E /* ShorterWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374EF2C261D7D007DCA5E /* ShorterWidgets.swift */; };
+		C90374F22C261D7E007DCA5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C90374F12C261D7E007DCA5E /* Assets.xcassets */; };
+		C90374F62C261D7E007DCA5E /* ShorterWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C90374E62C261D7C007DCA5E /* ShorterWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C90374FD2C2624A0007DCA5E /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374FC2C2624A0007DCA5E /* Keys.swift */; };
+		C90374FE2C2624AB007DCA5E /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374FC2C2624A0007DCA5E /* Keys.swift */; };
+		C90374FF2C26270D007DCA5E /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C82C25E21B007DCA5E /* PhotoManager.swift */; };
+		C90375012C262A48007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
+		C90375022C262A91007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +58,13 @@
 			remoteGlobalIDString = C90374832C25D05D007DCA5E;
 			remoteInfo = Shorter;
 		};
+		C90374F42C261D7E007DCA5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C903747C2C25D05D007DCA5E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C90374E52C261D7C007DCA5E;
+			remoteInfo = ShorterWidgetsExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +77,17 @@
 				C90374E02C260AB3007DCA5E /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C90374FA2C261D7E007DCA5E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C90374F62C261D7E007DCA5E /* ShorterWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -89,6 +118,16 @@
 		C90374CF2C25F551007DCA5E /* ShorterProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterProfile.swift; sourceTree = "<group>"; };
 		C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCreationScene.swift; sourceTree = "<group>"; };
 		C90374D62C2605D3007DCA5E /* MessagingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManager.swift; sourceTree = "<group>"; };
+		C90374E62C261D7C007DCA5E /* ShorterWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShorterWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C90374E82C261D7C007DCA5E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C90374EA2C261D7C007DCA5E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C90374ED2C261D7D007DCA5E /* ShorterWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterWidgetsBundle.swift; sourceTree = "<group>"; };
+		C90374EF2C261D7D007DCA5E /* ShorterWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterWidgets.swift; sourceTree = "<group>"; };
+		C90374F12C261D7E007DCA5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C90374F32C261D7E007DCA5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C90374FB2C262322007DCA5E /* ShorterWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShorterWidgetsExtension.entitlements; sourceTree = "<group>"; };
+		C90374FC2C2624A0007DCA5E /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		C90375002C262A48007DCA5E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,15 +154,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C90374E32C261D7C007DCA5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C90374EB2C261D7D007DCA5E /* SwiftUI.framework in Frameworks */,
+				C90374E92C261D7C007DCA5E /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		C903747B2C25D05D007DCA5E = {
 			isa = PBXGroup;
 			children = (
+				C90374FC2C2624A0007DCA5E /* Keys.swift */,
+				C90374FB2C262322007DCA5E /* ShorterWidgetsExtension.entitlements */,
 				C90374862C25D05D007DCA5E /* Shorter */,
 				C903749B2C25D05E007DCA5E /* ShorterTests */,
 				C90374A52C25D05E007DCA5E /* ShorterUITests */,
+				C90374EC2C261D7D007DCA5E /* ShorterWidgets */,
+				C90374E72C261D7C007DCA5E /* Frameworks */,
 				C90374852C25D05D007DCA5E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +186,7 @@
 				C90374842C25D05D007DCA5E /* Shorter.app */,
 				C90374982C25D05E007DCA5E /* ShorterTests.xctest */,
 				C90374A22C25D05E007DCA5E /* ShorterUITests.xctest */,
+				C90374E62C261D7C007DCA5E /* ShorterWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,6 +266,27 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		C90374E72C261D7C007DCA5E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C90374E82C261D7C007DCA5E /* WidgetKit.framework */,
+				C90374EA2C261D7C007DCA5E /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C90374EC2C261D7D007DCA5E /* ShorterWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				C90374ED2C261D7D007DCA5E /* ShorterWidgetsBundle.swift */,
+				C90375002C262A48007DCA5E /* Utilities.swift */,
+				C90374EF2C261D7D007DCA5E /* ShorterWidgets.swift */,
+				C90374F12C261D7E007DCA5E /* Assets.xcassets */,
+				C90374F32C261D7E007DCA5E /* Info.plist */,
+			);
+			path = ShorterWidgets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -224,10 +298,12 @@
 				C90374812C25D05D007DCA5E /* Frameworks */,
 				C90374822C25D05D007DCA5E /* Resources */,
 				C90374E12C260AB3007DCA5E /* Embed Frameworks */,
+				C90374FA2C261D7E007DCA5E /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C90374F52C261D7E007DCA5E /* PBXTargetDependency */,
 			);
 			name = Shorter;
 			packageProductDependencies = (
@@ -274,6 +350,23 @@
 			productReference = C90374A22C25D05E007DCA5E /* ShorterUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		C90374E52C261D7C007DCA5E /* ShorterWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C90374F72C261D7E007DCA5E /* Build configuration list for PBXNativeTarget "ShorterWidgetsExtension" */;
+			buildPhases = (
+				C90374E22C261D7C007DCA5E /* Sources */,
+				C90374E32C261D7C007DCA5E /* Frameworks */,
+				C90374E42C261D7C007DCA5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShorterWidgetsExtension;
+			productName = ShorterWidgetsExtension;
+			productReference = C90374E62C261D7C007DCA5E /* ShorterWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -294,6 +387,9 @@
 					C90374A12C25D05E007DCA5E = {
 						CreatedOnToolsVersion = 15.4;
 						TestTargetID = C90374832C25D05D007DCA5E;
+					};
+					C90374E52C261D7C007DCA5E = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -317,6 +413,7 @@
 				C90374832C25D05D007DCA5E /* Shorter */,
 				C90374972C25D05E007DCA5E /* ShorterTests */,
 				C90374A12C25D05E007DCA5E /* ShorterUITests */,
+				C90374E52C261D7C007DCA5E /* ShorterWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -345,6 +442,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C90374E42C261D7C007DCA5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C90374F22C261D7E007DCA5E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -353,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C90374882C25D05D007DCA5E /* ShorterApp.swift in Sources */,
+				C90374FD2C2624A0007DCA5E /* Keys.swift in Sources */,
 				C90374CB2C25E88A007DCA5E /* ContactManager.swift in Sources */,
 				C90374BF2C25D12B007DCA5E /* MainView.swift in Sources */,
 				C90374D72C2605D3007DCA5E /* MessagingManager.swift in Sources */,
@@ -361,6 +467,7 @@
 				C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */,
 				C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */,
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
+				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
@@ -387,6 +494,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C90374E22C261D7C007DCA5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C90374EE2C261D7D007DCA5E /* ShorterWidgetsBundle.swift in Sources */,
+				C90374FE2C2624AB007DCA5E /* Keys.swift in Sources */,
+				C90374FF2C26270D007DCA5E /* PhotoManager.swift in Sources */,
+				C90375022C262A91007DCA5E /* Utilities.swift in Sources */,
+				C90374F02C261D7D007DCA5E /* ShorterWidgets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -399,6 +518,11 @@
 			isa = PBXTargetDependency;
 			target = C90374832C25D05D007DCA5E /* Shorter */;
 			targetProxy = C90374A32C25D05E007DCA5E /* PBXContainerItemProxy */;
+		};
+		C90374F52C261D7E007DCA5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C90374E52C261D7C007DCA5E /* ShorterWidgetsExtension */;
+			targetProxy = C90374F42C261D7E007DCA5E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -520,6 +644,7 @@
 		C90374AD2C25D05E007DCA5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shorter/Shorter.entitlements;
@@ -561,6 +686,7 @@
 		C90374AE2C25D05E007DCA5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shorter/Shorter.entitlements;
@@ -689,6 +815,67 @@
 			};
 			name = Release;
 		};
+		C90374F82C261D7E007DCA5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ShorterWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShorterWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShorterWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.BrianMasse.Shorter.ShorterWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C90374F92C261D7E007DCA5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ShorterWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShorterWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShorterWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.BrianMasse.Shorter.ShorterWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -724,6 +911,15 @@
 			buildConfigurations = (
 				C90374B32C25D05E007DCA5E /* Debug */,
 				C90374B42C25D05E007DCA5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C90374F72C261D7E007DCA5E /* Build configuration list for PBXNativeTarget "ShorterWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C90374F82C261D7E007DCA5E /* Debug */,
+				C90374F92C261D7E007DCA5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
