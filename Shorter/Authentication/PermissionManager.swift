@@ -11,7 +11,7 @@ import RealmSwift
 //these are the names used for each of the different queries throuhgout the app
 //they are used when adding / removing queries
 enum QuerySubKey: String, CaseIterable {
-    case formattedCactusComponent
+    case shorterPostQuery
 }
 
 //MARK: QueryPermission

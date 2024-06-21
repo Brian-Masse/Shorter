@@ -21,6 +21,8 @@
 		C90374BF2C25D12B007DCA5E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374BE2C25D12B007DCA5E /* MainView.swift */; };
 		C90374C22C25D168007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90374C12C25D168007DCA5E /* RealmSwift */; };
 		C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C32C25D28B007DCA5E /* ShorterModel.swift */; };
+		C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C62C25D689007DCA5E /* ShorterPost.swift */; };
+		C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C82C25E21B007DCA5E /* PhotoManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		C90374B82C25D0FD007DCA5E /* AuthenticationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		C90374BE2C25D12B007DCA5E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C90374C32C25D28B007DCA5E /* ShorterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterModel.swift; sourceTree = "<group>"; };
+		C90374C62C25D689007DCA5E /* ShorterPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPost.swift; sourceTree = "<group>"; };
+		C90374C82C25E21B007DCA5E /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,15 +114,14 @@
 		C90374862C25D05D007DCA5E /* Shorter */ = {
 			isa = PBXGroup;
 			children = (
-				C90374872C25D05D007DCA5E /* ShorterApp.swift */,
-				C90374C32C25D28B007DCA5E /* ShorterModel.swift */,
-				C903748B2C25D05D007DCA5E /* ShorterView.swift */,
-				C90374BE2C25D12B007DCA5E /* MainView.swift */,
+				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
+				C90374C52C25D534007DCA5E /* Main */,
 				C90374BD2C25D105007DCA5E /* Authentication */,
 				C903748D2C25D05E007DCA5E /* Assets.xcassets */,
 				C903748F2C25D05E007DCA5E /* Info.plist */,
 				C90374902C25D05E007DCA5E /* Shorter.entitlements */,
 				C90374912C25D05E007DCA5E /* Preview Content */,
+				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
 			);
 			path = Shorter;
 			sourceTree = "<group>";
@@ -157,6 +160,17 @@
 				C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		C90374C52C25D534007DCA5E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C90374872C25D05D007DCA5E /* ShorterApp.swift */,
+				C90374C32C25D28B007DCA5E /* ShorterModel.swift */,
+				C903748B2C25D05D007DCA5E /* ShorterView.swift */,
+				C90374BE2C25D12B007DCA5E /* MainView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,6 +317,8 @@
 				C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
+				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
+				C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -49,8 +49,9 @@ final class RealmManager: ObservableObject {
     //    MARK: Initialization
     //    These can add, remove, and return compounded queries. During the app lifecycle, they'll need to change based on the current view
     
-//    @MainActor lazy var formattedCactusComponentSubscription: (QueryPermission<FormattedCactusComponent>)
-//    = QueryPermission { query in query.publicity.equals( FormattedCactusComponent.Publicity.publicComponent.rawValue )}
+    @MainActor lazy var shorterPostQuery: (QueryPermission<ShorterPost>) = QueryPermission { query in
+        query.ownerId == ShorterModel.ownerId || query.sharedOwnerIds.contains( ShorterModel.ownerId )
+    }
     
     
     init() {
@@ -235,8 +236,8 @@ final class RealmManager: ObservableObject {
     private func addSubcriptions() async {
         await self.removeAllNonBaseSubscriptions()
         
-//        let _ : FormattedCactusComponent? = await addGenericSubcriptions(name: QuerySubKey.formattedCactusComponent.rawValue,
-//                                                                         query: formattedCactusComponentSubscription.baseQuery)
+        let _ : ShorterPost? = await addGenericSubcriptions(name: QuerySubKey.shorterPostQuery.rawValue,
+                                                                         query: shorterPostQuery.baseQuery)
     }
     
     //    MARK: Helper Functions
