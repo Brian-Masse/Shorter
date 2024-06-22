@@ -31,8 +31,7 @@ struct MainView: View {
                     .bold()
                     .onTapGesture {
                         
-                        print("running")
-                        NotificationManager.shared.readFiringDates()
+                        print( ShorterModel.realmManager.realm.configuration.fileURL )
                     }
                 
                 Spacer()
@@ -40,6 +39,10 @@ struct MainView: View {
                 Image(systemName: "plus")
                     .onTapGesture { showingCreatePostView = true }
             }
+            
+            Button(action: { ShorterModel.realmManager.logoutUser() }, label: {
+                Text("logout")
+            })
             
             Spacer()
 

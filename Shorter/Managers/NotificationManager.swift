@@ -56,7 +56,7 @@ class NotificationManager: ObservableObject {
             self.notificationsAllowed = false
         }
         
-        self.setupFiringDates(true)
+        self.setupFiringDates()
     }
     
     func makeNotificationRequest(from time: Date, title: String, body: String, identifier: String) {

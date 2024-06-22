@@ -10,4 +10,12 @@ struct WidgetKeys {
     
     static let imageWidgetDataKey = "imageWidgetDataKey"
     static let imageWidgetImageDataKey = "imageWidgetImageDataKey"
+    
+    static let friendOwnerIdBaseKey = "friendOwnerIdBaseKey"
+    static let friendFirstNameBaseKey = "friendFirstNameBaseKey"
+    static let friendLastNameBaseKey = "friendLastNameBaseKey"
+    static let friendRecentImageDataBaseKey = "friendRecentImageDataBaseKey"
+    
+    
+    static let totalFriendsKey = "friendsCountKey"
 }

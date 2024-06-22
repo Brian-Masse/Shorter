@@ -19,13 +19,4 @@ final class ShorterPost: Object, Identifiable {
     @Persisted var title: String
     
     @Persisted var imageData: Data = Data()
- 
-    convenience init( ownerId: String = "", title: String, data: Data ) {
-        self.init()
-        
-        self.ownerId = ownerId
-        self.title = title
-        self.imageData = data
-        
-    }
 }

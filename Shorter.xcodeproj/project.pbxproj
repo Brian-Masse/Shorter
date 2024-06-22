@@ -35,7 +35,6 @@
 		C90374F62C261D7E007DCA5E /* ShorterWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C90374E62C261D7C007DCA5E /* ShorterWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C90374FD2C2624A0007DCA5E /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374FC2C2624A0007DCA5E /* Keys.swift */; };
 		C90374FE2C2624AB007DCA5E /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374FC2C2624A0007DCA5E /* Keys.swift */; };
-		C90374FF2C26270D007DCA5E /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C82C25E21B007DCA5E /* PhotoManager.swift */; };
 		C90375012C262A48007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
 		C90375022C262A91007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
 		C90375042C263227007DCA5E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375032C263227007DCA5E /* NotificationManager.swift */; };
@@ -45,6 +44,19 @@
 		C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C90375142C2718A9007DCA5E /* FirebaseMessaging */; };
 		C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C90375182C272A25007DCA5E /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375172C272A25007DCA5E /* TimingManager.swift */; };
+		C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375192C27447B007DCA5E /* SelectFriendIntent.swift */; };
+		C903751E2C2754BB007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; };
+		C903751F2C2754BB007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */; };
+		C90375242C2761CD007DCA5E /* ShorterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374CF2C25F551007DCA5E /* ShorterProfile.swift */; };
+		C90375272C2761FF007DCA5E /* ShorterPostExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */; };
+		C90375282C27622F007DCA5E /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C82C25E21B007DCA5E /* PhotoManager.swift */; };
+		C90375292C276284007DCA5E /* ShorterPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C62C25D689007DCA5E /* ShorterPost.swift */; };
+		C903752B2C2765E3007DCA5E /* RealmManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */; };
+		C903752C2C276756007DCA5E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
+		C903752D2C276772007DCA5E /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375172C272A25007DCA5E /* TimingManager.swift */; };
+		C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
+		C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903752F2C2768A3007DCA5E /* UIUniversals */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +106,17 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C90375202C2754BC007DCA5E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C903751F2C2754BB007DCA5E /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -135,6 +158,10 @@
 		C90375032C263227007DCA5E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C90375052C2637B5007DCA5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C90375172C272A25007DCA5E /* TimingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingManager.swift; sourceTree = "<group>"; };
+		C90375192C27447B007DCA5E /* SelectFriendIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendIntent.swift; sourceTree = "<group>"; };
+		C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterProfileExtension.swift; sourceTree = "<group>"; };
+		C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostExtension.swift; sourceTree = "<group>"; };
+		C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManagerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +193,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C903751E2C2754BB007DCA5E /* RealmSwift in Frameworks */,
 				C90374EB2C261D7D007DCA5E /* SwiftUI.framework in Frameworks */,
+				C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */,
 				C90374E92C261D7C007DCA5E /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,12 +232,11 @@
 		C90374862C25D05D007DCA5E /* Shorter */ = {
 			isa = PBXGroup;
 			children = (
+				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
+				C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */,
 				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
-				C90375032C263227007DCA5E /* NotificationManager.swift */,
-				C90374D62C2605D3007DCA5E /* MessagingManager.swift */,
+				C90375252C2761E6007DCA5E /* Managers */,
 				C90374CE2C25F538007DCA5E /* Profile */,
-				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
-				C90374CA2C25E88A007DCA5E /* ContactManager.swift */,
 				C90374C52C25D534007DCA5E /* Main */,
 				C90374BD2C25D105007DCA5E /* Authentication */,
 				C903748D2C25D05E007DCA5E /* Assets.xcassets */,
@@ -216,7 +244,6 @@
 				C90375052C2637B5007DCA5E /* GoogleService-Info.plist */,
 				C90374902C25D05E007DCA5E /* Shorter.entitlements */,
 				C90374912C25D05E007DCA5E /* Preview Content */,
-				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
 			);
 			path = Shorter;
 			sourceTree = "<group>";
@@ -250,8 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				C90374B82C25D0FD007DCA5E /* AuthenticationView.swift */,
-				C90374B72C25D0FD007DCA5E /* PermissionManager.swift */,
 				C90374B62C25D0FD007DCA5E /* RealmManager.swift */,
+				C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */,
 				C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */,
 			);
 			path = Authentication;
@@ -265,6 +292,7 @@
 				C90374C32C25D28B007DCA5E /* ShorterModel.swift */,
 				C903748B2C25D05D007DCA5E /* ShorterView.swift */,
 				C90374BE2C25D12B007DCA5E /* MainView.swift */,
+				C90374B72C25D0FD007DCA5E /* PermissionManager.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -273,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				C90374CF2C25F551007DCA5E /* ShorterProfile.swift */,
+				C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */,
 				C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */,
 			);
 			path = Profile;
@@ -293,10 +322,22 @@
 				C90374ED2C261D7D007DCA5E /* ShorterWidgetsBundle.swift */,
 				C90375002C262A48007DCA5E /* Utilities.swift */,
 				C90374EF2C261D7D007DCA5E /* ShorterWidgets.swift */,
+				C90375192C27447B007DCA5E /* SelectFriendIntent.swift */,
 				C90374F12C261D7E007DCA5E /* Assets.xcassets */,
 				C90374F32C261D7E007DCA5E /* Info.plist */,
 			);
 			path = ShorterWidgets;
+			sourceTree = "<group>";
+		};
+		C90375252C2761E6007DCA5E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C90374CA2C25E88A007DCA5E /* ContactManager.swift */,
+				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
+				C90375032C263227007DCA5E /* NotificationManager.swift */,
+				C90374D62C2605D3007DCA5E /* MessagingManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		CBB2A80C82599A7747D2D8B3 /* Pods */ = {
@@ -377,12 +418,17 @@
 				C90374E22C261D7C007DCA5E /* Sources */,
 				C90374E32C261D7C007DCA5E /* Frameworks */,
 				C90374E42C261D7C007DCA5E /* Resources */,
+				C90375202C2754BC007DCA5E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = ShorterWidgetsExtension;
+			packageProductDependencies = (
+				C903751D2C2754BB007DCA5E /* RealmSwift */,
+				C903752F2C2768A3007DCA5E /* UIUniversals */,
+			);
 			productName = ShorterWidgetsExtension;
 			productReference = C90374E62C261D7C007DCA5E /* ShorterWidgetsExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -484,14 +530,17 @@
 				C90374CB2C25E88A007DCA5E /* ContactManager.swift in Sources */,
 				C90374BF2C25D12B007DCA5E /* MainView.swift in Sources */,
 				C90374D72C2605D3007DCA5E /* MessagingManager.swift in Sources */,
+				C903752B2C2765E3007DCA5E /* RealmManagerExtension.swift in Sources */,
 				C90374BB2C25D0FD007DCA5E /* PermissionManager.swift in Sources */,
 				C90374BC2C25D0FD007DCA5E /* AuthenticationView.swift in Sources */,
 				C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */,
 				C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */,
+				C90375272C2761FF007DCA5E /* ShorterPostExtension.swift in Sources */,
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
 				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
 				C90375042C263227007DCA5E /* NotificationManager.swift in Sources */,
+				C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
@@ -523,8 +572,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C90374EE2C261D7D007DCA5E /* ShorterWidgetsBundle.swift in Sources */,
+				C90375292C276284007DCA5E /* ShorterPost.swift in Sources */,
+				C90375242C2761CD007DCA5E /* ShorterProfile.swift in Sources */,
+				C903752D2C276772007DCA5E /* TimingManager.swift in Sources */,
+				C90375282C27622F007DCA5E /* PhotoManager.swift in Sources */,
 				C90374FE2C2624AB007DCA5E /* Keys.swift in Sources */,
-				C90374FF2C26270D007DCA5E /* PhotoManager.swift in Sources */,
+				C903752C2C276756007DCA5E /* RealmManager.swift in Sources */,
+				C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */,
+				C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */,
 				C90375022C262A91007DCA5E /* Utilities.swift in Sources */,
 				C90374F02C261D7D007DCA5E /* ShorterWidgets.swift in Sources */,
 			);
@@ -996,6 +1051,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		C903751D2C2754BB007DCA5E /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		C903752F2C2768A3007DCA5E /* UIUniversals */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */;
+			productName = UIUniversals;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

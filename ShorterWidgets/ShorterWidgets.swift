@@ -86,22 +86,45 @@ struct ShorterWidgetsEntryView : View {
     }
 }
 
+struct SelectFriendProvider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> SimpleEntry {
+        SimpleEntry(date: .now, emoji: "placeholder", imageData: nil)
+    }
+    
+    func snapshot(for configuration: SelectFriendIntent, in context: Context) async -> SimpleEntry {
+        SimpleEntry(date: .now, emoji: "snapshot", imageData: nil)
+    }
+    
+    func timeline(for configuration: SelectFriendIntent, in context: Context) async -> Timeline<SimpleEntry> {
+        
+        let friend = configuration.friend
+        print( friend.imageData )
+        
+        let simpleEntry = SimpleEntry(date: .now, emoji: configuration.friend.firstName, imageData: friend.imageData)
+        
+        let timeline = Timeline(entries: [simpleEntry], policy: .never)
+        return timeline
+        
+    }
+    
+    
+}
+
 struct ShorterWidgets: Widget {
     let kind: String = "ShorterWidgets"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                ShorterWidgetsEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                ShorterWidgetsEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+        AppIntentConfiguration(kind: kind,
+                               intent: SelectFriendIntent.self,
+                               provider: SelectFriendProvider()) { entry in
+            ShorterWidgetsEntryView(entry: entry)
+            
         }
+        
+        
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
+        .supportedFamilies([.systemSmall, .systemLarge, .systemMedium])
     }
 }
 

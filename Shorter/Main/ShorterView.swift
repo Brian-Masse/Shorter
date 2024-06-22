@@ -13,27 +13,30 @@ struct ShorterView: View {
     @ObservedObject var realmManager = ShorterModel.realmManager
     
     var body: some View {
-        switch realmManager.authenticationState {
-        case .authenticating:
-            AuthenticationView()
-                .padding()
-            
-        case .openingRealm:
-            OpenFlexibleSyncRealmView()
-                .environment(\.realmConfiguration, realmManager.configuration)
-                .padding()
-            
-        case .creatingProfile:
-            ProfileCreationView()
-            
-        case .error:
-            Text("An error occoured")
-            
-        case .complete:
-            MainView()
-                .environment(\.realmConfiguration, realmManager.configuration)
-                .padding()
+        VStack {
+            switch realmManager.authenticationState {
+            case .authenticating:
+                AuthenticationView()
+                    .padding()
+                
+            case .openingRealm:
+                OpenFlexibleSyncRealmView()
+                    .environment(\.realmConfiguration, realmManager.configuration)
+                    .padding()
+                
+            case .creatingProfile:
+                ProfileCreationView()
+                
+            case .error:
+                Text("An error occoured")
+                
+            case .complete:
+                MainView()
+                    .environment(\.realmConfiguration, realmManager.configuration)
+                    .padding()
+            }
         }
+        .task { realmManager.checkLogin() }
     }
 }
 

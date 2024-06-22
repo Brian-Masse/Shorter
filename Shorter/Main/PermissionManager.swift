@@ -46,7 +46,8 @@ class QueryPermission<T: Object> {
     
     func addQuery(_ name: String? = nil, _ query: @escaping ((Query<T>) -> Query<Bool>) ) async {
         let wrappedQuery = WrappedQuery(name: name, query: query)
-        let _ = await ShorterModel.realmManager.addGenericSubcriptions(name: wrappedQuery.name, query: query)
+        
+        let _ = await RealmManager.shared.addGenericSubcriptions(name: wrappedQuery.name, query: query)
         additionalQueries.append(wrappedQuery)
     }
     
@@ -61,7 +62,7 @@ class QueryPermission<T: Object> {
     }
 
     func removeQuery(_ name: String) async {
-        await ShorterModel.realmManager.removeSubscription(name: name)
+        await RealmManager.shared.removeSubscription(name: name)
         if let index = additionalQueries.firstIndex(where: { wrappedQuery in
             wrappedQuery.name == name
         }) {
