@@ -26,10 +26,7 @@
 		C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */; };
 		C90374D02C25F551007DCA5E /* ShorterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374CF2C25F551007DCA5E /* ShorterProfile.swift */; };
 		C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */; };
-		C90374D52C25FC10007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C90374D42C25FC10007DCA5E /* UIUniversals */; };
 		C90374D72C2605D3007DCA5E /* MessagingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374D62C2605D3007DCA5E /* MessagingManager.swift */; };
-		C90374DF2C260A34007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90374DE2C260A34007DCA5E /* RealmSwift */; };
-		C90374E02C260AB3007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90374DE2C260A34007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C90374E92C261D7C007DCA5E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90374E82C261D7C007DCA5E /* WidgetKit.framework */; };
 		C90374EB2C261D7D007DCA5E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90374EA2C261D7C007DCA5E /* SwiftUI.framework */; };
 		C90374EE2C261D7D007DCA5E /* ShorterWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374ED2C261D7D007DCA5E /* ShorterWidgetsBundle.swift */; };
@@ -41,6 +38,12 @@
 		C90374FF2C26270D007DCA5E /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C82C25E21B007DCA5E /* PhotoManager.swift */; };
 		C90375012C262A48007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
 		C90375022C262A91007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
+		C90375042C263227007DCA5E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375032C263227007DCA5E /* NotificationManager.swift */; };
+		C90375062C2637B5007DCA5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90375052C2637B5007DCA5E /* GoogleService-Info.plist */; };
+		C903750F2C271798007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903750E2C271798007DCA5E /* UIUniversals */; };
+		C90375122C27179F007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; };
+		C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C90375142C2718A9007DCA5E /* FirebaseMessaging */; };
+		C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +77,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C90374E02C260AB3007DCA5E /* RealmSwift in Embed Frameworks */,
+				C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +131,8 @@
 		C90374FB2C262322007DCA5E /* ShorterWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShorterWidgetsExtension.entitlements; sourceTree = "<group>"; };
 		C90374FC2C2624A0007DCA5E /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C90375002C262A48007DCA5E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		C90375032C263227007DCA5E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		C90375052C2637B5007DCA5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +140,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C90374DF2C260A34007DCA5E /* RealmSwift in Frameworks */,
-				C90374D52C25FC10007DCA5E /* UIUniversals in Frameworks */,
+				C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */,
+				C90375122C27179F007DCA5E /* RealmSwift in Frameworks */,
+				C903750F2C271798007DCA5E /* UIUniversals in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +183,7 @@
 				C90374EC2C261D7D007DCA5E /* ShorterWidgets */,
 				C90374E72C261D7C007DCA5E /* Frameworks */,
 				C90374852C25D05D007DCA5E /* Products */,
+				CBB2A80C82599A7747D2D8B3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
+				C90375032C263227007DCA5E /* NotificationManager.swift */,
 				C90374D62C2605D3007DCA5E /* MessagingManager.swift */,
 				C90374CE2C25F538007DCA5E /* Profile */,
 				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
@@ -203,6 +211,7 @@
 				C90374BD2C25D105007DCA5E /* Authentication */,
 				C903748D2C25D05E007DCA5E /* Assets.xcassets */,
 				C903748F2C25D05E007DCA5E /* Info.plist */,
+				C90375052C2637B5007DCA5E /* GoogleService-Info.plist */,
 				C90374902C25D05E007DCA5E /* Shorter.entitlements */,
 				C90374912C25D05E007DCA5E /* Preview Content */,
 				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
@@ -287,6 +296,13 @@
 			path = ShorterWidgets;
 			sourceTree = "<group>";
 		};
+		CBB2A80C82599A7747D2D8B3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -307,8 +323,9 @@
 			);
 			name = Shorter;
 			packageProductDependencies = (
-				C90374D42C25FC10007DCA5E /* UIUniversals */,
-				C90374DE2C260A34007DCA5E /* RealmSwift */,
+				C903750E2C271798007DCA5E /* UIUniversals */,
+				C90375112C27179F007DCA5E /* RealmSwift */,
+				C90375142C2718A9007DCA5E /* FirebaseMessaging */,
 			);
 			productName = Shorter;
 			productReference = C90374842C25D05D007DCA5E /* Shorter.app */;
@@ -403,8 +420,9 @@
 			);
 			mainGroup = C903747B2C25D05D007DCA5E;
 			packageReferences = (
-				C90374D32C25FC10007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */,
-				C90374DD2C260A34007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */,
+				C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */,
+				C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */,
+				C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C90374852C25D05D007DCA5E /* Products */;
 			projectDirPath = "";
@@ -423,6 +441,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C90375062C2637B5007DCA5E /* GoogleService-Info.plist in Resources */,
 				C90374932C25D05E007DCA5E /* Preview Assets.xcassets in Resources */,
 				C903748E2C25D05E007DCA5E /* Assets.xcassets in Resources */,
 			);
@@ -469,6 +488,7 @@
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
 				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
+				C90375042C263227007DCA5E /* NotificationManager.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
@@ -564,7 +584,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -579,6 +599,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -625,7 +646,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -634,6 +655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -656,6 +678,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shorter/Info.plist;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Allow Shorter to Access Your Contacts";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -698,6 +721,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shorter/Info.plist;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Allow Shorter to Access Your Contacts";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -927,7 +951,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C90374D32C25FC10007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
+		C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Brian-Masse/UIUniversals";
 			requirement = {
@@ -935,7 +959,7 @@
 				kind = branch;
 			};
 		};
-		C90374DD2C260A34007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
 			requirement = {
@@ -943,18 +967,31 @@
 				kind = branch;
 			};
 		};
+		C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.28.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C90374D42C25FC10007DCA5E /* UIUniversals */ = {
+		C903750E2C271798007DCA5E /* UIUniversals */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C90374D32C25FC10007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */;
+			package = C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */;
 			productName = UIUniversals;
 		};
-		C90374DE2C260A34007DCA5E /* RealmSwift */ = {
+		C90375112C27179F007DCA5E /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C90374DD2C260A34007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		C90375142C2718A9007DCA5E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

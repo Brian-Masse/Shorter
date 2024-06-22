@@ -16,8 +16,6 @@ struct MainView: View {
     
     @ObservedResults( ShorterPost.self ) var posts
     
-    
-    
     var body: some View {
         
         VStack {
@@ -38,7 +36,7 @@ struct MainView: View {
             }
             
             Spacer()
-            
+
             ForEach( posts ) { post in
                 
                 HStack {
@@ -68,6 +66,9 @@ struct MainView: View {
                     }
                 }
             }
+        }
+        .task {
+            await NotificationManager.shared.loadStatus()
         }
         .sheet(isPresented: $showingCreatePostView) {
             CreatePostView()

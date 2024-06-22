@@ -105,9 +105,9 @@ struct ShorterWidgets: Widget {
     }
 }
 
-#Preview(as: .systemSmall) {
-    ShorterWidgets()
-} timeline: {
-    SimpleEntry(date: .now, emoji: "😀", imageData: nil)
-    SimpleEntry(date: .now, emoji: "🤩", imageData: nil)
-}
+//#Preview(as: .systemSmall) {
+//    ShorterWidgets()
+//} timeline: {
+//    SimpleEntry(date: .now, emoji: "😀", imageData: nil)
+//    SimpleEntry(date: .now, emoji: "🤩", imageData: nil)
+//}
