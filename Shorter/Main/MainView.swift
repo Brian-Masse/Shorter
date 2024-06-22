@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import RealmSwift
 import WidgetKit
+import UIUniversals
 
 struct MainView: View {
     
@@ -28,6 +29,11 @@ struct MainView: View {
                 Text( "Shorter" )
                     .font(.title)
                     .bold()
+                    .onTapGesture {
+                        
+                        print("running")
+                        NotificationManager.shared.readFiringDates()
+                    }
                 
                 Spacer()
                 

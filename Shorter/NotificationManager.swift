@@ -7,13 +7,18 @@
 
 import Foundation
 import NotificationCenter
-import Firebase
-import FirebaseMessaging
+import UIUniversals
 
 
 class NotificationManager: ObservableObject {
 //    MARK: Vars
     static let shared = NotificationManager()
+    static let totalNotificationCount: Int = 7
+    
+    private struct NotificationsDefaultKeys {
+        static let suiteName: String = "notificationsDefault"
+        static let notifcationEntryBase: String = "notificationEntryBase"
+    }
     
     let current = UNUserNotificationCenter.current()
     
@@ -50,6 +55,8 @@ class NotificationManager: ObservableObject {
         default:
             self.notificationsAllowed = false
         }
+        
+        self.setupFiringDates(true)
     }
     
     func makeNotificationRequest(from time: Date, title: String, body: String, identifier: String) {
@@ -64,8 +71,14 @@ class NotificationManager: ObservableObject {
     }
     
     func clearNotifications() {
-//        for a list of identifiers, clear the associated notifications
-        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [])
+        var keys: [String] = []
+        
+        for i in 0..<NotificationManager.totalNotificationCount {
+            let key = makeKey(for: i)
+            keys.append(key)
+        }
+        
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: keys)
     }
     
 //    MARK: Production Methods
@@ -79,7 +92,7 @@ class NotificationManager: ObservableObject {
     
     private func makeCalendarNotificationRequest(components: DateComponents, identifier: String, content: UNMutableNotificationContent ) {
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         
         let request = UNNotificationRequest(identifier: identifier,
                                             content: content,
@@ -88,4 +101,71 @@ class NotificationManager: ObservableObject {
         UNUserNotificationCenter.current().add(request)
     }
     
+//    MARK: SetupFiringDates
+//    creates several notifications at the specified `random` date / time start at .now
+//    once a notification has been created its fire date is saved into UserDefaults
+//    if one of the notification firing dates in the UserDefaults has alread run, then it adds an additional
+//    notification
+    @MainActor
+    private func setupFiringDates(_ forceRefresh: Bool = false) {
+        if !self.notificationsAllowed { return }
+        
+        if !self.firingDatesNeedRefresh() && !forceRefresh { return }
+        
+        print( "refreshing firing dates" )
+        
+        for i in 0..<NotificationManager.totalNotificationCount {
+            let key = makeKey(for: i)
+            
+            let proposedDate = Date.now.resetToStartOfDay() + (Constants.DayTime * Double(i))
+            
+            let date = TimingManager.getFiringTime(for: proposedDate)
+            
+            let components = Calendar.current.dateComponents([ .day, .month, .year, .hour ],
+                                                             from: date)
+            
+            let content = makeNotificationContent(title: "Notificaiton \(i)", body: "This notification was supposed to be sent at: \( date.formatted(date: .abbreviated, time: .complete) )")
+            
+            makeCalendarNotificationRequest(components: components,
+                                            identifier: key,
+                                            content: content)
+         
+            saveFiringDate(key: key, date: date)
+        }
+    }
+    
+    private func makeKey(for index: Int) -> String {
+        "\(NotificationsDefaultKeys.notifcationEntryBase)\(index)"
+    }
+    
+    private func saveFiringDate(key: String, date: Date) {
+        if let defaults = UserDefaults(suiteName: NotificationsDefaultKeys.suiteName) {
+            defaults.setValue(date, forKey: key)
+        }
+    }
+    
+//    if the current date is ahead of the first firing date, then all notifications need to be refreshed
+    private func firingDatesNeedRefresh() -> Bool {
+        if let defaults = UserDefaults(suiteName: NotificationsDefaultKeys.suiteName) {
+            let key = makeKey(for: 0)
+            
+            if let date = defaults.object(forKey: key) as? Date {
+                return Date.now.resetToStartOfDay() > date.resetToStartOfDay()
+            }
+        }
+        return false
+    }
+    
+    func readFiringDates() {
+        if let defaults = UserDefaults(suiteName: NotificationsDefaultKeys.suiteName) {
+            
+            for i in 0..<NotificationManager.totalNotificationCount {
+                let key = makeKey(for: i)
+                
+                if let date = defaults.object(forKey: key) as? Date {
+                    print( date.formatted() )
+                }
+            }
+        }
+    }
 }

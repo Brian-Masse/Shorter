@@ -23,6 +23,8 @@ final class RealmManager: ObservableObject {
         case complete
     }
     
+    static let defaultId = "66759d000ae4d97657a322dd"
+    
     static let defaults = UserDefaults.standard
     
     static let appID = "application-0-ecwqhth"
@@ -54,6 +56,9 @@ final class RealmManager: ObservableObject {
     }
     @MainActor lazy var shorterProfileQuery: (QueryPermission<ShorterProfile>) = QueryPermission { query in
         query.ownerId == ShorterModel.ownerId
+    }
+    @MainActor lazy var timingManagerQuery: (QueryPermission<TimingManager>) = QueryPermission { query in
+        query.author == RealmManager.defaultId
     }
     
     
@@ -180,6 +185,7 @@ final class RealmManager: ObservableObject {
                 if let err = error { print("error logging out: \(err.localizedDescription)") }
                 
                 DispatchQueue.main.async {
+                    NotificationManager.shared.clearNotifications()
                     self.setState(.authenticating)
                 }
             }
@@ -256,6 +262,8 @@ final class RealmManager: ObservableObject {
                                                                          query: shorterPostQuery.baseQuery)
         let _ : ShorterProfile? = await addGenericSubcriptions(name: QuerySubKey.shorterProfileQuery.rawValue,
                                                                          query: shorterProfileQuery.baseQuery)
+        let _ : TimingManager? = await addGenericSubcriptions(name: QuerySubKey.timingManager.rawValue,
+                                                                         query: timingManagerQuery.baseQuery)
     }
     
     //    MARK: Helper Functions

@@ -44,6 +44,7 @@
 		C90375122C27179F007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; };
 		C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C90375142C2718A9007DCA5E /* FirebaseMessaging */; };
 		C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C90375182C272A25007DCA5E /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375172C272A25007DCA5E /* TimingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		C90375002C262A48007DCA5E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C90375032C263227007DCA5E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C90375052C2637B5007DCA5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C90375172C272A25007DCA5E /* TimingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				C90374872C25D05D007DCA5E /* ShorterApp.swift */,
+				C90375172C272A25007DCA5E /* TimingManager.swift */,
 				C90374C32C25D28B007DCA5E /* ShorterModel.swift */,
 				C903748B2C25D05D007DCA5E /* ShorterView.swift */,
 				C90374BE2C25D12B007DCA5E /* MainView.swift */,
@@ -494,6 +497,7 @@
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
 				C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */,
 				C90374D02C25F551007DCA5E /* ShorterProfile.swift in Sources */,
+				C90375182C272A25007DCA5E /* TimingManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
