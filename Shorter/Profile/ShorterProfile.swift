@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import RealmSwift   
+import RealmSwift
 
 final class ShorterProfile: Object, Identifiable {
     

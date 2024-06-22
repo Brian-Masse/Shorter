@@ -57,6 +57,7 @@
 		C903752D2C276772007DCA5E /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375172C272A25007DCA5E /* TimingManager.swift */; };
 		C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
 		C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903752F2C2768A3007DCA5E /* UIUniversals */; };
+		C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,7 @@
 		C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterProfileExtension.swift; sourceTree = "<group>"; };
 		C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostExtension.swift; sourceTree = "<group>"; };
 		C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManagerExtension.swift; sourceTree = "<group>"; };
+		C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRealmManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +325,7 @@
 				C90375002C262A48007DCA5E /* Utilities.swift */,
 				C90374EF2C261D7D007DCA5E /* ShorterWidgets.swift */,
 				C90375192C27447B007DCA5E /* SelectFriendIntent.swift */,
+				C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */,
 				C90374F12C261D7E007DCA5E /* Assets.xcassets */,
 				C90374F32C261D7E007DCA5E /* Info.plist */,
 			);
@@ -580,6 +583,7 @@
 				C903752C2C276756007DCA5E /* RealmManager.swift in Sources */,
 				C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */,
 				C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */,
+				C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */,
 				C90375022C262A91007DCA5E /* Utilities.swift in Sources */,
 				C90374F02C261D7D007DCA5E /* ShorterWidgets.swift in Sources */,
 			);

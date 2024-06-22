@@ -30,8 +30,9 @@ struct MainView: View {
                     .font(.title)
                     .bold()
                     .onTapGesture {
+                        print( "running" )
                         
-                        print( ShorterModel.realmManager.realm.configuration.fileURL )
+                        WidgetCenter.shared.reloadAllTimelines()
                     }
                 
                 Spacer()

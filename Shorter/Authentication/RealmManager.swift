@@ -130,8 +130,9 @@ final class RealmManager: ObservableObject {
                 let querySub = QuerySubscription(name: name, query: query)
                 
                 if checkSubscription(name: name, realm: localRealm) {
-                    let foundSubscriptions = subscriptions.first(named: name)!
-                    foundSubscriptions.updateQuery(toType: T.self, where: query)
+                    if let foundSubscriptions = subscriptions.first(named: name) {
+                        foundSubscriptions.updateQuery(toType: T.self, where: query)
+                    }
                 }
                 else { subscriptions.append(querySub) }
             }

@@ -8,61 +8,50 @@
 import WidgetKit
 import SwiftUI
 
-let suiteName = "group.com.shorter.BrianMasse"
-
-//MARK: Provider
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀", imageData: nil)
-    }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        
-        let entry = SimpleEntry(date: Date(), emoji: "😀", imageData: nil)
-        completion(entry)
-    }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            
-            var imageData: Data? = nil
-            
-            if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
-                
-                if let data = defaults.data(forKey: WidgetKeys.imageWidgetImageDataKey) {
-                    
-                    imageData = data
-                }
-                
-            }
-            
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "value", imageData: imageData)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
-}
-
 //MARK: TimeLine Entry
-struct SimpleEntry: TimelineEntry {
+struct FriendWidgetEntry: TimelineEntry {
     let date: Date
+
+    let title: String
+    let fullName: String
     let emoji: String
     let imageData: Data?
 }
 
 //MARK: WidgetView
 struct ShorterWidgetsEntryView : View {
-    var entry: Provider.Entry
+    var entry: FriendWidgetEntry
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottomLeading) {
+            
+            LinearGradient(colors: [.black, .clear],
+                           startPoint: .bottom,
+                           endPoint: .top)
+            .opacity(0.7)
+            .padding(-15)
+            .padding(.top, 70)
+            
+            VStack(alignment: .leading) {
+                Spacer()
+                HStack {
+                    Text(entry.title)
+                        .bold()
+                        .font(.title2)
+                        .lineLimit(1)
+                    Text(entry.emoji)
+                    
+                    Spacer()
+                }
+                Text( entry.date.formatted(date: .abbreviated, time: .omitted) )
+                Text( entry.fullName )
+                    .textCase(.uppercase)
+                    .font(.caption2)
+                    .opacity(0.8)
+            }
+            .padding([.trailing, .bottom], 5)
+        }
+        .background {
             if let imageData = entry.imageData {
                 if let uiImage = PhotoManager.decodeUIImage(from: imageData) {
                     
@@ -71,45 +60,53 @@ struct ShorterWidgetsEntryView : View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .ignoresSafeArea()
+                        .clipped()
+                        .padding(-15)
                 }
             }
-            
-            VStack {
-                Text("Time:")
-                Text(entry.date, style: .time)
-                
-                Text("Emoji:")
-                Text(entry.emoji)
-            }
+        }
+        .foregroundStyle(.white)
+        .padding(-5)
+        .containerBackground(for: .widget) {
+            Color.white
         }
     }
 }
 
+//MARK: Timeline Provider
 struct SelectFriendProvider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: .now, emoji: "placeholder", imageData: nil)
+    func placeholder(in context: Context) -> FriendWidgetEntry {
+        FriendWidgetEntry(date: .now,
+                          title: "Place Holder",
+                          fullName: "Brian Masse",
+                          emoji: "🫥",
+                          imageData: nil)
     }
     
-    func snapshot(for configuration: SelectFriendIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: .now, emoji: "snapshot", imageData: nil)
+    func snapshot(for configuration: SelectFriendIntent, in context: Context) async -> FriendWidgetEntry {
+        FriendWidgetEntry(date: .now,
+                          title: "Snapshot",
+                          fullName: "Brian Masse",
+                          emoji: "🫥",
+                          imageData: nil)
     }
     
-    func timeline(for configuration: SelectFriendIntent, in context: Context) async -> Timeline<SimpleEntry> {
+    func timeline(for configuration: SelectFriendIntent, in context: Context) async -> Timeline<FriendWidgetEntry> {
         
         let friend = configuration.friend
-        print( friend.imageData )
+        let entry = FriendWidgetEntry(date: .now,
+                                      title: friend.postTitle,
+                                      fullName: "\(friend.firstName) \(friend.lastName)",
+                                      emoji: friend.postEmoji,
+                                      imageData: friend.imageData)
         
-        let simpleEntry = SimpleEntry(date: .now, emoji: configuration.friend.firstName, imageData: friend.imageData)
-        
-        let timeline = Timeline(entries: [simpleEntry], policy: .never)
+        let timeline = Timeline(entries: [entry], policy: .atEnd)
         return timeline
         
     }
-    
-    
 }
 
+//MARK: ShorterWidgets
 struct ShorterWidgets: Widget {
     let kind: String = "ShorterWidgets"
 
@@ -120,17 +117,23 @@ struct ShorterWidgets: Widget {
             ShorterWidgetsEntryView(entry: entry)
             
         }
-        
-        
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
         .supportedFamilies([.systemSmall, .systemLarge, .systemMedium])
     }
 }
 
-//#Preview(as: .systemSmall) {
-//    ShorterWidgets()
-//} timeline: {
-//    SimpleEntry(date: .now, emoji: "😀", imageData: nil)
-//    SimpleEntry(date: .now, emoji: "🤩", imageData: nil)
-//}
+#Preview(as: .systemSmall) {
+    ShorterWidgets()
+    
+} timeline: {
+    let image = UIImage(named: "Goats")
+    let data = PhotoManager.encodeImage(image,
+                                        compressionQuality: 0.5)
+    
+    FriendWidgetEntry(date: .now,
+                      title: "Post Title",
+                      fullName: "Brian Masse",
+                      emoji: "🫥",
+                      imageData: data)
+}

@@ -124,8 +124,17 @@ extension RealmManager {
         }
     }
     
+//    once a user is signed in, save their ownerID to the defaults shared between the app
+//    and the widget extension so the widgets can query data properly
+    private func saveOwnerId() {
+        if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
+            defaults.set(ShorterModel.ownerId, forKey: WidgetKeys.ownerIdKey)
+        }
+    }
+    
     @MainActor
     private func postAuthenticationInit() {
+        self.saveOwnerId()
         self.setConfiguration()
         self.setState(.openingRealm)
     }
@@ -155,10 +164,6 @@ extension RealmManager {
     //    MARK: SetConfiguration
     private func setConfiguration() {
         self.configuration = user?.flexibleSyncConfiguration()
-        
-        let defaults = UserDefaults()
-        
-        defaults.setValue(self.configuration, forKey: "test")
     }
     
     

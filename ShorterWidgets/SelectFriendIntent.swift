@@ -32,6 +32,8 @@ struct FriendDetail: AppEntity {
     let id: String
     let firstName: String
     let lastName: String
+    let postTitle: String
+    let postEmoji: String
     let imageData: Data?
     
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Friend"
@@ -45,7 +47,7 @@ struct FriendDetail: AppEntity {
 //    if it does, it maps the fetched data into the FriendDetail
     @MainActor
     static func retreiveFriends() async -> [FriendDetail] {
-        var details: [FriendDetail] = [ .init(id: "", firstName: "test", lastName: "masse", imageData: nil) ]
+        var details: [FriendDetail] = []
         
         if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
             let count = max( 0, defaults.integer(forKey: WidgetKeys.totalFriendsKey) )
@@ -54,55 +56,16 @@ struct FriendDetail: AppEntity {
                 let ownerId = defaults.string(forKey: WidgetKeys.friendOwnerIdBaseKey + "\(i)") ?? ""
                 let firstName = defaults.string(forKey: WidgetKeys.friendFirstNameBaseKey + "\(i)") ?? ""
                 let lastName = defaults.string(forKey: WidgetKeys.friendLastNameBaseKey + "\(i)") ?? ""
-                
-                
-                var imageData: Data? = nil
-                
-                
-                
-                let credentials = RealmSwift.Credentials.emailPassword(email: "brianm25it@gmail.com", password: "Cars2Cool!")
-                
-                if let user = try? await RealmManager.shared.app.login(credentials: credentials) {
-                
-                    let configuration = user.flexibleSyncConfiguration()
-                    
-                    let realm = try! await Realm(configuration: configuration)
-                    
-                    RealmManager.shared.realm = realm
-                    
-                    await RealmManager.shared.addGenericSubcriptions(name: "profile") { (query: Query<ShorterProfile>) in
-                        
-                        query.ownerId == ownerId
-                    }
-            
-                    
-                    
-                    if let profile: ShorterProfile = RealmManager.retrieveObject(where: { query in
-                        query.ownerId == ownerId
-                    }).first {
-                        
-                        if let mostRecentPost = profile.mostRecentPost {
                             
-                            await RealmManager.shared.addGenericSubcriptions(name: "post") { (query: Query<ShorterPost>) in
-                                query._id == mostRecentPost
-                            }
-                            
-                            if let post: ShorterPost = RealmManager.retrieveObject(where: { query in
-                                query._id == mostRecentPost
-                                
-                            }).first {
-                                imageData = post.imageData
-                            }
-                        }
-                    }
-                }
-                
-                    
                 if !ownerId.isEmpty {
-                    details.append( FriendDetail(id: ownerId,
-                                                 firstName: firstName,
-                                                 lastName: lastName,
-                                                 imageData: imageData)  )
+                    if let post = await WidgetRealmManger.shared.retrieveImageData(from: ownerId) {
+                        details.append( FriendDetail(id: ownerId,
+                                                     firstName: firstName,
+                                                     lastName: lastName,
+                                                     postTitle: post.title,
+                                                     postEmoji: "🥳",
+                                                     imageData: post.imageData)  )
+                    }
                 }
             }
         }
