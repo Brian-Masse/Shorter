@@ -58,6 +58,7 @@
 		C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
 		C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903752F2C2768A3007DCA5E /* UIUniversals */; };
 		C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */; };
+		C90375362C279010007DCA5E /* ShorterPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375352C279010007DCA5E /* ShorterPreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostExtension.swift; sourceTree = "<group>"; };
 		C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManagerExtension.swift; sourceTree = "<group>"; };
 		C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRealmManger.swift; sourceTree = "<group>"; };
+		C90375352C279010007DCA5E /* ShorterPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,8 +236,7 @@
 		C90374862C25D05D007DCA5E /* Shorter */ = {
 			isa = PBXGroup;
 			children = (
-				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
-				C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */,
+				C90375332C278FFF007DCA5E /* Posts */,
 				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
 				C90375252C2761E6007DCA5E /* Managers */,
 				C90374CE2C25F538007DCA5E /* Profile */,
@@ -341,6 +342,16 @@
 				C90374D62C2605D3007DCA5E /* MessagingManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		C90375332C278FFF007DCA5E /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */,
+				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
+				C90375352C279010007DCA5E /* ShorterPreviewView.swift */,
+			);
+			path = Posts;
 			sourceTree = "<group>";
 		};
 		CBB2A80C82599A7747D2D8B3 /* Pods */ = {
@@ -537,6 +548,7 @@
 				C90374BB2C25D0FD007DCA5E /* PermissionManager.swift in Sources */,
 				C90374BC2C25D0FD007DCA5E /* AuthenticationView.swift in Sources */,
 				C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */,
+				C90375362C279010007DCA5E /* ShorterPreviewView.swift in Sources */,
 				C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */,
 				C90375272C2761FF007DCA5E /* ShorterPostExtension.swift in Sources */,
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
