@@ -11,77 +11,26 @@ import RealmSwift
 import WidgetKit
 import UIUniversals
 
+//MARK: MainView
 struct MainView: View {
     
     @State private var showingCreatePostView: Bool = false
     
     @ObservedResults( ShorterPost.self ) var posts
     
+//    MARK: Body
     var body: some View {
-        
-        VStack {
-            HStack {
-                
-                Image(systemName: "pencil")
-                
-                Spacer()
-                
-                Text( "Shorter" )
-                    .font(.title)
-                    .bold()
-                    .onTapGesture {
-                        print( "running" )
-                        
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
-                
-                Spacer()
-                
-                Image(systemName: "plus")
-                    .onTapGesture { showingCreatePostView = true }
-            }
+        ZStack(alignment: .top) {
+            Text( "Shorter" )
+                .font(.title2)
+                .bold()
+                .padding(.top, 7)
             
-            Button(action: { ShorterModel.realmManager.logoutUser() }, label: {
-                Text("logout")
-            })
+            ShorterPostsView(posts: Array( posts ))
             
-            Spacer()
-
-            ForEach( posts ) { post in
-                
-                HStack {
-                    Text(post.title)
-                    
-                    Spacer()
-                    
-                    if let image = PhotoManager.decodeImage(from: post.imageData) {
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 100)
-                    }
-                }
-                .onTapGesture {
-                    if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
-                        
-                        if let uiImage = PhotoManager.decodeUIImage(from: post.imageData) {
-                            let imageData = PhotoManager.encodeImage(uiImage, compressionQuality: 0.5)
-                            
-                            defaults.setValue( post.title, forKey: WidgetKeys.imageWidgetDataKey )
-                            
-                            defaults.setValue( imageData, forKey: WidgetKeys.imageWidgetImageDataKey)
-                            
-                            WidgetCenter.shared.reloadTimelines(ofKind: "ShorterWidgets")
-                        }
-                    }
-                }
-            }
         }
         .task {
             await NotificationManager.shared.loadStatus()
-        }
-        .sheet(isPresented: $showingCreatePostView) {
-            CreatePostView()
         }
     }
 }
@@ -91,13 +40,22 @@ struct CreatePostView: View {
     @State private var showingImagePicker: Bool = false
     
     @State private var title: String = ""
+    @State private var fullTitle: String = ""
+    @State private var notes: String = ""
     
+    @MainActor
     private func submit() {
         if title.isEmpty { return }
         
         let imageData = PhotoManager.encodeImage(self.image)
         
-        let post = ShorterPost(ownerId: ShorterModel.ownerId, title: title, data: imageData)
+        let post = ShorterPost(ownerId: ShorterModel.ownerId,
+                               authorName: ShorterModel.shared.profile!.fullName,
+                               fullTitle: fullTitle,
+                               title: title,
+                               emoji: "🙂‍↔️",
+                               notes: notes,
+                               data: imageData)
         
         RealmManager.addObject( post )
     }
@@ -113,6 +71,8 @@ struct CreatePostView: View {
                 .bold()
             
             TextField("title", text: $title, prompt: Text( "title" ))
+            TextField("fullTitle", text: $fullTitle, prompt: Text( "full title" ))
+            TextField("notes", text: $notes, prompt: Text( "notes" ))
             
             Button(action: { showingImagePicker = true }) {
                 Text( "image picker" )

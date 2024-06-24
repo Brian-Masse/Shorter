@@ -58,7 +58,13 @@
 		C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
 		C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903752F2C2768A3007DCA5E /* UIUniversals */; };
 		C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */; };
-		C90375362C279010007DCA5E /* ShorterPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375352C279010007DCA5E /* ShorterPreviewView.swift */; };
+		C90375362C279010007DCA5E /* ShorterPostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */; };
+		C903753E2C288E23007DCA5E /* ScrollingCardWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */; };
+		C90375412C288E57007DCA5E /* StyledScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375402C288E57007DCA5E /* StyledScrollView.swift */; };
+		C91032BF2C28A8F500A226BE /* ShorterPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */; };
+		C91032C22C28AEB400A226BE /* ShorterPostQuickCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */; };
+		C91032C42C28FE2A00A226BE /* ProfilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */; };
+		C91032C62C290B0900A226BE /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C52C290B0900A226BE /* IconButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,7 +171,13 @@
 		C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostExtension.swift; sourceTree = "<group>"; };
 		C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManagerExtension.swift; sourceTree = "<group>"; };
 		C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRealmManger.swift; sourceTree = "<group>"; };
-		C90375352C279010007DCA5E /* ShorterPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPreviewView.swift; sourceTree = "<group>"; };
+		C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostPreviewView.swift; sourceTree = "<group>"; };
+		C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardWrapper.swift; sourceTree = "<group>"; };
+		C90375402C288E57007DCA5E /* StyledScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledScrollView.swift; sourceTree = "<group>"; };
+		C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostsView.swift; sourceTree = "<group>"; };
+		C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostQuickCreationView.swift; sourceTree = "<group>"; };
+		C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePreviewView.swift; sourceTree = "<group>"; };
+		C91032C52C290B0900A226BE /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,8 +248,8 @@
 		C90374862C25D05D007DCA5E /* Shorter */ = {
 			isa = PBXGroup;
 			children = (
+				C90375372C288DD8007DCA5E /* UIElements */,
 				C90375332C278FFF007DCA5E /* Posts */,
-				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
 				C90375252C2761E6007DCA5E /* Managers */,
 				C90374CE2C25F538007DCA5E /* Profile */,
 				C90374C52C25D534007DCA5E /* Main */,
@@ -291,7 +303,6 @@
 			isa = PBXGroup;
 			children = (
 				C90374872C25D05D007DCA5E /* ShorterApp.swift */,
-				C90375172C272A25007DCA5E /* TimingManager.swift */,
 				C90374C32C25D28B007DCA5E /* ShorterModel.swift */,
 				C903748B2C25D05D007DCA5E /* ShorterView.swift */,
 				C90374BE2C25D12B007DCA5E /* MainView.swift */,
@@ -304,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				C90374CF2C25F551007DCA5E /* ShorterProfile.swift */,
+				C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */,
 				C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */,
 				C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */,
 			);
@@ -336,6 +348,7 @@
 		C90375252C2761E6007DCA5E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				C90375172C272A25007DCA5E /* TimingManager.swift */,
 				C90374CA2C25E88A007DCA5E /* ContactManager.swift */,
 				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
 				C90375032C263227007DCA5E /* NotificationManager.swift */,
@@ -349,9 +362,30 @@
 			children = (
 				C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */,
 				C90374C62C25D689007DCA5E /* ShorterPost.swift */,
-				C90375352C279010007DCA5E /* ShorterPreviewView.swift */,
+				C91032C02C28AE8800A226BE /* Views */,
 			);
 			path = Posts;
+			sourceTree = "<group>";
+		};
+		C90375372C288DD8007DCA5E /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
+				C91032C52C290B0900A226BE /* IconButton.swift */,
+				C90375402C288E57007DCA5E /* StyledScrollView.swift */,
+				C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */,
+			);
+			path = UIElements;
+			sourceTree = "<group>";
+		};
+		C91032C02C28AE8800A226BE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */,
+				C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */,
+				C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CBB2A80C82599A7747D2D8B3 /* Pods */ = {
@@ -544,19 +578,25 @@
 				C90374CB2C25E88A007DCA5E /* ContactManager.swift in Sources */,
 				C90374BF2C25D12B007DCA5E /* MainView.swift in Sources */,
 				C90374D72C2605D3007DCA5E /* MessagingManager.swift in Sources */,
+				C91032C42C28FE2A00A226BE /* ProfilePreviewView.swift in Sources */,
 				C903752B2C2765E3007DCA5E /* RealmManagerExtension.swift in Sources */,
 				C90374BB2C25D0FD007DCA5E /* PermissionManager.swift in Sources */,
 				C90374BC2C25D0FD007DCA5E /* AuthenticationView.swift in Sources */,
 				C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */,
-				C90375362C279010007DCA5E /* ShorterPreviewView.swift in Sources */,
+				C90375362C279010007DCA5E /* ShorterPostPreviewView.swift in Sources */,
+				C90375412C288E57007DCA5E /* StyledScrollView.swift in Sources */,
 				C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */,
+				C91032C62C290B0900A226BE /* IconButton.swift in Sources */,
 				C90375272C2761FF007DCA5E /* ShorterPostExtension.swift in Sources */,
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
 				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
+				C91032C22C28AEB400A226BE /* ShorterPostQuickCreationView.swift in Sources */,
 				C90375042C263227007DCA5E /* NotificationManager.swift in Sources */,
 				C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */,
+				C903753E2C288E23007DCA5E /* ScrollingCardWrapper.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
+				C91032BF2C28A8F500A226BE /* ShorterPostsView.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
 				C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */,

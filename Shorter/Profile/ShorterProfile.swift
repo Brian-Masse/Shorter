@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import SwiftUI
 
 final class ShorterProfile: Object, Identifiable {
     
@@ -32,5 +33,7 @@ final class ShorterProfile: Object, Identifiable {
         self.ownerId = ownerId
         self.email = email
     }
+    
+    var profileImage: Image? = nil
 }
 

@@ -31,7 +31,6 @@ class ProxyAppDelegate: NSObject, UIApplicationDelegate, ObservableObject, Messa
 //    After registering for remote notifications, confirm that it was successful or print the error
 //    if it is successful manually give Google the APNs Token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Registered for Apple Remote Notifications")
         Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
     }
     
@@ -41,14 +40,9 @@ class ProxyAppDelegate: NSObject, UIApplicationDelegate, ObservableObject, Messa
     
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        messaging.token { token, error in
-            guard let token = token else {
-                print( "error getting messaging token: \(error?.localizedDescription ?? "")" )
-                return
-            }
-            
-            print( "received Token: \(token)" )
-        }
+//        messaging.token { token, error in
+//            guard let token = token else { return }
+//        }
     }
 }
 

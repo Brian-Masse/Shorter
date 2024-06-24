@@ -22,6 +22,8 @@ class TimingManager: Object {
     static let startHour: Double = 9
     static let endHour: Double = 23
     
+    static let offset: Double = 1719028800
+    
     convenience init(_ key: String) {
         self.init()
         
@@ -51,7 +53,6 @@ class TimingManager: Object {
     
     @MainActor
     static func getFiringTime( for date: Date ) -> Date {
-        let offset: Double = 1719028800
         
         let startDate = TimingManager.getStartDate()
         let correctedDate = date.timeIntervalSince1970 < startDate.timeIntervalSince1970 ? startDate : date
@@ -76,6 +77,21 @@ class TimingManager: Object {
         }
         
         return .now
+    }
+    
+    @MainActor
+    static func getPreviousFiringTime() -> Date {
+        
+        let firingForToday = TimingManager.getFiringTime(for: .now)
+        
+        if firingForToday < .now {
+            return firingForToday
+        } else {
+         
+            let yesterday = .now.resetToStartOfDay() - Constants.DayTime
+            return TimingManager.getFiringTime(for: yesterday)
+            
+        }
     }
 }
 

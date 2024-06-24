@@ -153,7 +153,7 @@ class NotificationManager: ObservableObject {
                 return Date.now.resetToStartOfDay() > date.resetToStartOfDay()
             }
         }
-        return false
+        return true
     }
     
     func readFiringDates() {

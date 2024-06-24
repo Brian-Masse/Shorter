@@ -35,6 +35,10 @@ extension ShorterProfile {
         "\(firstName).\(lastName)"
     }
     
+    var fullName: String {
+        "\(self.firstName) \(self.lastName)"
+    }
+    
     func updateRecentPost(to id: ObjectId) {
         RealmManager.updateObject(self) { thawed in
             thawed.mostRecentPost = id
@@ -68,6 +72,21 @@ extension ShorterProfile {
     }
     
 //    MARK: ClassMethods
+    private func loadImage() -> Image? {
+        self.profileImage = PhotoManager.decodeImage(from: self.imageData)
+        return self.profileImage
+    }
+    
+    func getImage() -> Image {
+        if self.profileImage == nil {
+            if let image = self.loadImage() {
+                return image
+            }
+        }
+        
+        return self.profileImage ?? Image("BigSur")
+    }
+    
     func logout() {
         self.clearFriendListFromDefaults()
     }

@@ -33,7 +33,6 @@ struct ShorterView: View {
             case .complete:
                 MainView()
                     .environment(\.realmConfiguration, realmManager.configuration)
-                    .padding()
             }
         }
         .task { realmManager.checkLogin() }
