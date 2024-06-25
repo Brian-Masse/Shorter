@@ -16,7 +16,6 @@ struct ShorterPostQuickCreationView: View {
 //    TimingManager.getPreviousFiringTime()
     
     static let coordinateSpaceName = "customCoordSpace"
-    let mostRecentPost: ShorterPost
     
     private struct LocalConstants {
         static let previewSize: CGFloat = 175
@@ -200,14 +199,14 @@ struct ShorterPostQuickCreationView: View {
                             alignment: .topLeading,
                             offset: .init(x: 20 , y: 20),
                             binding: $expanded) {
-                Text("\(mostRecentPost.title) \(mostRecentPost.emoji)")
+                Text("\(activePost.title) \(activePost.emoji)")
                     .font(.title3)
                     .bold()
             }
 
             InformationNode(geo: geo, alignment: .bottomTrailing, offset: .init(x: 0, y: -15), binding: $expanded ) {
                 VStack(alignment: .leading) {
-                    Text( mostRecentPost.notes )
+                    Text( activePost.notes )
                         .font(.caption)
                         .multilineTextAlignment(.trailing)
                         .lineLimit(4)
@@ -219,7 +218,7 @@ struct ShorterPostQuickCreationView: View {
                             alignment: .bottomLeading,
                             offset: .init(x: 20, y: -30),
                             binding: $expanded) {
-                Text( "\(mostRecentPost.postedDate.formatted(date: .abbreviated, time: .omitted))\n\(mostRecentPost.postedDate.formatted(date: .omitted, time: .shortened))" )
+                Text( "\(activePost.postedDate.formatted(date: .abbreviated, time: .omitted))\n\(activePost.postedDate.formatted(date: .omitted, time: .shortened))" )
                     .font(.callout)
             }
         }
@@ -237,12 +236,47 @@ struct ShorterPostQuickCreationView: View {
         }
     }
     
+//    MARK: CenterWidget
+    @State private var nextPostOffset: CGFloat = -300
+    @State private var currentPostOffset: CGFloat = 0
+    @State private var previousPostOffset: CGFloat = 300
+    
     @ViewBuilder
-    private func makeCenterWidget() -> some View {
+    private func makeCenterWidgetWrapper() -> some View {
+        ZStack {
+            
+            makeCenterWidget( from: previousPost )
+                .offset(x: nextPostOffset)
+            
+            makeCenterWidget( from: activePost )
+                .offset(x: currentPostOffset)
+                .scaleEffect( 1 - abs(currentPostOffset) / 600 )
+            
+            makeCenterWidget( from: nextPost )
+                .offset(x: previousPostOffset)
+        }
+        .onChange(of: activePostIndex) { oldValue, newValue in
+            let direction: Double = newValue > oldValue ? -1 : 1
+            
+            currentPostOffset = direction * 300
+            withAnimation { currentPostOffset = 0 }
+            
+            if direction == -1 {
+                previousPostOffset = 0
+                withAnimation { previousPostOffset = 300 }
+            } else {
+                nextPostOffset = 0
+                withAnimation { nextPostOffset = -300 }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func makeCenterWidget(from post: ShorterPost) -> some View {
         Rectangle()
             .aspectRatio(1, contentMode: .fit)
             .overlay {
-                mostRecentPost.getImage()
+                post.getImage()
                     .resizable()
                     .scaledToFill()
                     .clipped()
@@ -264,16 +298,34 @@ struct ShorterPostQuickCreationView: View {
     
     @Namespace var shorterPostCreationViewNameSpace
     
+    let posts: [ShorterPost]
+    
+    private var activePost: ShorterPost { posts[activePostIndex] }
+    private var previousPost: ShorterPost { posts[incrementIndex()] }
+    private var nextPost: ShorterPost { posts[decrementIndex()] }
+    
+    @State var activePostIndex: Int = 0
     @State var expanded: Bool = true
     
-//    MARK: Layouts
+    private func incrementIndex() -> Int { min(activePostIndex + 1, posts.count - 1) }
+    private func decrementIndex() -> Int { max(activePostIndex - 1, 0) }
+    
+    private var swipeGesture: some Gesture {
+        DragGesture(minimumDistance: 20)
+            .onEnded { value in
+                let direction = value.translation.width / abs( value.translation.width )
+                self.activePostIndex = direction == 1 ? incrementIndex() : decrementIndex()
+            }
+    }
+ 
+//    MARK: RegularLayout
     @ViewBuilder
     private func makeRegularLayout() -> some View {
         VStack(alignment: .leading) {
             HStack {
              
                 VStack() {
-                    makeCenterWidget()
+                    makeCenterWidgetWrapper()
                         .matchedGeometryEffect(id: widgetId, in: shorterPostCreationViewNameSpace)
                         .frame(width: expanded ? LocalConstants.previewSize : LocalConstants.smallPreviewSize)
                         .padding(.vertical)
@@ -290,15 +342,34 @@ struct ShorterPostQuickCreationView: View {
         }
     }
     
+//    MARK: ExpandedLayout
     @ViewBuilder
     private func makeExpandedLayout(in geo: GeometryProxy) -> some View {
-        makeCenterWidget()
-            .matchedGeometryEffect(id: widgetId, in: shorterPostCreationViewNameSpace)
-            .frame(width: expanded ? LocalConstants.previewSize : LocalConstants.smallPreviewSize)
-            .offset(y: LocalConstants.previewVerticalOffset)
-        
-        makeInformationNodes(in: geo)
-//            .matchedGeometryEffect(id: informationNodeId, in: shorterPostCreationViewNameSpace)
+        ZStack {
+            makeCenterWidgetWrapper()
+                .matchedGeometryEffect(id: widgetId, in: shorterPostCreationViewNameSpace)
+                .frame(width: expanded ? LocalConstants.previewSize : LocalConstants.smallPreviewSize)
+                .offset(y: LocalConstants.previewVerticalOffset)
+            
+            makeInformationNodes(in: geo)
+            
+            HStack {
+                Image(systemName: "chevron.left")
+                    .padding()
+                    .onTapGesture { activePostIndex = incrementIndex() }
+                    .opacity( activePostIndex < posts.count - 1 ? 1 : 0.5 )
+//            }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .padding()
+                    .onTapGesture { activePostIndex = decrementIndex() }
+                    .opacity( activePostIndex > 0 ? 1 : 0.5 )
+            }
+        }
+        .contentShape(Rectangle())
+        .gesture(swipeGesture)
     }
     
     
@@ -327,6 +398,12 @@ struct ShorterPostQuickCreationView: View {
     let uiImage = UIImage(named: "BigSur")
     let imageData = PhotoManager.encodeImage(uiImage)
     
+    let uiImage2 = UIImage(named: "JTree")
+    let imageData2 = PhotoManager.encodeImage(uiImage2)
+    
+    let uiImage3 = UIImage(named: "Goats")
+    let imageData3 = PhotoManager.encodeImage(uiImage3)
+    
     let post = ShorterPost(ownerId: "test",
                            authorName: "Brian Masse",
                            fullTitle: "Working on Shorter",
@@ -335,8 +412,26 @@ struct ShorterPostQuickCreationView: View {
                            notes: "I had a blast because after a lot of infastructure code yesterday, I finally get to focus on the UI!",
                            data: imageData)
     
+    let post2 = ShorterPost(ownerId: "test2",
+                           authorName: "Brian Masse",
+                           fullTitle: "Testing a Card",
+                           title: "Testing",
+                           emoji: "😶",
+                           notes: "I had a blast because after a lot of infastructure code yesterday, I finally get to focus on the UI!",
+                           data: imageData2)
+    
+    let post3 = ShorterPost(ownerId: "test2",
+                           authorName: "Brian Masse",
+                           fullTitle: "Testing a Card",
+                           title: "Testing",
+                           emoji: "😶",
+                           notes: "I had a blast because after a lot of infastructure code yesterday, I finally get to focus on the UI!",
+                           data: imageData3)
+    
+    let posts = [ post, post2, post3, post2 ]
+    
     return VStack {
-        ShorterPostQuickCreationView(mostRecentPost: post)
+        ShorterPostQuickCreationView(posts: posts)
             .frame(height: 400)
             .border(.red)
         
