@@ -16,6 +16,11 @@ import UIKit
 //it should capture that, so this class can arbitrate that var for the next photo
 class PhotoManager: ObservableObject {
 
+    static let shared = PhotoManager()
+    
+    @Published var storedImage: UIImage? = nil
+    @Published var sourceType: UIImagePickerController.SourceType = .camera
+    
     static func decodeImage(from data: Data) -> Image? {
         if let uiImage: UIImage = decodeUIImage(from: data) {
             return Image(uiImage: uiImage)

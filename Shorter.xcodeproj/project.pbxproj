@@ -65,6 +65,9 @@
 		C91032C22C28AEB400A226BE /* ShorterPostQuickCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */; };
 		C91032C42C28FE2A00A226BE /* ProfilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */; };
 		C91032C62C290B0900A226BE /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C52C290B0900A226BE /* IconButton.swift */; };
+		C91032C82C2B4DDB00A226BE /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */; };
+		C91032CA2C2B4E2200A226BE /* UniversalForms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C92C2B4E2200A226BE /* UniversalForms.swift */; };
+		C91032CC2C2B557000A226BE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032CB2C2B557000A226BE /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +181,9 @@
 		C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostQuickCreationView.swift; sourceTree = "<group>"; };
 		C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePreviewView.swift; sourceTree = "<group>"; };
 		C91032C52C290B0900A226BE /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
+		C91032C92C2B4E2200A226BE /* UniversalForms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalForms.swift; sourceTree = "<group>"; };
+		C91032CB2C2B557000A226BE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,6 +377,9 @@
 			isa = PBXGroup;
 			children = (
 				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
+				C91032CB2C2B557000A226BE /* Extensions.swift */,
+				C91032C92C2B4E2200A226BE /* UniversalForms.swift */,
+				C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */,
 				C91032C52C290B0900A226BE /* IconButton.swift */,
 				C90375402C288E57007DCA5E /* StyledScrollView.swift */,
 				C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */,
@@ -586,8 +595,10 @@
 				C90375362C279010007DCA5E /* ShorterPostPreviewView.swift in Sources */,
 				C90375412C288E57007DCA5E /* StyledScrollView.swift in Sources */,
 				C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */,
+				C91032CA2C2B4E2200A226BE /* UniversalForms.swift in Sources */,
 				C91032C62C290B0900A226BE /* IconButton.swift in Sources */,
 				C90375272C2761FF007DCA5E /* ShorterPostExtension.swift in Sources */,
+				C91032C82C2B4DDB00A226BE /* LoadingBlur.swift in Sources */,
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
 				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
@@ -598,6 +609,7 @@
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
 				C91032BF2C28A8F500A226BE /* ShorterPostsView.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
+				C91032CC2C2B557000A226BE /* Extensions.swift in Sources */,
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
 				C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */,
 				C90374D02C25F551007DCA5E /* ShorterProfile.swift in Sources */,
@@ -802,8 +814,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
@@ -845,8 +857,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;

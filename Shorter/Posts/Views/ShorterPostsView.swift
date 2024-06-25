@@ -15,7 +15,7 @@ struct ShorterPostsView: View {
     let posts: [ ShorterPost ]
     
     @State var showingCreatePostView: Bool = false
-    @State private var expanded: Bool = true
+    @State private var expanded: Bool = false
     
 //    MARK: Getsures
     private var swipeGesture: some Gesture {
@@ -91,7 +91,6 @@ struct ShorterPostsView: View {
                         Spacer(minLength: expanded ? 0 : geo.size.height * 0.5)
                         
                         makePostsView()
-                            .border(.red)
                     }
                 }
             }

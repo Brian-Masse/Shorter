@@ -17,12 +17,14 @@ struct ProfileCreationView: View {
         func getTitle() -> String {
             switch self {
             case .overview: return "overview"
+            case .contact:  return "contact"
             case .photo:    return "profile picture"
             case .social:   return "find friends"
             }
         }
         
         case overview
+        case contact
         case photo
         case social
         
@@ -34,8 +36,8 @@ struct ProfileCreationView: View {
 //    MARK: Vars
     @ObservedObject private var contactManager = ContactManager.shared
     
-    @State private var activeScene: ProfileCreationScene = .overview
-    @State private var sceneComplete: Bool = true
+    @State private var activeScene: ProfileCreationScene = .photo
+    @State private var sceneComplete: Bool = false
     
     @State private var firstName: String    = ""
     @State private var lastName: String     = ""
@@ -54,12 +56,12 @@ struct ProfileCreationView: View {
     @State private var filteredContacts: [CNContact] = []
     @State private var friendIds: [String] = []
     
-    private var phoneNumberBinding: Binding<String> {
-        Binding {
-            self.phoneNumber.formatIntoPhoneNumber()
-        } set: { newValue in
-            self.phoneNumber = Int( newValue ) ?? self.phoneNumber
-        }
+    private func validatePhoneNumber() -> Bool {
+        "\(phoneNumber)".count >= 10 && "\(phoneNumber)".count < 12
+    }
+    
+    private func validateName() -> Bool {
+        !firstName.isEmpty && !lastName.isEmpty
     }
     
 //    MARK: Methods
@@ -79,44 +81,54 @@ struct ProfileCreationView: View {
         ShorterModel.realmManager.setState(.complete)
     }
     
-//    MARK: ViewBuilders
+//    MARK: Overview Scenes
     @ViewBuilder
     private func makeOverviewScene() -> some View {
         VStack(alignment: .leading) {
          
-            TextField("firstName", text: $firstName, prompt: Text( "First Name" ))
-                .padding(.bottom)
+            StyledTextField(title: "Whats your name?",
+                            prompt: "First Name",
+                            binding: $firstName)
             
-            TextField("lastName", text: $lastName, prompt: Text( "Last Name" ))
-                .padding(.bottom)
-            
-            TextField("phoneNumber", text: phoneNumberBinding, prompt: Text( "Phone Number" ))
-                .padding(.bottom)
-            
-            Button(action: { showingMessages = true }) {
-                Text("show messages")
-            }
+            StyledTextField(title: "",
+                            prompt: "Last Name",
+                            binding: $lastName)
         }
+        .onChange(of: firstName) { sceneComplete = validateName() }
+        .onChange(of: lastName) { sceneComplete = validateName() }
     }
     
     @ViewBuilder
+    private func makeContactScene() -> some View {
+        VStack(alignment: .leading) {
+            
+            let phoneBinding: Binding<String> = {
+               
+                Binding {
+                    phoneNumber.formatIntoPhoneNumber()
+                } set: { (newValue, _) in
+                    phoneNumber = Int( newValue.removeNonNumbers() ) ?? phoneNumber
+                }
+            }()
+         
+            StyledTextField(title: "Whats your Phone Number?",
+                            prompt: "",
+                            binding: phoneBinding)
+            .keyboardType(.numberPad)
+        }.onChange(of: phoneNumber) {
+            sceneComplete = validatePhoneNumber()
+        }
+    }
+    
+//    MARK: Profile Picture Scene
+    @ViewBuilder
     private func makeProfilePictureScene() -> some View {
         VStack {
-            Button(action: { showingImagePicker = true }) {
-                Text("pick image")
-            }
-            
-            if let uiImage = self.uiImage {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
-        }
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePickerView(sourceType: .photoLibrary) { image in
-                self.uiImage = image
-            }
-        }
+            StyledPhotoPicker($uiImage,
+                              description: "Choose a picture to display to friends",
+                              maxPhotoWidth: .infinity,
+                              shouldCrop: true)
+        }.onAppear { sceneComplete = true }
     }
     
     @ViewBuilder
@@ -193,7 +205,12 @@ struct ProfileCreationView: View {
                 
             }
         }
-
+    }
+    
+    @ViewBuilder
+    private func makeTransitionWrapper<C: View>(_ transitionDirection: Edge, @ViewBuilder contentBuilder: () -> C) -> some View {
+        contentBuilder()
+            .slideTransition( transitionDirection )
     }
     
 //    MARK: Body
@@ -202,14 +219,53 @@ struct ProfileCreationView: View {
         
         ShorterScene($activeScene, sceneComplete: $sceneComplete, canRegressScene: true) {
             submit()
-        } contentBuilder: { scene in
+        } contentBuilder: { scene, dir in
             VStack {
                 switch scene {
-                case .overview:     makeOverviewScene()
-                case .photo:        makeProfilePictureScene()
-                case .social:       makeFriendsScene()
+                case .overview:  
+                    makeTransitionWrapper(dir) {
+                        makeOverviewScene()
+                    }
+                    
+                case .contact:
+                    makeTransitionWrapper(dir) {
+                        makeContactScene()
+                    }
+
+                case .photo:        
+                    makeTransitionWrapper(dir) {
+                        makeProfilePictureScene()
+                    }
+                    
+                case .social:       
+                    makeTransitionWrapper(dir) {
+                        makeFriendsScene()
+                    }
                 }
             }
         }
+    }
+}
+
+#Preview {
+    ProfileCreationView()
+}
+
+
+//MARK: SlideTransition
+//This adds a slide to the page it is applied to. It is used in all non-app navigation
+//ie. entering the app, or leaving the splash screen
+private struct SlideTransition: ViewModifier {
+    let origin: Edge
+    
+    func body(content: Content) -> some View {
+        content
+            .transition(.push(from: origin))
+    }
+}
+
+extension View {
+    func slideTransition(_ origin: Edge) -> some View {
+        modifier( SlideTransition(origin: origin) )
     }
 }

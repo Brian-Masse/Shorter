@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIUniversals
+import SwiftUI
 
 struct ShorterModel {
     
@@ -16,4 +18,14 @@ struct ShorterModel {
     static var realmManager: RealmManager = RealmManager.shared
     
     var profile: ShorterProfile? = nil
+    
+//    MARK: Style
+    static let defautColorPallett : [Color] = [
+        Color(hex: "#875F8A"),
+        Color(hex: "#49404A"),
+        Color(hex: "#51574D"),
+        Color(hex: "#2E3529"),
+        Color(hex: "#977999"),
+        Color(hex: "#7A5C7D"),
+    ]
 }

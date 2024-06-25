@@ -7,14 +7,19 @@
 
 import Foundation
 import SwiftUI
+import UIUniversals
 
 struct IconButton: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
+    let title: String
     let icon: String
     let action: () -> Void
     
-    init( _ icon: String, action: @escaping () -> Void ) {
+    init( _ icon: String, title: String = "", action: @escaping () -> Void ) {
         self.icon = icon
+        self.title = title
         self.action = action
     }
     
@@ -23,23 +28,30 @@ struct IconButton: View {
         Button(action: {
             withAnimation { self.action() }
         }, label: {
-            Image( systemName: self.icon )
-                .renderingMode(.none)
+            HStack {
+                if !title.isEmpty {
+                    Text( title )
+                }
+                Image( systemName: self.icon )
+                    .renderingMode(.template)
+                    .frame(width: 15, height: 15)
+            }
+                .foregroundStyle(Colors.getAccent(from: colorScheme))
                 .padding(10)
                 .background( .ultraThinMaterial )
-                .clipShape(Circle())
+                .clipShape(RoundedRectangle(cornerRadius: 100))
             
-                .shadow(color: .black.opacity(0.3), radius: 0.3, x: 0.5, y: 0.5)
-                .shadow(color: .white.opacity(0.3), radius: 0.3, x: -0.5, y: -0.5)
+                .shadow(color: .black.opacity(0.2), radius: 0.3, x: 0.5, y: 0.5)
+                .shadow(color: .white.opacity(0.2), radius: 0.3, x: -0.5, y: -0.5)
                 .shadow(color: .black.opacity(0.1), radius: 5, y: 2)
             
                 .tint(.blue)
-        }).buttonStyle(.plain)
+        }).buttonStyle(PlainButtonStyle())
     }
 }
 
 #Preview {
-    IconButton("pencil") {
+    IconButton("arrow.forward") {
         print( "hello world" )
     }
 }
