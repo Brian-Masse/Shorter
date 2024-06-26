@@ -43,7 +43,6 @@
 		C90375122C27179F007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; };
 		C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C90375142C2718A9007DCA5E /* FirebaseMessaging */; };
 		C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		C90375182C272A25007DCA5E /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375172C272A25007DCA5E /* TimingManager.swift */; };
 		C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375192C27447B007DCA5E /* SelectFriendIntent.swift */; };
 		C903751E2C2754BB007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; };
 		C903751F2C2754BB007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -54,7 +53,6 @@
 		C90375292C276284007DCA5E /* ShorterPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C62C25D689007DCA5E /* ShorterPost.swift */; };
 		C903752B2C2765E3007DCA5E /* RealmManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */; };
 		C903752C2C276756007DCA5E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
-		C903752D2C276772007DCA5E /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375172C272A25007DCA5E /* TimingManager.swift */; };
 		C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
 		C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903752F2C2768A3007DCA5E /* UIUniversals */; };
 		C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */; };
@@ -62,7 +60,7 @@
 		C903753E2C288E23007DCA5E /* ScrollingCardWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */; };
 		C90375412C288E57007DCA5E /* StyledScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375402C288E57007DCA5E /* StyledScrollView.swift */; };
 		C91032BF2C28A8F500A226BE /* ShorterPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */; };
-		C91032C22C28AEB400A226BE /* ShorterPostQuickCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */; };
+		C91032C22C28AEB400A226BE /* ShorterPostsCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C12C28AEB400A226BE /* ShorterPostsCarousel.swift */; };
 		C91032C42C28FE2A00A226BE /* ProfilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */; };
 		C91032C62C290B0900A226BE /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C52C290B0900A226BE /* IconButton.swift */; };
 		C91032C82C2B4DDB00A226BE /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */; };
@@ -76,6 +74,9 @@
 		C9E289CC2C2C50FC0075476A /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */; };
 		C9E289CE2C2C54D50075476A /* UnicodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CD2C2C54D50075476A /* UnicodeManager.swift */; };
 		C9E289D02C2C59870075476A /* EmojiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CF2C2C59870075476A /* EmojiManager.swift */; };
+		C9E289D52C2C9B180075476A /* ShorterPostPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289D42C2C9B180075476A /* ShorterPostPromptView.swift */; };
+		C9E289DB2C2CA74B0075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
+		C9E289DC2C2CB72D0075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,7 +177,6 @@
 		C90375002C262A48007DCA5E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C90375032C263227007DCA5E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C90375052C2637B5007DCA5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C90375172C272A25007DCA5E /* TimingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimingManager.swift; sourceTree = "<group>"; };
 		C90375192C27447B007DCA5E /* SelectFriendIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendIntent.swift; sourceTree = "<group>"; };
 		C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterProfileExtension.swift; sourceTree = "<group>"; };
 		C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostExtension.swift; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 		C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardWrapper.swift; sourceTree = "<group>"; };
 		C90375402C288E57007DCA5E /* StyledScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledScrollView.swift; sourceTree = "<group>"; };
 		C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostsView.swift; sourceTree = "<group>"; };
-		C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostQuickCreationView.swift; sourceTree = "<group>"; };
+		C91032C12C28AEB400A226BE /* ShorterPostsCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostsCarousel.swift; sourceTree = "<group>"; };
 		C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePreviewView.swift; sourceTree = "<group>"; };
 		C91032C52C290B0900A226BE /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
@@ -199,6 +199,8 @@
 		C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		C9E289CD2C2C54D50075476A /* UnicodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnicodeManager.swift; sourceTree = "<group>"; };
 		C9E289CF2C2C59870075476A /* EmojiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiManager.swift; sourceTree = "<group>"; };
+		C9E289D42C2C9B180075476A /* ShorterPostPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostPromptView.swift; sourceTree = "<group>"; };
+		C9E289DA2C2CA74A0075476A /* TimingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,7 +370,7 @@
 		C90375252C2761E6007DCA5E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				C90375172C272A25007DCA5E /* TimingManager.swift */,
+				C9E289DA2C2CA74A0075476A /* TimingManager.swift */,
 				C90374CA2C25E88A007DCA5E /* ContactManager.swift */,
 				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
 				C90375032C263227007DCA5E /* NotificationManager.swift */,
@@ -390,17 +392,12 @@
 		C90375372C288DD8007DCA5E /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
-				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
-				C91032CB2C2B557000A226BE /* Extensions.swift */,
-				C91032C92C2B4E2200A226BE /* UniversalForms.swift */,
-				C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */,
-				C9E289CD2C2C54D50075476A /* UnicodeManager.swift */,
-				C9E289CF2C2C59870075476A /* EmojiManager.swift */,
+				C9E289D22C2C915A0075476A /* ShorterViews */,
+				C9E289D12C2C913E0075476A /* EmojiPicker */,
+				C9E289D32C2C916C0075476A /* Universals */,
 				C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */,
-				C91032C52C290B0900A226BE /* IconButton.swift */,
 				C90375402C288E57007DCA5E /* StyledScrollView.swift */,
 				C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */,
-				C9E289C42C2BB74F0075476A /* ShorterSplashScreen.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -411,7 +408,8 @@
 				C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */,
 				C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */,
 				C9E289C62C2C4ACD0075476A /* ShorterPostCreationView.swift */,
-				C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */,
+				C91032C12C28AEB400A226BE /* ShorterPostsCarousel.swift */,
+				C9E289D42C2C9B180075476A /* ShorterPostPromptView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -434,6 +432,35 @@
 				C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C9E289D12C2C913E0075476A /* EmojiPicker */ = {
+			isa = PBXGroup;
+			children = (
+				C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */,
+				C9E289CD2C2C54D50075476A /* UnicodeManager.swift */,
+				C9E289CF2C2C59870075476A /* EmojiManager.swift */,
+			);
+			path = EmojiPicker;
+			sourceTree = "<group>";
+		};
+		C9E289D22C2C915A0075476A /* ShorterViews */ = {
+			isa = PBXGroup;
+			children = (
+				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
+				C91032C52C290B0900A226BE /* IconButton.swift */,
+				C9E289C42C2BB74F0075476A /* ShorterSplashScreen.swift */,
+			);
+			path = ShorterViews;
+			sourceTree = "<group>";
+		};
+		C9E289D32C2C916C0075476A /* Universals */ = {
+			isa = PBXGroup;
+			children = (
+				C91032CB2C2B557000A226BE /* Extensions.swift */,
+				C91032C92C2B4E2200A226BE /* UniversalForms.swift */,
+			);
+			path = Universals;
 			sourceTree = "<group>";
 		};
 		CBB2A80C82599A7747D2D8B3 /* Pods */ = {
@@ -623,6 +650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E289D52C2C9B180075476A /* ShorterPostPromptView.swift in Sources */,
 				C90374882C25D05D007DCA5E /* ShorterApp.swift in Sources */,
 				C9E289CE2C2C54D50075476A /* UnicodeManager.swift in Sources */,
 				C90374FD2C2624A0007DCA5E /* Keys.swift in Sources */,
@@ -650,18 +678,18 @@
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
 				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
-				C91032C22C28AEB400A226BE /* ShorterPostQuickCreationView.swift in Sources */,
+				C91032C22C28AEB400A226BE /* ShorterPostsCarousel.swift in Sources */,
 				C90375042C263227007DCA5E /* NotificationManager.swift in Sources */,
 				C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */,
 				C903753E2C288E23007DCA5E /* ScrollingCardWrapper.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
+				C9E289DB2C2CA74B0075476A /* TimingManager.swift in Sources */,
 				C91032BF2C28A8F500A226BE /* ShorterPostsView.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
 				C91032CC2C2B557000A226BE /* Extensions.swift in Sources */,
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,
 				C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */,
 				C90374D02C25F551007DCA5E /* ShorterProfile.swift in Sources */,
-				C90375182C272A25007DCA5E /* TimingManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,9 +715,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C90374EE2C261D7D007DCA5E /* ShorterWidgetsBundle.swift in Sources */,
+				C9E289DC2C2CB72D0075476A /* TimingManager.swift in Sources */,
 				C90375292C276284007DCA5E /* ShorterPost.swift in Sources */,
 				C90375242C2761CD007DCA5E /* ShorterProfile.swift in Sources */,
-				C903752D2C276772007DCA5E /* TimingManager.swift in Sources */,
 				C90375282C27622F007DCA5E /* PhotoManager.swift in Sources */,
 				C90374FE2C2624AB007DCA5E /* Keys.swift in Sources */,
 				C903752C2C276756007DCA5E /* RealmManager.swift in Sources */,

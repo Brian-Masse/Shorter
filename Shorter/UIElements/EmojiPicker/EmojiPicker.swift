@@ -292,14 +292,13 @@ private struct EmojiPickerCategoryView: View {
                 ForEach(emojis) { emoji in
                     let unicode = emoji.keys.first!
                     let charachter = Character(UnicodeScalar(unicode)!)
-                    
-                    UniversalButton {
-                        Text( String(charachter) )
-                            .font(.largeTitle)
-                    } action: {
-                        viewModel.selectEmoji( emoji )
-                        viewModel.showingEmojiTray = false
-                    }
+                
+                    Text( String(charachter) )
+                        .font(.largeTitle)
+                        .onTapGesture {
+                            viewModel.selectEmoji( emoji )
+                            viewModel.showingEmojiTray = false
+                        }
                 }
             }
                           .padding(.bottom)

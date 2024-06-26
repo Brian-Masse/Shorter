@@ -55,9 +55,10 @@ extension ShorterPost {
         }.first
     }
     
+    @MainActor
     private func getExpectedDate() async -> Date {
         if ShorterModel.realmManager.authenticationState == .complete {
-            return await TimingManager.getFiringTime(for: self.postedDate)
+            return TimingManager.getFiringTime(for: self.postedDate)
         }
         return .now
     }

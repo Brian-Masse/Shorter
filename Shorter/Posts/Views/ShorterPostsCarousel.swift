@@ -10,7 +10,7 @@ import SwiftUI
 import UIUniversals
 
 //@MainActor
-struct ShorterPostQuickCreationView: View {
+struct ShorterPostsCarousel: View {
     
     let mostRecentFiring: Date = .now - Constants.DayTime
 //    TimingManager.getPreviousFiringTime()
@@ -85,7 +85,7 @@ struct ShorterPostQuickCreationView: View {
 //        MARK: InformationNode Methods
 //        from the top of the geometry reader, this is where the center of the widget is
         private var verticalOffset: CGFloat {
-            ShorterPostQuickCreationView.LocalConstants.previewVerticalOffset
+            ShorterPostsCarousel.LocalConstants.previewVerticalOffset
 //            + ShorterPostQuickCreationView.LocalConstants.previewSize / 2
         }
         
@@ -97,7 +97,7 @@ struct ShorterPostQuickCreationView: View {
         }
         
         private func localToGlobalCoordinates(in geo: GeometryProxy) -> CGPoint {
-            let coordSpaceName = ShorterPostQuickCreationView.coordinateSpaceName
+            let coordSpaceName = ShorterPostsCarousel.coordinateSpaceName
             
             let currentX = geo.frame(in: .named(coordSpaceName) ).midX
             let currentY = geo.frame(in: .named(coordSpaceName) ).midY
@@ -191,7 +191,7 @@ struct ShorterPostQuickCreationView: View {
         }
     }
     
-//    MARK: ViewBuilders
+//    MARK: InformationNodes
     @ViewBuilder
     private func makeInformationNodes(in geo: GeometryProxy) -> some View {
         ZStack {
@@ -209,7 +209,7 @@ struct ShorterPostQuickCreationView: View {
                     Text( activePost.notes )
                         .font(.caption)
                         .multilineTextAlignment(.trailing)
-                        .lineLimit(4)
+                        .lineLimit(3, reservesSpace: true)
                 }
                 .frame(width: 125)
             }
@@ -387,7 +387,7 @@ struct ShorterPostQuickCreationView: View {
                         }
                     }
                 }
-                .coordinateSpace(name: ShorterPostQuickCreationView.coordinateSpaceName)
+                .coordinateSpace(name: ShorterPostsCarousel.coordinateSpaceName)
             }
         }
     }
@@ -431,7 +431,7 @@ struct ShorterPostQuickCreationView: View {
     let posts = [ post, post2, post3, post2 ]
     
     return VStack {
-        ShorterPostQuickCreationView(posts: posts)
+        ShorterPostsCarousel(posts: posts)
             .frame(height: 400)
             .border(.red)
         

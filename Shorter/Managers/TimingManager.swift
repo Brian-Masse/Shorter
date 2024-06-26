@@ -24,23 +24,6 @@ class TimingManager: Object {
     
     static let offset: Double = 1719028800
     
-    convenience init(_ key: String) {
-        self.init()
-        
-        if key != RealmManager.defaultId { return }
-
-        let seed: RealmSwift.List<Double> = List()
-        
-        for _ in 0...TimingManager.seedLength {
-            let random = Double.random(in: 0...1)
-            seed.append(random)
-        }
-
-        self.seed = seed
-        
-        RealmManager.addObject(self)
-    }
-    
     static func getStartDate() -> Date {
         var startDateComponents = DateComponents()
         startDateComponents.day = 22
@@ -53,6 +36,8 @@ class TimingManager: Object {
     
     @MainActor
     static func getFiringTime( for date: Date ) -> Date {
+        
+        if RealmManager.shared.authenticationState != .complete { return .now - Constants.DayTime }
         
         let startDate = TimingManager.getStartDate()
         let correctedDate = date.timeIntervalSince1970 < startDate.timeIntervalSince1970 ? startDate : date

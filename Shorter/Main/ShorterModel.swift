@@ -13,7 +13,7 @@ struct ShorterModel {
     
     static var shared: ShorterModel = ShorterModel()
     
-    static var ownerId: String { ShorterModel.realmManager.user?.id ?? "" }
+    static var ownerId: String { ShorterModel.realmManager.user?.id ?? "66759d000ae4d97657a322dd" }
     
     static var realmManager: RealmManager = RealmManager.shared
     

@@ -37,7 +37,7 @@ struct ShorterPostPreviewView: View {
                 
             
             VStack(alignment: .leading) {
-                Text( post.fullTitle + " " + post.emoji )
+                Text( post.title + " " + post.emoji )
 //                    .font(.title3)
                     .bold()
                 

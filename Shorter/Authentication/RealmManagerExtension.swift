@@ -163,7 +163,11 @@ extension RealmManager {
     
     //    MARK: SetConfiguration
     private func setConfiguration() {
-        self.configuration = user?.flexibleSyncConfiguration()
+        self.configuration = user?.flexibleSyncConfiguration(clientResetMode: .discardUnsyncedChanges(beforeReset: { before in
+            
+        }, afterReset: { before, after in
+            
+        }))
     }
     
     

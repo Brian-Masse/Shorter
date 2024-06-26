@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIUniversals
 
 struct ShorterPostCreationView: View {
     
@@ -24,6 +25,8 @@ struct ShorterPostCreationView: View {
     }
     
 //    MARK: Vars
+    @Environment(\.dismiss) var dismiss
+    
     @State private var activeScene: CreationPostScene = .overview
     @State private var sceneComplete: Bool = false
     
@@ -43,17 +46,17 @@ struct ShorterPostCreationView: View {
     private func submit() {
         if title.isEmpty { return }
         
-//        let imageData = PhotoManager.encodeImage(self.image)
+        let imageData = PhotoManager.encodeImage(self.uiImage)
+//
+        let post = ShorterPost(ownerId: ShorterModel.ownerId,
+                               authorName: ShorterModel.shared.profile!.fullName,
+                               fullTitle: fullTitle,
+                               title: title,
+                               emoji: EmojiPickerViewModel.shared.selectedEmoji,
+                               notes: notes,
+                               data: imageData)
 //        
-//        let post = ShorterPost(ownerId: ShorterModel.ownerId,
-//                               authorName: ShorterModel.shared.profile!.fullName,
-//                               fullTitle: fullTitle,
-//                               title: title,
-//                               emoji: "🙂‍↔️",
-//                               notes: notes,
-//                               data: imageData)
-//        
-//        RealmManager.addObject( post )
+        RealmManager.addObject( post )
     }
     
 
@@ -91,9 +94,63 @@ struct ShorterPostCreationView: View {
         .onChange(of: title) { sceneComplete = validateFields() }
     }
     
+//    MARK: PhotoScene
     @ViewBuilder
     private func makePhotoScene() -> some View {
-        Text("hi")
+        VStack() {
+            Spacer()
+            
+            if let image = self.uiImage {
+                VStack {
+                    Spacer()
+                    
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
+                        
+                    Spacer()
+                    
+                    HStack {
+                        IconButton("arrow.triangle.2.circlepath") {
+                            self.showingImagePicker = true
+                        }
+                        
+                        Spacer()
+                        
+                        IconButton("trash") {
+                            self.uiImage = nil
+                        }
+                    }
+                }
+                
+            } else {
+                
+                UniversalButton {
+                    VStack {
+                        Image(systemName: "iphone.rear.camera")
+                            .font(.largeTitle)
+                            .padding(.bottom)
+                        
+                        Text( "Take a Picture" )
+                            .font(.title2)
+                            .bold()
+                    }
+                } action: {
+                    self.showingImagePicker = true
+                }
+            }
+            
+            Spacer()
+        }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePickerView(sourceType: .photoLibrary) { uiImage in
+                self.uiImage = uiImage
+            }
+        }
+        .onChange(of: uiImage) {
+            sceneComplete = uiImage != nil
+        }
     }
     
     @ViewBuilder
@@ -104,18 +161,25 @@ struct ShorterPostCreationView: View {
     
 //    MARK: Body
     var body: some View {
-        
-        ShorterScene($activeScene,
-                     sceneComplete: $sceneComplete,
-                     canRegressScene: true,
-                     submit: submit ) { scene, dir in
-            
-            VStack {
-                switch scene {
-                case .overview:     makeOverviewScene()
-                case .photo:        makePhotoScene()
+        ZStack(alignment: .topTrailing) {
+            ShorterScene($activeScene,
+                         sceneComplete: $sceneComplete,
+                         canRegressScene: true,
+                         hideControls: true,
+                         submit: submit ) { scene, dir in
+                
+                VStack {
+                    switch scene {
+                    case .overview:     makeOverviewScene()
+                    case .photo:        makePhotoScene()
+                    }
                 }
             }
+            
+            IconButton("chevron.down") {
+                dismiss()
+            }
+            .padding()
         }
         .emojiPresenter()
     }

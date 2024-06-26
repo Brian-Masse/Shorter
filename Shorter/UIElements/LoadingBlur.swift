@@ -118,6 +118,7 @@ struct BlurredBackground: View {
             
             
         }
+        .background()
         .allowsHitTesting(false)
     }
 }
