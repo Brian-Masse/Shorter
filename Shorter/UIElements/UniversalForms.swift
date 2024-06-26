@@ -15,13 +15,24 @@ struct StyledTextField: View {
     let title: String
     let prompt: String
     let binding: Binding<String>
+    let privateField: Bool
     let clearable: Bool
     
-    init( title: String, prompt: String = "", binding: Binding<String>, clearable: Bool = false ) {
+    init( title: String, prompt: String = "", binding: Binding<String>, privateField: Bool = false, clearable: Bool = false ) {
         self.title = title
+        self.privateField = privateField
         self.binding = binding
         self.prompt = prompt
         self.clearable = clearable
+    }
+    
+    @ViewBuilder
+    private func makeTextField() -> some View {
+        if privateField {
+            SecureField(prompt, text: binding)
+        } else {
+            TextField(prompt, text: binding, axis: .vertical)
+        }
     }
     
     @Environment(\.colorScheme) var colorScheme
@@ -38,7 +49,7 @@ struct StyledTextField: View {
                     .padding(.trailing)
             }
             
-            TextField(prompt, text: binding, axis: .vertical)
+            makeTextField()
                 .focused($focused)
                 .lineLimit(1...)
                 .frame(maxWidth: .infinity)

@@ -17,7 +17,7 @@
 		C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */; };
 		C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
 		C90374BB2C25D0FD007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
-		C90374BC2C25D0FD007DCA5E /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B82C25D0FD007DCA5E /* AuthenticationView.swift */; };
+		C90374BC2C25D0FD007DCA5E /* AuthenticationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B82C25D0FD007DCA5E /* AuthenticationScene.swift */; };
 		C90374BF2C25D12B007DCA5E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374BE2C25D12B007DCA5E /* MainView.swift */; };
 		C90374C42C25D28B007DCA5E /* ShorterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C32C25D28B007DCA5E /* ShorterModel.swift */; };
 		C90374C72C25D689007DCA5E /* ShorterPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C62C25D689007DCA5E /* ShorterPost.swift */; };
@@ -70,6 +70,12 @@
 		C91032CC2C2B557000A226BE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032CB2C2B557000A226BE /* Extensions.swift */; };
 		C91032CE2C2B7C6D00A226BE /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91032CD2C2B7C6D00A226BE /* SearchView.swift */; };
 		C9E289C22C2BB3D80075476A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289C12C2BB3D80075476A /* SearchViewModel.swift */; };
+		C9E289C52C2BB74F0075476A /* ShorterSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289C42C2BB74F0075476A /* ShorterSplashScreen.swift */; };
+		C9E289C72C2C4ACD0075476A /* ShorterPostCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289C62C2C4ACD0075476A /* ShorterPostCreationView.swift */; };
+		C9E289CA2C2C4FE80075476A /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = C9E289C92C2C4FE80075476A /* MCEmojiPicker */; };
+		C9E289CC2C2C50FC0075476A /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */; };
+		C9E289CE2C2C54D50075476A /* UnicodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CD2C2C54D50075476A /* UnicodeManager.swift */; };
+		C9E289D02C2C59870075476A /* EmojiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CF2C2C59870075476A /* EmojiManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,7 +154,7 @@
 		C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmOpeningView.swift; sourceTree = "<group>"; };
 		C90374B62C25D0FD007DCA5E /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C90374B72C25D0FD007DCA5E /* PermissionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
-		C90374B82C25D0FD007DCA5E /* AuthenticationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		C90374B82C25D0FD007DCA5E /* AuthenticationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationScene.swift; sourceTree = "<group>"; };
 		C90374BE2C25D12B007DCA5E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C90374C32C25D28B007DCA5E /* ShorterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterModel.swift; sourceTree = "<group>"; };
 		C90374C62C25D689007DCA5E /* ShorterPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPost.swift; sourceTree = "<group>"; };
@@ -188,6 +194,11 @@
 		C91032CB2C2B557000A226BE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C91032CD2C2B7C6D00A226BE /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C9E289C12C2BB3D80075476A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewModel.swift; path = Shorter/Profile/SearchViewModel.swift; sourceTree = SOURCE_ROOT; };
+		C9E289C42C2BB74F0075476A /* ShorterSplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterSplashScreen.swift; sourceTree = "<group>"; };
+		C9E289C62C2C4ACD0075476A /* ShorterPostCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostCreationView.swift; sourceTree = "<group>"; };
+		C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
+		C9E289CD2C2C54D50075476A /* UnicodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnicodeManager.swift; sourceTree = "<group>"; };
+		C9E289CF2C2C59870075476A /* EmojiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +209,7 @@
 				C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */,
 				C90375122C27179F007DCA5E /* RealmSwift in Frameworks */,
 				C903750F2C271798007DCA5E /* UIUniversals in Frameworks */,
+				C9E289CA2C2C4FE80075476A /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,12 +270,12 @@
 		C90374862C25D05D007DCA5E /* Shorter */ = {
 			isa = PBXGroup;
 			children = (
-				C90375372C288DD8007DCA5E /* UIElements */,
-				C90375332C278FFF007DCA5E /* Posts */,
-				C90375252C2761E6007DCA5E /* Managers */,
-				C90374CE2C25F538007DCA5E /* Profile */,
 				C90374C52C25D534007DCA5E /* Main */,
+				C90375252C2761E6007DCA5E /* Managers */,
 				C90374BD2C25D105007DCA5E /* Authentication */,
+				C90374CE2C25F538007DCA5E /* Profile */,
+				C90375332C278FFF007DCA5E /* Posts */,
+				C90375372C288DD8007DCA5E /* UIElements */,
 				C903748D2C25D05E007DCA5E /* Assets.xcassets */,
 				C903748F2C25D05E007DCA5E /* Info.plist */,
 				C90375052C2637B5007DCA5E /* GoogleService-Info.plist */,
@@ -301,10 +313,9 @@
 		C90374BD2C25D105007DCA5E /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				C90374B82C25D0FD007DCA5E /* AuthenticationView.swift */,
 				C90374B62C25D0FD007DCA5E /* RealmManager.swift */,
 				C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */,
-				C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */,
+				C9E289C32C2BB4D90075476A /* Views */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -382,10 +393,14 @@
 				C90374CC2C25F4B4007DCA5E /* ShorterScene.swift */,
 				C91032CB2C2B557000A226BE /* Extensions.swift */,
 				C91032C92C2B4E2200A226BE /* UniversalForms.swift */,
+				C9E289CB2C2C50FC0075476A /* EmojiPicker.swift */,
+				C9E289CD2C2C54D50075476A /* UnicodeManager.swift */,
+				C9E289CF2C2C59870075476A /* EmojiManager.swift */,
 				C91032C72C2B4DDB00A226BE /* LoadingBlur.swift */,
 				C91032C52C290B0900A226BE /* IconButton.swift */,
 				C90375402C288E57007DCA5E /* StyledScrollView.swift */,
 				C903753A2C288E23007DCA5E /* ScrollingCardWrapper.swift */,
+				C9E289C42C2BB74F0075476A /* ShorterSplashScreen.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -395,6 +410,7 @@
 			children = (
 				C91032BE2C28A8F500A226BE /* ShorterPostsView.swift */,
 				C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */,
+				C9E289C62C2C4ACD0075476A /* ShorterPostCreationView.swift */,
 				C91032C12C28AEB400A226BE /* ShorterPostQuickCreationView.swift */,
 			);
 			path = Views;
@@ -407,6 +423,15 @@
 				C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */,
 				C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */,
 				C9E289C12C2BB3D80075476A /* SearchViewModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C9E289C32C2BB4D90075476A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C90374B82C25D0FD007DCA5E /* AuthenticationScene.swift */,
+				C90374B52C25D0FD007DCA5E /* RealmOpeningView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -441,6 +466,7 @@
 				C903750E2C271798007DCA5E /* UIUniversals */,
 				C90375112C27179F007DCA5E /* RealmSwift */,
 				C90375142C2718A9007DCA5E /* FirebaseMessaging */,
+				C9E289C92C2C4FE80075476A /* MCEmojiPicker */,
 			);
 			productName = Shorter;
 			productReference = C90374842C25D05D007DCA5E /* Shorter.app */;
@@ -543,6 +569,7 @@
 				C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */,
 				C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */,
 				C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C9E289C82C2C4FE80075476A /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 			);
 			productRefGroup = C90374852C25D05D007DCA5E /* Products */;
 			projectDirPath = "";
@@ -597,15 +624,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				C90374882C25D05D007DCA5E /* ShorterApp.swift in Sources */,
+				C9E289CE2C2C54D50075476A /* UnicodeManager.swift in Sources */,
 				C90374FD2C2624A0007DCA5E /* Keys.swift in Sources */,
 				C90374CB2C25E88A007DCA5E /* ContactManager.swift in Sources */,
+				C9E289D02C2C59870075476A /* EmojiManager.swift in Sources */,
 				C90374BF2C25D12B007DCA5E /* MainView.swift in Sources */,
 				C90374D72C2605D3007DCA5E /* MessagingManager.swift in Sources */,
+				C9E289C72C2C4ACD0075476A /* ShorterPostCreationView.swift in Sources */,
 				C91032C42C28FE2A00A226BE /* ProfilePreviewView.swift in Sources */,
 				C903752B2C2765E3007DCA5E /* RealmManagerExtension.swift in Sources */,
+				C9E289CC2C2C50FC0075476A /* EmojiPicker.swift in Sources */,
 				C90374BB2C25D0FD007DCA5E /* PermissionManager.swift in Sources */,
-				C90374BC2C25D0FD007DCA5E /* AuthenticationView.swift in Sources */,
+				C90374BC2C25D0FD007DCA5E /* AuthenticationScene.swift in Sources */,
 				C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */,
+				C9E289C52C2BB74F0075476A /* ShorterSplashScreen.swift in Sources */,
 				C91032CE2C2B7C6D00A226BE /* SearchView.swift in Sources */,
 				C90375362C279010007DCA5E /* ShorterPostPreviewView.swift in Sources */,
 				C90375412C288E57007DCA5E /* StyledScrollView.swift in Sources */,
@@ -1118,6 +1150,14 @@
 				minimumVersion = 10.28.0;
 			};
 		};
+		C9E289C82C2C4FE80075476A /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1145,6 +1185,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */;
 			productName = UIUniversals;
+		};
+		C9E289C92C2C4FE80075476A /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9E289C82C2C4FE80075476A /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

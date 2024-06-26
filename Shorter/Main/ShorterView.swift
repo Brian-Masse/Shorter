@@ -16,8 +16,7 @@ struct ShorterView: View {
         VStack {
             switch realmManager.authenticationState {
             case .authenticating:
-                AuthenticationView()
-                    .padding()
+                AuthenticationScene()
                 
             case .openingRealm:
                 OpenFlexibleSyncRealmView()

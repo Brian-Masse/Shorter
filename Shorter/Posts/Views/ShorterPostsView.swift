@@ -100,7 +100,7 @@ struct ShorterPostsView: View {
         .gesture(swipeGesture)
         .padding(.horizontal)
         .sheet(isPresented: $showingCreatePostView) {
-            CreatePostView()
+            ShorterPostCreationView()
         }
     }
 }

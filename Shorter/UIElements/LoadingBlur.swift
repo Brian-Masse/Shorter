@@ -107,17 +107,17 @@ struct BlurredBackground: View {
                 .foregroundStyle(.background)
                 .opacity(colorScheme == .dark ? 0.8 : 0.7)
             
-            Image("noise")
-                .resizable()
-                .frame(height: geo.size.height)
-                .aspectRatio(contentMode: .fit)
-                .clipped()
-                .blendMode(.overlay)
-                .opacity(0.1)
-                .scaleEffect(1.2)
+//            Image("noise")
+//                .resizable()
+//                .frame(height: geo.size.height)
+//                .aspectRatio(contentMode: .fit)
+//                .clipped()
+//                .blendMode(.overlay)
+//                .opacity(0.1)
+//                .scaleEffect(1.2)
             
             
         }
-        .gesture(holdGesture)
+        .allowsHitTesting(false)
     }
 }

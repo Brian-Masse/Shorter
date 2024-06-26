@@ -41,9 +41,7 @@ struct ProfileCreationView: View {
     @ObservedObject private var contactManager = ContactManager.shared
     
     @State private var activeScene: ProfileCreationScene = .start
-    @State private var sceneComplete: Bool = false
-    
-    @State private var showingStartPage: Bool = false
+    @State private var sceneComplete: Bool = true
     
 //    overview
     @State private var firstName: String    = ""
@@ -104,36 +102,7 @@ struct ProfileCreationView: View {
 //    MARK: Start Screen
     @ViewBuilder
     private func makeStartScene() -> some View {
-        VStack {
-            if showingStartPage {
-                VStack {
-                    Spacer()
-                    
-                    Text("Start by creating your")
-                        .bold()
-                        .font(.largeTitle)
-                    
-                    HStack {
-                        Text("Shorter")
-                            .bold()
-                            .font(.largeTitle)
-                            .foregroundStyle(Colors.getAccent(from: colorScheme))
-                            .shadow(color: Colors.getAccent(from: colorScheme).opacity(0.6),
-                                    radius: 20 )
-                        
-                        Text("Profile.")
-                            .bold()
-                            .font(.largeTitle)
-                    }
-                    
-                    Spacer()
-                }
-                .transition( .asymmetric(insertion: .scale, removal: .push(from: .trailing)) )
-            }
-        }.onAppear { withAnimation {
-            sceneComplete = true
-            showingStartPage = true
-        } }
+        ShorterSplashScreen("Start by creating your Shorter Profile.", highlighting: "Shorter")
     }
     
 //    MARK: Overview Scenes

@@ -30,8 +30,16 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
     let allowsSceneRegression: Bool
     let showControlsOnStart: Bool
     let hasStartScene: Bool
+    let hideControls: Bool
     
-    init( _ scene: Binding<Scene>, sceneComplete: Binding<Bool>, canRegressScene: Bool, showControlsOnStart: Bool = false, hasStartScene: Bool = false, submit: @escaping() -> Void, contentBuilder: @escaping ( Scene, Edge ) -> Content ) {
+    init( _ scene: Binding<Scene>,
+          sceneComplete: Binding<Bool>,
+          canRegressScene: Bool,
+          showControlsOnStart: Bool = false,
+          hasStartScene: Bool = false,
+          hideControls: Bool = false,
+          submit: @escaping() -> Void,
+          contentBuilder: @escaping ( Scene, Edge ) -> Content ) {
         
         
         self.contentBuilder = contentBuilder
@@ -40,6 +48,7 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
         self.submit = submit
         self.showControlsOnStart = showControlsOnStart
         self.hasStartScene = hasStartScene
+        self.hideControls = hideControls
         
         self.allowsSceneRegression = canRegressScene
     }
@@ -143,9 +152,11 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
         VStack(alignment: .leading) {
             
             if sceneState.rawValue > 0 || showControlsOnStart {
-                makeHeader()
-                    .padding(.bottom)
-                    .padding(.horizontal)
+                if !hideControls {
+                    makeHeader()
+                        .padding(.bottom)
+                        .padding(.horizontal)
+                }
             }
             
             VStack(spacing: 0) {
