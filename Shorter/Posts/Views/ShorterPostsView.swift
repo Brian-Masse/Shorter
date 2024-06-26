@@ -33,7 +33,7 @@ struct ShorterPostsView: View {
     @ViewBuilder
     private func makeHeader() -> some View {
         HStack {
-            IconButton("gear") { }
+            IconButton("gear") { Task { await ShorterModel.realmManager.logoutUser() }}
             
             Spacer()
             
@@ -81,9 +81,11 @@ struct ShorterPostsView: View {
                 ZStack(alignment: .top) {
                     
                     //                if let post = ShorterPost.getPost(from: ShorterModel.shared.profile?.mostRecentPost) {
-                    ShorterPostQuickCreationView(posts: posts)
-                        .frame(height: geo.size.height * 0.5)
-                    //                }
+                    if posts.count > 0 {
+                        ShorterPostQuickCreationView(posts: posts)
+                            .frame(height: geo.size.height * 0.5)
+                        //                }
+                    }
                     
                     Spacer()
                     

@@ -16,6 +16,7 @@ struct ProfileCreationView: View {
     enum ProfileCreationScene: Int, ShorterSceneEnum {
         func getTitle() -> String {
             switch self {
+            case .start:    return "start"
             case .overview: return "overview"
             case .contact:  return "contact"
             case .photo:    return "profile picture"
@@ -23,6 +24,7 @@ struct ProfileCreationView: View {
             }
         }
         
+        case start
         case overview
         case contact
         case photo
@@ -34,18 +36,25 @@ struct ProfileCreationView: View {
     }
     
 //    MARK: Vars
+    
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject private var contactManager = ContactManager.shared
     
-    @State private var activeScene: ProfileCreationScene = .photo
+    @State private var activeScene: ProfileCreationScene = .start
     @State private var sceneComplete: Bool = false
     
+    @State private var showingStartPage: Bool = false
+    
+//    overview
     @State private var firstName: String    = ""
     @State private var lastName: String     = ""
     @State private var phoneNumber: Int     = 1
-    @State private var uiImage: UIImage?    = nil
     
+//    image
+    @State private var uiImage: UIImage?    = nil
     @State private var showingImagePicker: Bool = false
     
+//    contacts
     @State private var searchText: String = ""
     
     @State private var showingMessages: Bool = false
@@ -79,6 +88,52 @@ struct ProfileCreationView: View {
                                                  imageData: photoData)
         
         ShorterModel.realmManager.setState(.complete)
+    }
+    
+    private func search() async {
+        await ShorterModel.realmManager.shorterProfileQuery.addQuery("test") { query in
+            return query.firstName.contains( searchText )
+        }
+        
+        let results: [ShorterProfile] = RealmManager.retrieveObjects()
+        self.filteredProfiles = results
+        
+        self.filteredContacts = contactManager.fetchContacts(for: searchText)
+    }
+    
+//    MARK: Start Screen
+    @ViewBuilder
+    private func makeStartScene() -> some View {
+        VStack {
+            if showingStartPage {
+                VStack {
+                    Spacer()
+                    
+                    Text("Start by creating your")
+                        .bold()
+                        .font(.largeTitle)
+                    
+                    HStack {
+                        Text("Shorter")
+                            .bold()
+                            .font(.largeTitle)
+                            .foregroundStyle(Colors.getAccent(from: colorScheme))
+                            .shadow(color: Colors.getAccent(from: colorScheme).opacity(0.6),
+                                    radius: 20 )
+                        
+                        Text("Profile.")
+                            .bold()
+                            .font(.largeTitle)
+                    }
+                    
+                    Spacer()
+                }
+                .transition( .asymmetric(insertion: .scale, removal: .push(from: .trailing)) )
+            }
+        }.onAppear { withAnimation {
+            sceneComplete = true
+            showingStartPage = true
+        } }
     }
     
 //    MARK: Overview Scenes
@@ -131,80 +186,11 @@ struct ProfileCreationView: View {
         }.onAppear { sceneComplete = true }
     }
     
+//    MARK: Social Scene
     @ViewBuilder
     private func makeFriendsScene() -> some View {
-        VStack(alignment: .leading) {
-            
-            HStack {
-                TextField("search", text: $searchText, prompt: Text( "search for friends" ))
-                
-                Image(systemName: "magnifyingglass")
-                    .onTapGesture {
-                        Task {
-                            await ShorterModel.realmManager.shorterProfileQuery.addQuery("test") { query in
-                                return query.firstName.contains( searchText )
-                            }
-                            
-                            let results: [ShorterProfile] = RealmManager.retrieveObjects()
-                            self.filteredProfiles = results
-                            
-                            self.filteredContacts = contactManager.fetchContacts(for: searchText)
-                        }
-                    }
-            }
-            Text("Selected Users")
-                .font(.title3)
-                .bold()
-            
-            ForEach(friendIds) { id in
-                if let profile = ShorterProfile.getProfile(for: id) {
-                    Text("\(profile.firstName)")
-                } else {
-                    Text( "error getting profie: \(id)" )
-                }
-            }
-            
-            Text( "Uesrs" )
-                .font(.title3)
-                .bold()
-            
-            ForEach( filteredProfiles ) { profile in
-                Text( "\( profile.firstName ) \( profile.lastName )" )
-                    .onTapGesture {
-                        if let index = friendIds.firstIndex(where: { str in str == profile.ownerId }) {
-                            friendIds.remove(at: index)
-                        } else {
-                            friendIds.append(profile.ownerId)
-                        }
-                    }
-            }
-            
-            Text("Contacts")
-                .font(.title3)
-                .bold()
-            
-            ForEach( filteredContacts ) { contact in
-                Text( "\(contact.givenName) \(contact.familyName)" )
-                    .onTapGesture {
-                        recipients = [ contact.phoneNumbers.first?.value.stringValue ?? "" ]
-                        message = "you should download this great app!"
-                        
-                        if !recipients.first!.isEmpty {
-                            showingMessages = true
-                        }
-                    }
-            }
-            
-            Spacer()
-        }
-        .task {
-            await contactManager.fetchContacts()
-        }
-        .sheet(isPresented: $showingMessages) {
-            MessageUIView(recipients: $recipients, body: $message) { result in
-                
-            }
-        }
+        SearchView()
+            .onAppear { sceneComplete = true }
     }
     
     @ViewBuilder
@@ -217,12 +203,20 @@ struct ProfileCreationView: View {
     var body: some View {
         
         
-        ShorterScene($activeScene, sceneComplete: $sceneComplete, canRegressScene: true) {
+        ShorterScene($activeScene,
+                     sceneComplete: $sceneComplete,
+                     canRegressScene: true,
+                     hasStartScene: true) {
             submit()
         } contentBuilder: { scene, dir in
             VStack {
                 switch scene {
-                case .overview:  
+                case .start:
+                    makeTransitionWrapper(dir) {
+                        makeStartScene()
+                    }
+                    
+                case .overview:
                     makeTransitionWrapper(dir) {
                         makeOverviewScene()
                     }

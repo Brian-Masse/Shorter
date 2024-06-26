@@ -28,14 +28,18 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
     let submit: () -> Void
     
     let allowsSceneRegression: Bool
+    let showControlsOnStart: Bool
+    let hasStartScene: Bool
     
-    init( _ scene: Binding<Scene>, sceneComplete: Binding<Bool>, canRegressScene: Bool, submit: @escaping() -> Void, contentBuilder: @escaping ( Scene, Edge ) -> Content ) {
+    init( _ scene: Binding<Scene>, sceneComplete: Binding<Bool>, canRegressScene: Bool, showControlsOnStart: Bool = false, hasStartScene: Bool = false, submit: @escaping() -> Void, contentBuilder: @escaping ( Scene, Edge ) -> Content ) {
         
         
         self.contentBuilder = contentBuilder
         self._sceneState = scene
         self._sceneComplete = sceneComplete
         self.submit = submit
+        self.showControlsOnStart = showControlsOnStart
+        self.hasStartScene = hasStartScene
         
         self.allowsSceneRegression = canRegressScene
     }
@@ -70,18 +74,23 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
     
 //    MARK: ViewBuilders
     @ViewBuilder
-    private func makeSceneCompletionIndicator(scene: Scene) -> some View {
-        Circle()
-            .stroke(Colors.getAccent(from: colorScheme), lineWidth: 2)
-            .fill( sceneState == scene ? Colors.getAccent(from: colorScheme) : .clear )
-            .frame(width: 8, height: 8)
+    private func makeSceneCompletionIndicator(sceneId: Int) -> some View {
+        ZStack {
+            Circle().stroke(lineWidth: 2)
+            Circle()
+                .fill()
+                .opacity(sceneId <= sceneState.rawValue ? 1 : 0)
+        }
+        .frame(width: 8, height: 8)
     }
     
     @ViewBuilder
     private func makeSceneCompletionIndicators() -> some View {
         HStack {
-            ForEach( Scene.allCases, id: \.self ) { scene in
-                makeSceneCompletionIndicator(scene: scene)
+            let start = hasStartScene ? 1 : 0
+            
+            ForEach( start..<Scene.allCases.count, id: \.self ) { i in
+                makeSceneCompletionIndicator(sceneId: i)
             }
         }
     }
@@ -89,7 +98,7 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
     @ViewBuilder
     private func makeHeader() -> some View {
         
-        HStack(alignment: .bottom) {
+        HStack(alignment: .center) {
             IconButton("arrow.backward") { regressScene() }
                 .opacity( sceneState.rawValue == 0 ? 0.3 : 1 )
             
@@ -97,7 +106,6 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
             
             VStack {
                 makeSceneCompletionIndicators()
-                Text(sceneState.getTitle())
             }
             
             Spacer()
@@ -134,9 +142,11 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            makeHeader()
-                .padding(.bottom)
-                .padding(.horizontal)
+            if sceneState.rawValue > 0 || showControlsOnStart {
+                makeHeader()
+                    .padding(.bottom)
+                    .padding(.horizontal)
+            }
             
             VStack(spacing: 0) {
                 

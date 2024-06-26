@@ -24,11 +24,11 @@ struct ProfilePreviewView: View{
             
             VStack(alignment: .leading) {
                 Text( profile.fullName )
-                    .font(.title2)
+                    .font(.title3)
                     .bold()
                 
-                Text( "friend since \(Date.now.formatted(date: .abbreviated, time: .omitted))" )
-                    
+                Text( profile.phoneNumber.formatIntoPhoneNumber() )
+                    .font(.caption)
                 
                 Spacer()
             }
@@ -36,8 +36,9 @@ struct ProfilePreviewView: View{
             
             Spacer()
         }
-        .frame(height: 75)
+        .frame(height: 55)
         .padding()
+        .padding(.trailing, 7)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
         .shadow(color: .black.opacity(0.2), radius: 10, y: 10)

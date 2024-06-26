@@ -52,6 +52,14 @@ class ContactManager: ObservableObject {
         }
     }
     
+//    MARK: Convenience Functions
+    static func getPhoneNumbers( for contact: CNContact ) -> [Int] {
+        return contact.phoneNumbers.map { labeledPhoneNumber in
+            let string = labeledPhoneNumber.value.stringValue
+            return Int(string.removeNonNumbers()) ?? 0
+        }
+    }
+    
 //    MARK: Fetch Contacts
     @MainActor
     func fetchContacts(for name: String) -> [CNContact] {
