@@ -13,6 +13,11 @@ struct ProfilePreviewView: View{
     
     let profile: ShorterProfile
     
+    private let removeFriendTitle: String = "Remove Friend?"
+    private let removeFriendMessage: String = "You won't be able to see any of their older posts, even when you re-add them"
+    
+    @State private var showingRemoveFriendAlert: Bool = false
+    
     @State private var previousOffset: CGFloat = 0
     @State private var offset: CGFloat = 0
     
@@ -59,11 +64,7 @@ struct ProfilePreviewView: View{
             }
             
         } action: {
-            let id = profile.ownerId
-            
-            Task {
-                await ShorterModel.shared.profile?.removeFriend( id )
-            }
+            showingRemoveFriendAlert = true
         }
     }
     
@@ -78,6 +79,14 @@ struct ProfilePreviewView: View{
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
                         .clipShape(Circle())
+                        .background {
+                            profile.getImage()
+                                .resizable()
+                                .aspectRatio(1, contentMode: .fill)
+                                .frame(width: 200)
+                                .blur(radius: 70)
+                                .opacity(0.3)
+                        }
                     
                     
                     VStack(alignment: .leading) {
@@ -124,7 +133,21 @@ struct ProfilePreviewView: View{
             }
     
             .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
-            .shadow(color: .black.opacity(0.2), radius: 10, y: 10)
+            .cardWithDepth()
+        
+        
+            .alert(removeFriendTitle,
+                   isPresented: $showingRemoveFriendAlert,
+                   actions: {
+                
+                Button("remove", role: .destructive) {
+                    let id = profile.ownerId
+                    Task { await ShorterModel.shared.profile?.removeFriend( id ) }
+                }
+                
+            }, message: {
+                Text( removeFriendMessage )
+            })
     }
 }
 

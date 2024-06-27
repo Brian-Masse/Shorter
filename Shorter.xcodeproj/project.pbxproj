@@ -83,6 +83,7 @@
 		C9E289E42C2CF3FA0075476A /* ShorterPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E32C2CF3FA0075476A /* ShorterPostView.swift */; };
 		C9E289E62C2CF40C0075476A /* ShorterPostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E52C2CF40C0075476A /* ShorterPostPageViewModel.swift */; };
 		C9E289E82C2DEE270075476A /* SocialPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E72C2DEE270075476A /* SocialPageView.swift */; };
+		C9E289EA2C2E203B0075476A /* ShorterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E92C2E203B0075476A /* ShorterExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +214,7 @@
 		C9E289E32C2CF3FA0075476A /* ShorterPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostView.swift; sourceTree = "<group>"; };
 		C9E289E52C2CF40C0075476A /* ShorterPostPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShorterPostPageViewModel.swift; path = Shorter/Posts/ShorterPostPageViewModel.swift; sourceTree = SOURCE_ROOT; };
 		C9E289E72C2DEE270075476A /* SocialPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPageView.swift; sourceTree = "<group>"; };
+		C9E289E92C2E203B0075476A /* ShorterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -468,6 +470,7 @@
 				C91032C52C290B0900A226BE /* IconButton.swift */,
 				C9E289C42C2BB74F0075476A /* ShorterSplashScreen.swift */,
 				C9E289DF2C2CC3780075476A /* ShorterPlaceHolderView.swift */,
+				C9E289E92C2E203B0075476A /* ShorterExtensions.swift */,
 			);
 			path = ShorterViews;
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				C90374D22C25F9A0007DCA5E /* ProfileCreationScene.swift in Sources */,
 				C90375012C262A48007DCA5E /* Utilities.swift in Sources */,
 				C903748C2C25D05D007DCA5E /* ShorterView.swift in Sources */,
+				C9E289EA2C2E203B0075476A /* ShorterExtensions.swift in Sources */,
 				C91032C22C28AEB400A226BE /* ShorterPostsCarousel.swift in Sources */,
 				C90375042C263227007DCA5E /* NotificationManager.swift in Sources */,
 				C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */,

@@ -159,6 +159,7 @@ extension RealmManager {
         }
         
         self.user = nil
+        
     }
     
     //    MARK: SetConfiguration

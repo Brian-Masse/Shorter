@@ -129,7 +129,7 @@ struct ProfileEdittingView: View {
                     .bold()
                 
                 
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     makeOverviewView()
                     
                     makePhotoView()

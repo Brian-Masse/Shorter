@@ -73,9 +73,13 @@ class NotificationManager: ObservableObject {
     func clearNotifications() {
         var keys: [String] = []
         
+        let defaults = UserDefaults(suiteName: NotificationsDefaultKeys.suiteName)!
+        
         for i in 0..<NotificationManager.totalNotificationCount {
             let key = makeKey(for: i)
             keys.append(key)
+            
+            defaults.removeObject(forKey: key)
         }
         
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: keys)

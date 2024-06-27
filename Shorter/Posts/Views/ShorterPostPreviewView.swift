@@ -70,8 +70,8 @@ struct ShorterPostPreviewView: View {
             .frame(maxHeight: LocalConstants.cardHeigt)
             .onTapGesture { showingFullScreen = true }
         
-            .sheet(isPresented: $showingFullScreen) {
-                ShorterPostView(post: post)
+            .fullScreenCover(isPresented: $showingFullScreen) {
+                ShorterPostsView(posts: ShorterPostsPageViewModel.shared.filteredPosts)
             }
     }
 }

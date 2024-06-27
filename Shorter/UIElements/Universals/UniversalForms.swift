@@ -56,7 +56,7 @@ struct StyledTextField: View {
                 .padding( .trailing, 5 )
                 .tint(Colors.getAccent(from: colorScheme) )
                 .rectangularBackground(style: .transparent)
-                .shadow(color: .black.opacity(0.08), radius: 12, y: 5)
+                .cardWithDepth()
             
                 .onChange(of: self.focused) { value, _ in
                     withAnimation { self.showingClearButton = value }

@@ -154,15 +154,22 @@ struct ShorterPostView: View {
     @ViewBuilder
     private func makeOverview() -> some View {
         VStack(alignment: .leading) {
-            HStack { Spacer() }
-            Text( "\(post.title) \(post.emoji)" )
-                .font(.largeTitle)
-                .bold()
+            HStack {
+                Text( "\(post.title) \(post.emoji)" )
+                    .font(.largeTitle)
+                    .bold()
+                
+                Spacer()
+            }
             
             Text( "\(post.fullTitle)  |  \(post.postedDate.formatted(date: .abbreviated, time: .omitted))" )
                 .font(.title2)
-                .padding(.bottom)
                 .opacity(0.75)
+            
+            Text( "\(post.ownerName)" )
+                .font(.callout)
+                .opacity(0.6)
+                .padding(.bottom)
             
             Text( "\(post.notes)" )
                 .font(.callout)

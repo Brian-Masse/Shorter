@@ -41,9 +41,7 @@ struct IconButton: View {
                 .background( .ultraThinMaterial )
                 .clipShape(RoundedRectangle(cornerRadius: 100))
             
-                .shadow(color: .black.opacity(0.2), radius: 0.3, x: 0.5, y: 0.5)
-                .shadow(color: .white.opacity(0.2), radius: 0.3, x: -0.5, y: -0.5)
-                .shadow(color: .black.opacity(0.1), radius: 5, y: 2)
+                .cardWithDepth(shadow: true)
             
                 .tint(.blue)
         }).buttonStyle(PlainButtonStyle())

@@ -151,7 +151,7 @@ struct SearchView: View {
                     .font(.title2)
                     .bold()
                 
-                ScrollView( .horizontal ) {
+                ScrollView( .horizontal, showsIndicators: false ) {
                     HStack {
                         ForEach( viewModel.selectedProfles ) { profile in
                             makeSelectedProfile(profile)

@@ -104,18 +104,21 @@ struct ProfileView: View {
             }
             .padding(.horizontal, 7)
             .rectangularBackground(style: .transparent)
+            .cardWithDepth()
         }
     }
     
 //    MARK: Social Page
     @ViewBuilder
     private func makeSocialPage() -> some View {
-        Text( "Friends" )
-            .font(.callout)
-            .bold()
-            .padding(.leading)
-        
-        FriendList(profile: profile)
+        VStack(alignment: .leading) {
+            Text( "Friends" )
+                .font(.callout)
+                .bold()
+                .padding(.leading)
+            
+            FriendList(profile: profile)
+        }
     }
     
 //    MARK: Signout Button
@@ -161,7 +164,7 @@ struct ProfileView: View {
             makeProfileImage()
                 .padding(.bottom)
             
-            ScrollView(.vertical) {
+            ScrollView(.vertical, showsIndicators: false) {
                 makeContactSection()
                     .padding(.bottom)
                 
@@ -187,7 +190,8 @@ struct ProfileView: View {
             
             Spacer()
         }
-        .padding()
+        .padding([.top, .horizontal])
+        .ignoresSafeArea(edges: .bottom)
         .sheet(isPresented: $showingProfileEdittingView) {
             ProfileEdittingView(profile: profile)
         }

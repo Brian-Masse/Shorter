@@ -78,7 +78,9 @@ struct SocialPageView: View {
                     .padding(.bottom, 7)
                 
                 SearchView(directlyAddFriends: true)
-                    .frame(minHeight: geo.size.height * 0.6)
+                    .if(profile.friendIds.count > 1) { view in
+                        view.frame(minHeight: geo.size.height * 0.55)
+                    }
                 
                 Spacer()
             }
