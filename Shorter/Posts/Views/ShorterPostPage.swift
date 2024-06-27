@@ -9,78 +9,8 @@ import Foundation
 import SwiftUI
 import UIUniversals
 
-//MARK: ShorterPostsPageViewModel
-class ShorterPostsPageViewModel: ObservableObject {
-    
-    private let maxCarouselPosts: Int = 10
-    private let maxRecentlyShared: Int = 30
-    
-    static let shared = ShorterPostsPageViewModel()
-    
-    var posts: [ShorterPost] = []
-    
-    @Published var myPosts: [ShorterPost] = []
-    @Published var filteredPosts: [ ShorterPost ] = []
-    @Published var shouldShowPrompt: Bool = true
-    
-    @Published var allowMyPosts: Bool = false {
-        didSet { Task { await getSharedWithMePosts(from: posts) } }
-    }
-    @Published var allowSharedPosts: Bool = true {
-        didSet { Task { await getSharedWithMePosts(from: posts) } }
-    }
-    
-    func loadAndFilterPosts( from posts: [ShorterPost] ) async {
-        self.posts = posts
-        
-        await getMyPosts(from: posts)
-        await getSharedWithMePosts(from: posts)
-        await checkShouldShowPrompt()
-    }
-    
-    @MainActor
-    private func checkShouldShowPrompt() async {
-        var shouldShowPrompt = true
-        
-        if let recentPost = myPosts.first {
-            let previousFire = TimingManager.getPreviousFiringTime()
-            shouldShowPrompt = !(recentPost.postedDate > previousFire)
-        }
-            
-        self.shouldShowPrompt = shouldShowPrompt
-    }
-    
-//    MARK: FilterPosts
-    @MainActor
-    func getMyPosts(from posts: [ShorterPost]) async {
-        let filteredPosts = Array(posts
-            .filter { post in post.ownerId == ShorterModel.ownerId }
-            .sorted(by: { post1, post2 in
-                post1.postedDate > post2.postedDate
-            })
-            .prefix(maxCarouselPosts))
-        
-        withAnimation { self.myPosts = filteredPosts }
-    }
-    
-    @MainActor
-    func getSharedWithMePosts(from posts: [ShorterPost]) async {
-        let filteredPosts = Array(posts
-            .filter { post in
-                let defaultOwnerId = ShorterModel.ownerId
-                return (allowMyPosts || post.ownerId != defaultOwnerId) && (allowSharedPosts || post.ownerId == defaultOwnerId)
-            }
-            .sorted(by: { post1, post2 in
-                post1.postedDate > post2.postedDate
-            })
-            .prefix(maxRecentlyShared)
-        )
-        
-        withAnimation { self.filteredPosts = filteredPosts }
-    }
-}
 
-struct ShorterPostsView: View {
+struct ShorterPostPage: View {
     
 //    MARK: Vars
     let posts: [ ShorterPost ]
@@ -91,6 +21,8 @@ struct ShorterPostsView: View {
     private let compactMainContentHeight = 0.4
     private let compactPrmptHeight = 0.35
     
+    @State private var showingProfileView: Bool = false
+    @State private var showingPostCreationView: Bool = false
     
     private func makeMainContentHeight(in geo: GeometryProxy) -> CGFloat {
         geo.size.height * (viewModel.shouldShowPrompt ? compactPrmptHeight : compactMainContentHeight)
@@ -112,11 +44,11 @@ struct ShorterPostsView: View {
     @ViewBuilder
     private func makeHeader() -> some View {
         HStack {
-            IconButton("gear") { Task { ShorterModel.realmManager.logoutUser() }}
+            IconButton("gear") { Task { showingPostCreationView = true }}
             
             Spacer()
             
-            IconButton("wallet.pass") {  }
+            IconButton("wallet.pass") { showingProfileView = true }
         }
     }
     
@@ -133,6 +65,8 @@ struct ShorterPostsView: View {
                 Spacer()
                 
                 Menu {
+                    makeFriendsMenu()
+                    
                     Button(action: { viewModel.allowMyPosts.toggle() }, label: {
                         Label("my posts", systemImage: viewModel.allowMyPosts ? "checkmark" : "minus")
                     })
@@ -152,9 +86,26 @@ struct ShorterPostsView: View {
                 ShorterPostPreviewView(post: post)
             }
         }
+        .padding()
         .background{
             RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius)
                 .foregroundStyle(.background)
+        }
+    }
+    
+    private func makeFriendsMenu() -> some View {
+        Menu("Friends") {
+            ForEach(ShorterModel.shared.profile!.friendIds) { id in
+                    
+                if let profile = ShorterProfile.getProfile(for: id) {
+                    
+                    
+                    Button(profile.fullName,
+                           systemImage: viewModel.ownerId == id ? "checkmark" : "minus") {
+                        viewModel.toggleOwnerId(id)
+                    }
+                }
+            }
         }
     }
     
@@ -181,6 +132,7 @@ struct ShorterPostsView: View {
                 ZStack(alignment: .top) {
                     makePostsCarousel()
                         .frame(height: makeMainContentHeight(in: geo))
+                        .padding(.horizontal)
                     
                     Spacer()
                     
@@ -190,14 +142,18 @@ struct ShorterPostsView: View {
                         makePostsView()
                     }
                 }
-                
-                Text( ShorterModel.ownerId )
             }
         }
         .gesture(swipeGesture)
-        .padding(.horizontal)
-        .task {
-            await viewModel.loadAndFilterPosts(from: posts)
+        .fullScreenCover(isPresented: $showingProfileView) {
+            ProfileView(profile: ShorterModel.shared.profile!)
+        }
+        .fullScreenCover(isPresented: $showingPostCreationView, content: {
+            ShorterPostCreationView()
+        })
+        .task { await viewModel.loadAndFilterPosts(from: posts) }
+        .onChange(of: posts) {
+            Task { await viewModel.loadAndFilterPosts(from: posts ) }
         }
     }
 }
@@ -238,5 +194,5 @@ struct ShorterPostsView: View {
     
     let posts = [ post, post2, post3, post2, post, post2, post3, post2 ]
     
-    return ShorterPostsView(posts: posts)
+    return ShorterPostPage(posts: posts)
 }

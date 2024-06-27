@@ -14,6 +14,7 @@ final class ShorterProfile: Object, Identifiable {
     @Persisted( primaryKey: true ) var _id: ObjectId
     
     @Persisted var ownerId: String = ""
+    @Persisted var dateJoined: Date = .now
     
     @Persisted var firstName: String = ""
     @Persisted var lastName: String = ""
@@ -32,6 +33,7 @@ final class ShorterProfile: Object, Identifiable {
         
         self.ownerId = ownerId
         self.email = email
+        self.dateJoined = .now
     }
     
     var profileImage: Image? = nil

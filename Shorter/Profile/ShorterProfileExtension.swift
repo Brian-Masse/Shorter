@@ -23,6 +23,15 @@ extension ShorterProfile {
         self.addFriends(friendIds)
     }
     
+    func updateProfile( firstName: String, lastName: String, email: String, phoneNumber: Int, imageData: Data ) {
+        RealmManager.updateObject(self) { thawed in
+            thawed.email = email
+        }
+        
+        self.fillProfile(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, friendIds: [], imageData: imageData)
+        let _ = self.loadImage()
+    }
+    
     var isComplete: Bool {
         !self.firstName.isEmpty &&
         !self.lastName.isEmpty &&
@@ -39,7 +48,7 @@ extension ShorterProfile {
         "\(self.firstName) \(self.lastName)"
     }
     
-    func updateRecentPost(to id: ObjectId) {
+    func updateRecentPost(to id: ObjectId?) {
         RealmManager.updateObject(self) { thawed in
             thawed.mostRecentPost = id
         }

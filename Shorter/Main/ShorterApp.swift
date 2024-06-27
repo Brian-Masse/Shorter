@@ -61,13 +61,13 @@ struct ShorterApp: App {
         Colors.setColors(baseLight:         .init(255, 255, 255),
                          secondaryLight:    .init(240, 240, 240),
                          baseDark:          .init(0, 0, 0),
-                         secondaryDark:     .init(25.5, 25.5, 25.5),
+                         secondaryDark:     .init(15.5, 15.5, 15.5),
                          lightAccent:       .init(63, 45, 64),
                          darkAccent:        .init(212, 178, 214))
         
         Constants.UIDefaultCornerRadius = 20
         
-        Constants.setFontSizes(UILargeTextSize: 90,
+        Constants.setFontSizes(UILargeTextSize: 35,
                                UITitleTextSize: 45,
                                UIMainHeaderTextSize: 35,
                                UIHeaderTextSize: 30,

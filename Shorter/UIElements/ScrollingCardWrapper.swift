@@ -69,7 +69,7 @@ struct ScrollingCardWrapper<Content: View>: View {
     }
     
     private func checkOutOfScrollViewBounds(in geo: GeometryProxy) -> Bool {
-        distanceFromStart(in: geo) <= 0 && distanceFromStart(in: geo) > -height - LocalConstants.spacing
+        distanceFromStart(in: geo) <= 0 && distanceFromStart(in: geo) > -height * 2
     }
     
     private func makeHeight(in geo: GeometryProxy) -> CGFloat {
@@ -100,10 +100,6 @@ struct ScrollingCardWrapper<Content: View>: View {
                 .shadow(color: .white.opacity(0.2), radius: 0.3, x: -1, y: -1)
             
                 .animation( .easeInOut(duration: 0.2), value: scaleModifier)
-                .onTapGesture {
-                    scaleModifier = 0.05
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { scaleModifier = 0 }
-                }
             
                 .onAppear { makeScale(in: geo) }
                 .onChange(of: scrollPosition) {

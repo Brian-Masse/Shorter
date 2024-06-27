@@ -57,6 +57,8 @@ struct ShorterPostCreationView: View {
                                data: imageData)
 //        
         RealmManager.addObject( post )
+        
+        dismiss()
     }
     
 

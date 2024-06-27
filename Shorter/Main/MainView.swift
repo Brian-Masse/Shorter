@@ -22,11 +22,11 @@ struct MainView: View {
     var body: some View {
         ZStack(alignment: .top) {
             Text( "Shorter" )
-                .font(.title2)
                 .bold()
+                .opacity(0.5)
                 .padding(.top, 7)
             
-            ShorterPostsView(posts: Array( posts ))
+            ShorterPostPage(posts: Array( posts ))
             
         }
         .emojiPresenter()

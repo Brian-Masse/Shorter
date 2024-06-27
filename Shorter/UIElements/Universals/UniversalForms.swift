@@ -139,35 +139,44 @@ struct StyledPhotoPicker: View {
         
         VStack(alignment: .leading, spacing: 7) {
             
-            Text("Choose a Profile Picture")
-                .font(.title2)
-                .bold()
-            
-            Text(description)
-                .font(.callout)
-                .padding(.bottom)
-            
-            if let image = croppedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(Constants.UIDefaultCornerRadius)
-                    .frame(maxWidth: maxPhotoWidth)
-                    .padding(.top)
+            HStack {
+                Text("Choose a Profile Picture")
+                    .font(.title2)
+                    .bold()
                 
-                HStack {
+                Spacer()
+                
+                if let _ = croppedImage {
                     makePhotoPicker {
                         IconButton("photo.on.rectangle.angled") { }
                     }
-                    
-                    Spacer()
                     
                     if shouldCrop {
                         IconButton("crop.rotate") {
                             showCropView = true
                         }
                     }
-                }.padding(.horizontal)
+                }
+            }
+            
+            if !description.isEmpty {
+                Text(description)
+                    .font(.callout)
+                    .padding(.bottom)
+            }
+            
+            if let image = croppedImage {
+                HStack {
+                    Spacer()
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(Constants.UIDefaultCornerRadius)
+                        .frame(maxWidth: maxPhotoWidth)
+                        .clipShape(Circle())
+                        .padding(.top)
+                    Spacer()
+                }
                 
                 
             } else {

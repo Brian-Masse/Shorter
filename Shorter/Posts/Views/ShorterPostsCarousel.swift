@@ -281,9 +281,16 @@ struct ShorterPostsCarousel: View {
                     .scaledToFill()
                     .clipped()
             }
-            .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: Constants.UILargeTextSize))
             .shadow(color: .black.opacity(0.3), radius: 10, y: 10)
-            .onTapGesture { toggleExpansion() }
+            .background {
+                post.getImage()
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 100)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture { showingPostView = true }
     }
     
     private let widgetId = "WidgetId"
@@ -295,7 +302,6 @@ struct ShorterPostsCarousel: View {
             self.expanded.toggle()
         }
     }
-    
     @Namespace var shorterPostCreationViewNameSpace
     
     let posts: [ShorterPost]
@@ -306,6 +312,8 @@ struct ShorterPostsCarousel: View {
     
     @State var activePostIndex: Int = 0
     @State var expanded: Bool = true
+    
+    @State private var showingPostView: Bool = false
     
     private func incrementIndex() -> Int { min(activePostIndex + 1, posts.count - 1) }
     private func decrementIndex() -> Int { max(activePostIndex - 1, 0) }
@@ -389,6 +397,9 @@ struct ShorterPostsCarousel: View {
                 }
                 .coordinateSpace(name: ShorterPostsCarousel.coordinateSpaceName)
             }
+        }
+        .fullScreenCover(isPresented: $showingPostView) {
+            ShorterPostsView(posts: posts)
         }
     }
 }

@@ -43,7 +43,6 @@ extension ShorterPost {
             }
         }
         
-        
         ShorterModel.shared.profile?.updateRecentPost(to: self._id)
     }
     
@@ -77,6 +76,36 @@ extension ShorterPost {
         }
         
         return self.image ?? Image("BigSur")
+    }
+    
+//    when a user deletes the most recent post on a profile this function ensures that
+//    the second most recent post is stored, to be properly displayed on receiving widgets
+    @MainActor
+    private func updateProfileMostRecentPost() async {
+        let posts: [ShorterPost] = RealmManager.retrieveObjects { query in
+            query.postedDate < self.postedDate
+        }.sorted { post1, post2 in
+            post1.postedDate > post2.postedDate
+        }
+        
+        ShorterModel.shared.profile?.updateRecentPost(to: posts.first?._id ?? nil)
+    }
+    
+    @MainActor
+    private func removeFromRealm() {
+        RealmManager.deleteObject(self) { post in
+            post._id == self._id
+        }
+    }
+    
+    @MainActor
+    func delete() async {
+        let profile = ShorterModel.shared.profile!
+        if profile.mostRecentPost == self._id {
+            await self.updateProfileMostRecentPost()
+        }
+        
+        self.removeFromRealm()
     }
 }
 
