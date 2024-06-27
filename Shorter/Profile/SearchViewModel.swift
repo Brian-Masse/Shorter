@@ -52,8 +52,13 @@ class SearchViewModel: ObservableObject {
     
     //    MARK: selectProfile
     @MainActor
-    func toggleProfile( _ id: String ) async {
+    func toggleProfile( _ id: String, directlyAddProfile: Bool ) async {
         var mutatingProfiles = selectedProfles
+        
+        if directlyAddProfile {
+            withAnimation { ShorterModel.shared.profile?.addFriend( id ) }
+            return
+        }
         
         if let index = selectedProfles.firstIndex(where: { profile in
             profile.ownerId == id
@@ -85,6 +90,7 @@ class SearchViewModel: ObservableObject {
         var results: [ShorterProfile] = RealmManager.retrieveObjects()
         results = results.filter { profile in
             profile.ownerId != ShorterModel.ownerId
+            && (profile.firstName.contains(searchText) || profile.lastName.contains(searchText))
         }
         
         withAnimation { self.filteredProfiles = results }

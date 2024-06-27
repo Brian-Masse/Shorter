@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Contacts
+import UIUniversals
 
 
 //MARK: SearchView
@@ -27,6 +28,8 @@ struct SearchView: View {
     @State private var friendIds: [String] = ["test"]
     
     @State private var searching: Bool = false
+    
+    let directlyAddFriends: Bool
     
     private func composeMessage(to contact: CNContact) {
         recipients = [ contact.phoneNumbers.first?.value.stringValue ?? "" ]
@@ -57,7 +60,7 @@ struct SearchView: View {
     @ViewBuilder
     private func makeToggleButton( for id: String ) -> some View {
         IconButton( viewModel.checkProfileIsSelected(id) ? "minus" : "plus") {
-            Task { await viewModel.toggleProfile(id) }
+            Task { await viewModel.toggleProfile(id, directlyAddProfile: directlyAddFriends) }
         }
     }
     
@@ -168,7 +171,7 @@ struct SearchView: View {
         VStack(alignment: .leading) {
             
             Text( "Find Friends" )
-                .font(.title2)
+                .font(.title3)
                 .bold()
             
             makeSearchBar()
@@ -179,7 +182,7 @@ struct SearchView: View {
             makeSelectedProfileList()
                 .padding(.bottom)
 
-            ScrollView(.vertical) {
+            ScrollView(.vertical, showsIndicators: false) {
                 if !searching {
                     makeProfileList()
                         .padding(.bottom)
@@ -189,6 +192,7 @@ struct SearchView: View {
                     ProgressView()
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius ))
 
             Spacer()
         }
@@ -201,5 +205,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView()
+    SearchView(directlyAddFriends: true)
 }

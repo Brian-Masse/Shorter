@@ -82,6 +82,7 @@
 		C9E289E22C2CCB000075476A /* ProfileEdittingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E12C2CCB000075476A /* ProfileEdittingView.swift */; };
 		C9E289E42C2CF3FA0075476A /* ShorterPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E32C2CF3FA0075476A /* ShorterPostView.swift */; };
 		C9E289E62C2CF40C0075476A /* ShorterPostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E52C2CF40C0075476A /* ShorterPostPageViewModel.swift */; };
+		C9E289E82C2DEE270075476A /* SocialPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E72C2DEE270075476A /* SocialPageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +212,7 @@
 		C9E289E12C2CCB000075476A /* ProfileEdittingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEdittingView.swift; sourceTree = "<group>"; };
 		C9E289E32C2CF3FA0075476A /* ShorterPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostView.swift; sourceTree = "<group>"; };
 		C9E289E52C2CF40C0075476A /* ShorterPostPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShorterPostPageViewModel.swift; path = Shorter/Posts/ShorterPostPageViewModel.swift; sourceTree = SOURCE_ROOT; };
+		C9E289E72C2DEE270075476A /* SocialPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,6 +351,7 @@
 			children = (
 				C90374CF2C25F551007DCA5E /* ShorterProfile.swift */,
 				C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */,
+				C9E289C12C2BB3D80075476A /* SearchViewModel.swift */,
 				C91032CF2C2B7C7400A226BE /* Views */,
 			);
 			path = Profile;
@@ -430,11 +433,11 @@
 			isa = PBXGroup;
 			children = (
 				C91032CD2C2B7C6D00A226BE /* SearchView.swift */,
+				C9E289E72C2DEE270075476A /* SocialPageView.swift */,
 				C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */,
 				C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */,
 				C9E289DD2C2CBD800075476A /* ProfileView.swift */,
 				C9E289E12C2CCB000075476A /* ProfileEdittingView.swift */,
-				C9E289C12C2BB3D80075476A /* SearchViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				C9E289DB2C2CA74B0075476A /* TimingManager.swift in Sources */,
 				C91032BF2C28A8F500A226BE /* ShorterPostPage.swift in Sources */,
 				C90374CD2C25F4B4007DCA5E /* ShorterScene.swift in Sources */,
+				C9E289E82C2DEE270075476A /* SocialPageView.swift in Sources */,
 				C91032CC2C2B557000A226BE /* Extensions.swift in Sources */,
 				C9E289E42C2CF3FA0075476A /* ShorterPostView.swift in Sources */,
 				C90374C92C25E21B007DCA5E /* PhotoManager.swift in Sources */,

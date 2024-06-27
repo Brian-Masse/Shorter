@@ -22,7 +22,7 @@ struct ShorterPostPage: View {
     private let compactPrmptHeight = 0.35
     
     @State private var showingProfileView: Bool = false
-    @State private var showingPostCreationView: Bool = false
+    @State private var showingSocialPageView: Bool = false
     
     private func makeMainContentHeight(in geo: GeometryProxy) -> CGFloat {
         geo.size.height * (viewModel.shouldShowPrompt ? compactPrmptHeight : compactMainContentHeight)
@@ -44,7 +44,7 @@ struct ShorterPostPage: View {
     @ViewBuilder
     private func makeHeader() -> some View {
         HStack {
-            IconButton("gear") { Task { showingPostCreationView = true }}
+            IconButton("person.badge.plus") { Task { showingSocialPageView = true }}
             
             Spacer()
             
@@ -113,7 +113,7 @@ struct ShorterPostPage: View {
     @ViewBuilder
     private func makePostsCarousel() -> some View {
         VStack {
-            if !viewModel.shouldShowPrompt {
+            if !viewModel.shouldShowPrompt && !posts.isEmpty {
                 ShorterPostsCarousel(posts: viewModel.myPosts)
             } else {
                 ShorterPostPromptView()
@@ -148,8 +148,8 @@ struct ShorterPostPage: View {
         .fullScreenCover(isPresented: $showingProfileView) {
             ProfileView(profile: ShorterModel.shared.profile!)
         }
-        .fullScreenCover(isPresented: $showingPostCreationView, content: {
-            ShorterPostCreationView()
+        .fullScreenCover(isPresented: $showingSocialPageView, content: {
+            SocialPageView()
         })
         .task { await viewModel.loadAndFilterPosts(from: posts) }
         .onChange(of: posts) {

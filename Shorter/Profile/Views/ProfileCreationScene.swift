@@ -158,7 +158,7 @@ struct ProfileCreationView: View {
 //    MARK: Social Scene
     @ViewBuilder
     private func makeFriendsScene() -> some View {
-        SearchView()
+        SearchView(directlyAddFriends: false)
             .onAppear { sceneComplete = true }
     }
     

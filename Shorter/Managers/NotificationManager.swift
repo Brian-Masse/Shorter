@@ -121,7 +121,7 @@ class NotificationManager: ObservableObject {
             
             let date = TimingManager.getFiringTime(for: proposedDate)
             
-            let components = Calendar.current.dateComponents([ .day, .month, .year, .hour ],
+            let components = Calendar.current.dateComponents([ .day, .month, .year, .hour, .minute ],
                                                              from: date)
             
             let content = makeNotificationContent(title: "Notificaiton \(i)", body: "This notification was supposed to be sent at: \( date.formatted(date: .abbreviated, time: .complete) )")

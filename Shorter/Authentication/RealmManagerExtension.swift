@@ -239,5 +239,18 @@ extension RealmManager {
     func transferDataOwnership(to ownerID: String) {
         //        TODO: Implement Transfer Data Ownership
     }
+    
+//    MARK: Refresh Subscripton
+    func refreshSubscriptions() async {
+        await removeSubscription(name: QuerySubKey.shorterPostQuery.rawValue)
+        
+        let shorterPostQuery: (QueryPermission<ShorterPost>) = QueryPermission { query in
+            query.ownerId == ShorterModel.ownerId || query.sharedOwnerIds.contains( ShorterModel.ownerId )
+        }
+     
+        let _ = await self.addGenericSubcriptions(name: QuerySubKey.shorterPostQuery.rawValue,
+                                    query: shorterPostQuery.baseQuery)
+        
+    }
 }
 

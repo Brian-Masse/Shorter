@@ -24,6 +24,8 @@ struct ShorterPostPreviewView: View {
         "\(post.ownerName) on \( post.postedDate.formatted(date: .abbreviated, time: .omitted) )"
     }
     
+    @State private var showingFullScreen: Bool = false
+    
 //    MARK: ViewBuilders
     @ViewBuilder
     private func makeContent() -> some View {
@@ -66,41 +68,11 @@ struct ShorterPostPreviewView: View {
             .overlay { makeContent() }
             .clipShape(RoundedRectangle(cornerRadius: 25))
             .frame(maxHeight: LocalConstants.cardHeigt)
+            .onTapGesture { showingFullScreen = true }
+        
+            .sheet(isPresented: $showingFullScreen) {
+                ShorterPostView(post: post)
+            }
     }
-}
-
-struct TestView: View {
-    @State private var value: Double = 150
-    @State private var test: Bool = false
-    
-    var body: some View {
-        VStack {
-            let uiImage = UIImage(named: "BigSur")
-            let imageData = PhotoManager.encodeImage(uiImage)
-            
-            let post = ShorterPost(ownerId: "test",
-                                   authorName: "Brian Masse",
-                                   fullTitle: "Full Title",
-                                   title: "Title",
-                                   emoji: "🫡",
-                                   notes: "notes",
-                                   data: imageData)
-            Spacer()
-            
-            Text("\(value)")
-            Slider(value: $value, in: 60...150)
-                .padding()
-            
-            Spacer()
-            
-            ShorterPostPreviewView(post: post)
-            
-            Spacer()
-        }
-    }
-}
-
-#Preview {
-   TestView()
 }
 

@@ -20,7 +20,7 @@ extension ShorterProfile {
             thawed.imageData = imageData
         }
         
-        self.addFriends(friendIds)
+        Task { await self.addFriends(friendIds) }
     }
     
     func updateProfile( firstName: String, lastName: String, email: String, phoneNumber: Int, imageData: Data ) {
@@ -63,12 +63,14 @@ extension ShorterProfile {
     }
     
 //    MARK: Social Functions
+    @MainActor
     func addFriends( _ ids: [String] ) {
         for id in ids {
             addFriend(id)
         }
     }
     
+    @MainActor
     func addFriend( _ id: String ) {
         if let friend = ShorterProfile.getProfile(for: id) {
             RealmManager.updateObject(self) { thawed in
@@ -76,6 +78,45 @@ extension ShorterProfile {
             }
             RealmManager.updateObject(friend) { thawed in
                 thawed.friendIds.append(ShorterModel.ownerId)
+            }
+        }
+    }
+    
+    @MainActor
+    func removeFriend( _ id: String ) async {
+        if let index = self.friendIds.firstIndex(of: id) {
+            RealmManager.updateObject(self) { thawed in
+                withAnimation {
+                    thawed.friendIds.remove(at: index)
+                }
+            }
+        }
+        if let profile = ShorterProfile.getProfile(for: id) {
+            if let index = profile.friendIds.firstIndex(of: self.ownerId) {
+                RealmManager.updateObject(profile) { thawed in
+                    thawed.friendIds.remove(at: index)
+                }
+            }
+            
+            await profile.removeFriendFromPosts( self.ownerId )
+        }
+        
+        await removeFriendFromPosts(id)
+        await ShorterModel.realmManager.refreshSubscriptions()
+    }
+    
+    @MainActor
+    func removeFriendFromPosts(_ id: String) async {
+        
+        let posts: [ShorterPost] = RealmManager.retrieveObjects { post in
+            post.sharedOwnerIds.contains( id )
+        }
+        
+        for post in posts {
+            if let index = post.sharedOwnerIds.firstIndex(of: id) {
+                RealmManager.updateObject(post) { thawed in
+                    thawed.sharedOwnerIds.remove(at: index)
+                }
             }
         }
     }

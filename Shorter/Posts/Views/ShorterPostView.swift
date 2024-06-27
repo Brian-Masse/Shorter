@@ -9,53 +9,7 @@ import Foundation
 import SwiftUI
 import UIUniversals
 
-private struct ShorterPostViewTransitionWrapper: ViewModifier {
-    
-    @ViewBuilder
-    private func makeTransitionWrapper<C: View>(_ transitionDirection: Edge, @ViewBuilder contentBuilder: () -> C) -> some View {
-        contentBuilder()
-            .slideTransition( transitionDirection )
-    }
-    
-    let slideDirection: Edge
-    let currentIndex: Int
-    
-    @State var offset: CGFloat = 0
-    
-    func body(content: Content) -> some View {
-        ZStack {
-            content
-                .offset(x: offset)
-            
-            content
-                .offset(x: offset)
-            
-//            if currentIndex % 2 == 0 {
-//                makeTransitionWrapper(slideDirection) {
-//                    content
-//                }
-//        
-//                    
-//                
-////                    .slideTransition(.leading)
-////                    .onAppear { print(slideDirection) }
-//            } else {
-//                makeTransitionWrapper(slideDirection) {
-//                    content
-//                }
-////                    .transition(.push(from: .leading))
-////                    .slideTransition(.leading)
-////                    .onAppear { print(slideDirection) }
-//            
-//            }
-        }
-        .onChange(of: currentIndex ) {
-            offset =  slideDirection == .trailing ? 400 : -400
-            withAnimation { offset = 0 }
-        }
-    }
-}
-
+//MARK: ShorterPostsView
 struct ShorterPostsView: View {
     
     @State private var currentPostIndex: Int = 0 {
@@ -110,6 +64,8 @@ struct ShorterPostView: View {
     
     @Binding var currentPostIndex: Int
     
+    @State private var dismissOffset: CGFloat = 0
+    
     init( post: ShorterPost, inScrollView: Bool = false, currentPostIndex: Binding<Int> = .init { 0 } set: { _ in } ) {
         self.inScrollView = inScrollView
         self.post = post
@@ -117,6 +73,27 @@ struct ShorterPostView: View {
     }
     
     let post: ShorterPost
+    
+    private var dissmissGesture: some Gesture {
+        DragGesture(minimumDistance: 10)
+            .onChanged { value in
+                if value.translation.height < 0 { return }
+                if value.translation.height > 200 {
+                    dismiss()
+                }
+                dismissOffset = value.translation.height
+            }
+                
+            .onEnded { value in
+                if value.translation.height > 200 {
+                    dismiss()
+                } else {
+                    withAnimation {
+                        dismissOffset = 0
+                    }
+                }
+            }
+    }
     
 //    MARK: Struct Methods
     private func incrementPostIndex() { withAnimation {
@@ -166,8 +143,10 @@ struct ShorterPostView: View {
                 .allowsHitTesting(false)
         }
         .clipShape(  UnevenRoundedRectangle(
-            cornerRadii: .init(bottomLeading: Constants.UILargeTextSize,
-                               bottomTrailing: Constants.UILargeTextSize))  )
+            cornerRadii: .init(topLeading: Constants.UILargeTextSize,
+                               bottomLeading: Constants.UILargeTextSize,
+                               bottomTrailing: Constants.UILargeTextSize,
+                               topTrailing: Constants.UILargeTextSize ))  )
         .animation(nil, value: currentPostIndex)
     }
     
@@ -252,6 +231,9 @@ struct ShorterPostView: View {
             }
         }
         .ignoresSafeArea(edges: .top)
+        .offset(y: dismissOffset)
+        .gesture(dissmissGesture)
+        
         .alert(alertTitle,
                isPresented: $showDeleteAlert) {
             
@@ -260,9 +242,7 @@ struct ShorterPostView: View {
                 dismiss()
             }
             
-        } message: {
-            Text( alertMessage )
-        }
+        } message: { Text( alertMessage ) }
     }
 }
 

@@ -17,6 +17,7 @@ struct ProfileView: View {
     let profile: ShorterProfile
     
     @State private var showingProfileEdittingView: Bool = false
+    @State private var showingPostCreationView: Bool = false
     
 //    MARK: Header
     @ViewBuilder
@@ -109,25 +110,12 @@ struct ProfileView: View {
 //    MARK: Social Page
     @ViewBuilder
     private func makeSocialPage() -> some View {
-        VStack(alignment: .leading) {
-            
-            Text( "Friends" )
-                .font(.callout)
-                .bold()
-                .padding(.leading)
-            
-            if profile.friendIds.count > 0 {
-                ForEach( profile.friendIds ) { id in
-                    
-                    if let profile = ShorterProfile.getProfile(for: id) {
-                        ProfilePreviewView(profile: profile)
-                    }
-                }
-            } else {
-                ShorterPlaceHolderView(icon: "person.line.dotted.person",
-                                       message: "Connect with friends on Shortes")
-            }
-        }
+        Text( "Friends" )
+            .font(.callout)
+            .bold()
+            .padding(.leading)
+        
+        FriendList(profile: profile)
     }
     
 //    MARK: Signout Button
@@ -188,6 +176,12 @@ struct ProfileView: View {
                 Text( ShorterModel.ownerId )
                     .font(.caption2)
                     .opacity(0.7)
+                    .onTapGesture {
+                        print( ShorterModel.ownerId )
+                        NotificationManager.shared.readFiringDates()
+                        
+                        showingPostCreationView = true
+                    }
                 
             }.clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
             
@@ -197,6 +191,9 @@ struct ProfileView: View {
         .sheet(isPresented: $showingProfileEdittingView) {
             ProfileEdittingView(profile: profile)
         }
+        .sheet(isPresented: $showingPostCreationView, content: {
+            ShorterPostCreationView()
+        })
     }
 }
 
