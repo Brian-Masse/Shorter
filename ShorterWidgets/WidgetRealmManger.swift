@@ -48,6 +48,8 @@ class WidgetRealmManger {
 //    called when a widget is checking if another user might have posted
     @MainActor
     func retrieveImageData( from profileId: String ) async -> ShorterPost? {
+        print("attempting to retreive image data")
+        
         if !realmLoaded { await self.loadRealm() }
         
 //        add a subscription to access the profile

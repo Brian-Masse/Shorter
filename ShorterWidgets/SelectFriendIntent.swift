@@ -32,9 +32,6 @@ struct FriendDetail: AppEntity {
     let id: String
     let firstName: String
     let lastName: String
-    let postTitle: String
-    let postEmoji: String
-    let imageData: Data?
     
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Friend"
     static var defaultQuery = FriendQuery()
@@ -58,14 +55,9 @@ struct FriendDetail: AppEntity {
                 let lastName = defaults.string(forKey: WidgetKeys.friendLastNameBaseKey + "\(i)") ?? ""
                             
                 if !ownerId.isEmpty {
-                    if let post = await WidgetRealmManger.shared.retrieveImageData(from: ownerId) {
-                        details.append( FriendDetail(id: ownerId,
-                                                     firstName: firstName,
-                                                     lastName: lastName,
-                                                     postTitle: post.title,
-                                                     postEmoji: "🥳",
-                                                     imageData: post.imageData)  )
-                    }
+                    details.append( FriendDetail(id: ownerId,
+                                                 firstName: firstName,
+                                                 lastName: lastName) )
                 }
             }
         }

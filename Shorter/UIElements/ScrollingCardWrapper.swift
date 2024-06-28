@@ -29,6 +29,8 @@ struct ScrollingCardWrapper<Content: View>: View {
     @State var scale: CGFloat = 1
     @State var alpha: CGFloat = 1
     
+    @State private var show: Bool = false
+    
     init( height: CGFloat, index: Int, scrollPosition: Binding<CGFloat>, content: @escaping (Binding<Bool>) -> Content ) {
         self.height = height
         self.index = index
@@ -94,14 +96,22 @@ struct ScrollingCardWrapper<Content: View>: View {
     var body: some View {
         GeometryReader { geo in
             let height = makeHeight(in: geo)
-            self.content( $showingFullCard )
+            VStack {
+                if show { self.content( $showingFullCard ) }
+            }
                 .frame(height: height)
                 .shadow(color: .black.opacity(0.5), radius: 0.3, x: 0.5, y: 0.5)
                 .shadow(color: .white.opacity(0.2), radius: 0.3, x: -1, y: -1)
             
                 .animation( .easeInOut(duration: 0.2), value: scaleModifier)
             
-                .onAppear { makeScale(in: geo) }
+                .onAppear {
+                    makeScale(in: geo)
+                    show = true
+                }
+                .onDisappear {
+                    show = false
+                }
                 .onChange(of: scrollPosition) {
                     makeScale(in: geo)
                     checkHalfContentToggle(in: geo)

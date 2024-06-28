@@ -64,8 +64,18 @@ extension ShorterPost {
     
 //    MARK: Class Functions
     private func loadImage() -> Image? {
-        self.image = PhotoManager.decodeImage(from: self.imageData)
-        return self.image
+        
+        let uiImage = PhotoManager.decodeUIImage(from: self.imageData)
+        
+        if self.imageData.count < 600000 {
+            self.image = Image(uiImage: uiImage!)
+            return self.image
+        }
+
+        let data = PhotoManager.encodeImage(uiImage)
+        self.image = PhotoManager.decodeImage(from: data)
+        
+        return image
     }
     
     func getImage() -> Image {

@@ -80,6 +80,8 @@ extension ShorterProfile {
                 thawed.friendIds.append(ShorterModel.ownerId)
             }
         }
+        
+        self.saveFriendListToDefaults()
     }
     
     @MainActor
@@ -103,6 +105,8 @@ extension ShorterProfile {
         
         await removeFriendFromPosts(id)
         await ShorterModel.realmManager.refreshSubscriptions()
+        
+        self.saveFriendListToDefaults()
     }
     
     @MainActor

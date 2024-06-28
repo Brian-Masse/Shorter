@@ -35,8 +35,11 @@ class PhotoManager: ObservableObject {
         return nil
     }
     
-    static func encodeImage( _ image: UIImage?, compressionQuality: Double = 0.9) -> Data {
-        if let image { return image.jpegData(compressionQuality: compressionQuality) ?? Data() }
+    static func encodeImage( _ image: UIImage?, compressionQuality: Double = 0.9, in height: CGFloat = 400) -> Data {
+        if let image {
+            let resizedImage = image.aspectFittedToHeight(height)
+            return resizedImage.jpegData(compressionQuality: compressionQuality) ?? Data()
+        }
         return Data()
     }
 }
@@ -109,6 +112,19 @@ struct ImagePickerView: UIViewControllerRepresentable {
         }
         public func imagePickerControllerDidCancel(_: UIImagePickerController) {
             self.onDismiss()
+        }
+    }
+}
+
+extension UIImage {
+    func aspectFittedToHeight(_ newHeight: CGFloat) -> UIImage {
+        let scale = newHeight / self.size.height
+        let newWidth = self.size.width * scale
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
         }
     }
 }

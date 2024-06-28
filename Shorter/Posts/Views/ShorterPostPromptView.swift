@@ -29,6 +29,7 @@ struct ShorterPostPromptView: View {
                 }
                 .frame(width: 200, height: 200)
                 .rectangularBackground(style: .secondary)
+                .cardWithDepth()
                 
             } action: { showingCreatPostView = true }
         }
