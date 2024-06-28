@@ -67,22 +67,24 @@ struct SocialPageView: View {
                 makeHeader()
                     .padding(.bottom)
                 
-                Text( "My Friends" )
-                    .font(.title3)
-                    .bold()
-                
                 ScrollView(.vertical, showsIndicators: false) {
-                    FriendList( profile: profile )
-                }
-                    .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius ))
-                    .padding(.bottom, 7)
-                
-                SearchView(directlyAddFriends: true)
-                    .if(profile.friendIds.count > 1) { view in
-                        view.frame(minHeight: geo.size.height * 0.55)
+                    VStack(alignment: .leading) {
+                        SearchView(directlyAddFriends: true)
+                            .padding(.vertical)
+                            .padding(.horizontal, 5)
+                        
+                        Text( "My Friends" )
+                            .font(.title3)
+                            .bold()
+                        
+                        FriendList( profile: profile )
                     }
-                
-                Spacer()
+                    .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius ))
+//                    .frame(minHeight: geo.size.height * 0.4)
+                    .padding(.bottom, 7)
+                    
+                    Spacer()
+                }
             }
         }
         .ignoresSafeArea(edges: .bottom)

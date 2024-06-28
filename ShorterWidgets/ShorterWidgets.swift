@@ -10,6 +10,20 @@ import SwiftUI
 
 //MARK: TimeLine Entry
 struct FriendWidgetEntry: TimelineEntry {
+    init( date: Date = .now,
+          title: String,
+          fullName: String,
+          emoji: String,
+          imageData: Data? = nil,
+          postedDate: Date) {
+        self.date = date
+        self.title = title
+        self.fullName = fullName
+        self.emoji = emoji
+        self.postedDate = postedDate
+        self.imageData = imageData
+    }
+    
     let date: Date
 
     let title: String
@@ -44,7 +58,7 @@ struct ShorterWidgetsEntryView : View {
                     
                     Spacer()
                 }
-                Text( entry.postedDate.formatted(date: .abbreviated, time: .omitted) )
+                Text( entry.date.formatted(date: .omitted, time: .complete) )
                 Text( entry.fullName )
                     .textCase(.uppercase)
                     .font(.caption2)
@@ -53,16 +67,15 @@ struct ShorterWidgetsEntryView : View {
             .padding([.trailing, .bottom], 5)
         }
         .background {
-            if let imageData = entry.imageData {
-                let uiImage = PhotoManager.decodeUIImage(from: imageData) ?? UIImage(named: "BigSur")
-                    
-                let image = Image(uiImage: uiImage!.resized(toWidth: 800, isOpaque: true)!)
+            if entry.imageData == nil { Image( "BigSur" ) }
+            else {
+                let image = Image(uiImage: PhotoManager.decodeUIImage(from: entry.imageData!)! )
                 
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
-                    .padding(-15)
+//                image
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fill)
+//                    .clipped()
+//                    .padding(-15)
             }
         }
         .foregroundStyle(.white)
@@ -77,24 +90,46 @@ struct ShorterWidgetsEntryView : View {
 struct SelectFriendProvider: AppIntentTimelineProvider {
 
     private func makePlaceHolderWidgetEntry() -> FriendWidgetEntry {
-        let uiImage = UIImage(named: "BigSur")
-        let imageData = PhotoManager.encodeImage(uiImage)
-        
         return FriendWidgetEntry(date: .now,
                           title: "Place Holder",
                           fullName: "Brian Masse",
                           emoji: "🫥",
-                          imageData: imageData,
+                          imageData: nil,
                           postedDate: .now)
     }
     
     private func makeEmptyWidgetEntry(name: String) -> FriendWidgetEntry {
-        .init(date: .now,
+
+        .init(date: .now + ( 60 * 6 ) ,
               title: "Waiting on Post",
               fullName: name,
               emoji: "🙂‍↔️",
               imageData: nil,
               postedDate: .now)
+    }
+    
+    private func compressImageData(_ data: Data) -> Data {
+        if data.count < 600000 {
+            return data
+        }
+
+        let uiImage = PhotoManager.decodeUIImage(from: data)
+        return PhotoManager.encodeImage(uiImage, compressionQuality: 0, in: 100)
+    }
+    
+    @MainActor
+    private func makePostEntry(from id: String, name: String) async -> FriendWidgetEntry? {
+        if let post = await WidgetRealmManger().retrieveImageData(from: id) {
+            
+            return FriendWidgetEntry(date: .now,
+                                    title: post.title,
+                                    fullName: name,
+                                    emoji: post.emoji,
+                                    imageData: compressImageData(post.imageData),
+                                    postedDate: post.postedDate)
+        }
+        
+        return nil
     }
     
     func placeholder(in context: Context) -> FriendWidgetEntry {
@@ -111,19 +146,11 @@ struct SelectFriendProvider: AppIntentTimelineProvider {
         let friend = configuration.friend
         let name = "\(friend.firstName) \(friend.lastName)"
         
-        var entry: FriendWidgetEntry? = nil
-        
-        if let post = await WidgetRealmManger.shared.retrieveImageData(from: friend.id) {
-            
-            entry = FriendWidgetEntry(date: .now,
-                                          title: post.title,
-                                          fullName: name,
-                                          emoji: post.emoji,
-                                          imageData: post.imageData,
-                                          postedDate: post.postedDate)
-        }
-    
+        let entry = await makePostEntry(from: friend.id, name: name)
         let finalEntry: FriendWidgetEntry = entry ?? makeEmptyWidgetEntry(name: name)
+
+        print( "MAKING TIMELINE" )
+        
         let timeline = Timeline(entries: [finalEntry], policy: .atEnd)
         return timeline
         

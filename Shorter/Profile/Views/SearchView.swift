@@ -83,8 +83,10 @@ struct SearchView: View {
             
             if wrapper.profileId == nil {
                 IconButton("arrowshape.turn.up.right") { composeMessage(to: contact) }
+                    .padding(.trailing)
             } else {
                 makeToggleButton(for: wrapper.profileId!)
+                    .padding(.trailing)
             }
             
         }

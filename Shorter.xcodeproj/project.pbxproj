@@ -52,8 +52,6 @@
 		C90375282C27622F007DCA5E /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C82C25E21B007DCA5E /* PhotoManager.swift */; };
 		C90375292C276284007DCA5E /* ShorterPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374C62C25D689007DCA5E /* ShorterPost.swift */; };
 		C903752B2C2765E3007DCA5E /* RealmManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903752A2C2765E3007DCA5E /* RealmManagerExtension.swift */; };
-		C903752C2C276756007DCA5E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
-		C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B72C25D0FD007DCA5E /* PermissionManager.swift */; };
 		C90375302C2768A3007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903752F2C2768A3007DCA5E /* UIUniversals */; };
 		C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375312C277CAA007DCA5E /* WidgetRealmManger.swift */; };
 		C90375362C279010007DCA5E /* ShorterPostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */; };
@@ -76,7 +74,6 @@
 		C9E289D02C2C59870075476A /* EmojiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289CF2C2C59870075476A /* EmojiManager.swift */; };
 		C9E289D52C2C9B180075476A /* ShorterPostPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289D42C2C9B180075476A /* ShorterPostPromptView.swift */; };
 		C9E289DB2C2CA74B0075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
-		C9E289DC2C2CB72D0075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
 		C9E289DE2C2CBD800075476A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DD2C2CBD800075476A /* ProfileView.swift */; };
 		C9E289E02C2CC3780075476A /* ShorterPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DF2C2CC3780075476A /* ShorterPlaceHolderView.swift */; };
 		C9E289E22C2CCB000075476A /* ProfileEdittingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E12C2CCB000075476A /* ProfileEdittingView.swift */; };
@@ -84,6 +81,8 @@
 		C9E289E62C2CF40C0075476A /* ShorterPostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E52C2CF40C0075476A /* ShorterPostPageViewModel.swift */; };
 		C9E289E82C2DEE270075476A /* SocialPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E72C2DEE270075476A /* SocialPageView.swift */; };
 		C9E289EA2C2E203B0075476A /* ShorterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E92C2E203B0075476A /* ShorterExtensions.swift */; };
+		C9E28A282C2EC8450075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
+		C9E28A292C2EC84D0075476A /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -743,13 +742,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C90374EE2C261D7D007DCA5E /* ShorterWidgetsBundle.swift in Sources */,
-				C9E289DC2C2CB72D0075476A /* TimingManager.swift in Sources */,
 				C90375292C276284007DCA5E /* ShorterPost.swift in Sources */,
+				C9E28A292C2EC84D0075476A /* RealmManager.swift in Sources */,
 				C90375242C2761CD007DCA5E /* ShorterProfile.swift in Sources */,
+				C9E28A282C2EC8450075476A /* TimingManager.swift in Sources */,
 				C90375282C27622F007DCA5E /* PhotoManager.swift in Sources */,
 				C90374FE2C2624AB007DCA5E /* Keys.swift in Sources */,
-				C903752C2C276756007DCA5E /* RealmManager.swift in Sources */,
-				C903752E2C276783007DCA5E /* PermissionManager.swift in Sources */,
 				C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */,
 				C90375322C277CAA007DCA5E /* WidgetRealmManger.swift in Sources */,
 				C90375022C262A91007DCA5E /* Utilities.swift in Sources */,

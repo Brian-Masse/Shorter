@@ -164,11 +164,9 @@ extension RealmManager {
     
     //    MARK: SetConfiguration
     private func setConfiguration() {
-        self.configuration = user?.flexibleSyncConfiguration(clientResetMode: .discardUnsyncedChanges(beforeReset: { before in
-            
-        }, afterReset: { before, after in
-            
-        }))
+        self.configuration = user?.flexibleSyncConfiguration()
+        
+        print(configuration.fileURL)
     }
     
     
