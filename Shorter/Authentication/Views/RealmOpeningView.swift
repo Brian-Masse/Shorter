@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
+import UIUniversals
 
 
 /// This view opens a synced realm.
@@ -16,32 +17,110 @@ struct OpenFlexibleSyncRealmView: View {
     // so `@AsyncOpen` here opens a realm using that configuration.
     @AsyncOpen(appId: RealmManager.appID, timeout: 4000) var asyncOpen
     
-    var body: some View {
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
+    @State private var showingErrorAlert: Bool = false
+    
+//    MARK: AsyncStatus
+    @ViewBuilder
+    private func makeStatusLabel(status: String, icon: String) -> some View {
+        HStack {
+            Text( status )
+            
+            Image(systemName: icon)
+        }
+        .bold()
+        .opacity(0.5)
+    }
+    
+    @ViewBuilder
+    private func makeAsyncStatus() -> some View {
         switch asyncOpen {
         // Starting the Realm.asyncOpen process.
         // Show a progress view.
         case .connecting:
-            ProgressView()
+            makeStatusLabel(status: "connecting", icon: "externaldrive.connected.to.line.below")
+            
         // Waiting for a user to be logged in before executing
         // Realm.asyncOpen.
         case .waitingForUser:
-            ProgressView("Waiting for user to log in...")
+            makeStatusLabel(status: "Waiting for Authentication", icon: "person.slash")
+                .onAppear {
+                    self.alertTitle = "User not Authenticated"
+                    self.alertMessage = "return to the sign in screen and try again"
+                    self.showingErrorAlert = true
+                }
+            
         // The realm has been opened and is ready for use.
         // Show the content view.
         case .open(let realm):
-            // Do something with the realm
-            ProgressView()
+            makeStatusLabel(status: "Loading Assests", icon: "shippingbox")
                 .task { await ShorterModel.realmManager.authRealm(realm: realm) }
             
         // The realm is currently being downloaded from the server.
         // Show a progress view.
-        case .progress(let progress):
-            ProgressView(progress)
+        case .progress(_):
+            makeStatusLabel(status: "Downloading Realm from Server", icon: "server.rack")
+            
+            
         // Opening the Realm failed.
         // Show an error view.
-        case .error(let error):
-            Image(systemName: "aqi.high")
-                .onAppear { print( "There was an error opening the realm: \(error)" ) }
+        case .error(_):
+            makeStatusLabel(status: "Error Opening Realm", icon: "wrench.and.screwdriver")
+                .onAppear {
+                    self.alertTitle = "Error Opening Realm"
+                    self.alertMessage = "return to the sign in screen and try again"
+                    self.showingErrorAlert = true
+                }
         }
+    }
+    
+//    MARK: Icon
+    @ViewBuilder
+    private func makeIcon() -> some View {
+        
+        Image("BigSur")
+            .resizable()
+            .aspectRatio(1, contentMode: .fill)
+            .frame(width: 120, height: 120)
+            .clipShape(RoundedRectangle(cornerRadius: Constants.UILargeTextSize ))
+            .contentShape(Rectangle())
+            .allowsTightening(false)
+            .cardWithDepth(shadow: true)
+    }
+    
+//    MARK: Body
+    var body: some View {
+        
+        VStack {
+            Spacer()
+            
+            HStack {
+                Spacer()
+                
+                makeIcon()
+                
+                Spacer()
+            }
+            
+            Spacer()
+            
+            makeAsyncStatus()
+        }
+        .ignoresSafeArea()
+        .padding()
+        .background {
+            BlurredBackground(colors: ShorterModel.defautColorPallett)
+                .ignoresSafeArea()
+        }
+        
+        .alert(alertTitle, isPresented: $showingErrorAlert) {
+            Button("return to sign in", role: .cancel) {
+                ShorterModel.realmManager.setState(.authenticating)
+            }
+        } message: {
+            Text( alertMessage )
+        }
+
     }
 }

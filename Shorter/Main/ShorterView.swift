@@ -21,7 +21,6 @@ struct ShorterView: View {
             case .openingRealm:
                 OpenFlexibleSyncRealmView()
                     .environment(\.realmConfiguration, realmManager.configuration)
-                    .padding()
                 
             case .creatingProfile:
                 ProfileCreationView()
