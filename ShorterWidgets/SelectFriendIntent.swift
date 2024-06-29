@@ -23,17 +23,14 @@ struct SelectFriendIntent: WidgetConfigurationIntent {
         self.friend = friend
     }
     
-    init() {
-//        self.friend = .init(id: WidgetKeys.signInKey,
-//                            firstName: "select friend",
-//                            lastName: "")
-    }
+    init() { }
 }
 
 //MARK: FriendDetail
 struct FriendDetail: AppEntity {
     
     let id: String
+    let ownerId: String
     let firstName: String
     let lastName: String
     
@@ -47,7 +44,7 @@ struct FriendDetail: AppEntity {
 //    This looks into the shared userDefaults and attempts to find a list of the users friends
 //    if it does, it maps the fetched data into the FriendDetail
     @MainActor
-    static func retreiveFriends() -> [FriendDetail] {
+    static func retreiveFriends(_ currentId: String = "\(0)") -> [FriendDetail] {
         var details: [FriendDetail] = []
         
         if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
@@ -59,14 +56,16 @@ struct FriendDetail: AppEntity {
                 let lastName = defaults.string(forKey: WidgetKeys.friendLastNameBaseKey + "\(i)") ?? ""
                             
                 if !ownerId.isEmpty {
-                    details.append( FriendDetail(id: ownerId,
+                    details.append( FriendDetail(id: "\(i)",
+                                                 ownerId: ownerId,
                                                  firstName: firstName,
                                                  lastName: lastName) )
                 }
             }
             
             if count == 0 {
-                details.append( FriendDetail(id: WidgetKeys.signInKey,
+                details.append( FriendDetail(id: currentId,
+                                             ownerId: WidgetKeys.signInKey,
                                              firstName: "-",
                                              lastName: "") )
             }
@@ -80,13 +79,7 @@ struct FriendDetail: AppEntity {
 struct FriendQuery: EntityQuery {
     
     func entities(for identifiers: [FriendDetail.ID]) async throws -> [FriendDetail] {
-        let friends = await FriendDetail.retreiveFriends()
-        
-        if !friends.contains(where: { detail in
-            detail.id == identifiers.first
-        }) {
-            WidgetCenter.shared.invalidateConfigurationRecommendations()
-        }
+        let friends = await FriendDetail.retreiveFriends(identifiers.first ?? "")
         
         return friends
     }

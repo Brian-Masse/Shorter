@@ -165,14 +165,14 @@ struct SelectFriendProvider: AppIntentTimelineProvider {
         
         let friend = configuration.friend
         
-        if friend.id == WidgetKeys.signInKey {
+        if friend.ownerId == WidgetKeys.signInKey {
             let entry = makeSignInEntry()
             return Timeline(entries: [entry], policy: .never)
         }
         
         let name = "\(friend.firstName) \(friend.lastName)"
         
-        let entry = await makePostEntry(from: friend.id, name: name)
+        let entry = await makePostEntry(from: friend.ownerId, name: name)
         let finalEntry: FriendWidgetEntry = entry ?? makeEmptyWidgetEntry(name: name)
         
         let timeline = Timeline(entries: [finalEntry], policy: .atEnd)
