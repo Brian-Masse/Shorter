@@ -42,5 +42,25 @@
 			</dict>
 		</dict>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>icon-dark</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-dark</string>
+				</array>
+			</dict>
+			<key>icon-light</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-light</string>
+				</array>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

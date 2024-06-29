@@ -16,7 +16,7 @@ struct OpenFlexibleSyncRealmView: View {
     // We've injected a `flexibleSyncConfiguration` as an environment value,
     // so `@AsyncOpen` here opens a realm using that configuration.
     @AsyncOpen(appId: RealmManager.appID, timeout: 4000) var asyncOpen
-    
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
@@ -80,7 +80,7 @@ struct OpenFlexibleSyncRealmView: View {
     @ViewBuilder
     private func makeIcon() -> some View {
         
-        Image("icon")
+        Image(colorScheme == .dark ? "icon-dark" : "icon-light")
             .resizable()
             .aspectRatio(1, contentMode: .fill)
             .frame(width: 120, height: 120)
@@ -95,7 +95,7 @@ struct OpenFlexibleSyncRealmView: View {
             )
         
             .onAppear {
-                withAnimation(.linear(duration: 70)) {
+                withAnimation(.linear(duration: 100)) {
                     degrees = 180
                 }
                 xRotation = Double.random(in: -1...1)

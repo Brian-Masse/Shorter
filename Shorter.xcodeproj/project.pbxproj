@@ -83,6 +83,8 @@
 		C9E289EA2C2E203B0075476A /* ShorterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289E92C2E203B0075476A /* ShorterExtensions.swift */; };
 		C9E28A282C2EC8450075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
 		C9E28A292C2EC84D0075476A /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
+		C9E28A2C2C3096BF0075476A /* icon-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E28A2B2C3096BF0075476A /* icon-dark.png */; };
+		C9E28A2E2C3096CF0075476A /* icon-light.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E28A2D2C3096CF0075476A /* icon-light.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +216,8 @@
 		C9E289E52C2CF40C0075476A /* ShorterPostPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShorterPostPageViewModel.swift; path = Shorter/Posts/ShorterPostPageViewModel.swift; sourceTree = SOURCE_ROOT; };
 		C9E289E72C2DEE270075476A /* SocialPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPageView.swift; sourceTree = "<group>"; };
 		C9E289E92C2E203B0075476A /* ShorterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterExtensions.swift; sourceTree = "<group>"; };
+		C9E28A2B2C3096BF0075476A /* icon-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dark.png"; sourceTree = "<group>"; };
+		C9E28A2D2C3096CF0075476A /* icon-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-light.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +295,7 @@
 				C90374CE2C25F538007DCA5E /* Profile */,
 				C90375332C278FFF007DCA5E /* Posts */,
 				C90375372C288DD8007DCA5E /* UIElements */,
+				C9E28A2A2C3096A20075476A /* icons */,
 				C903748D2C25D05E007DCA5E /* Assets.xcassets */,
 				C903748F2C25D05E007DCA5E /* Info.plist */,
 				C90375052C2637B5007DCA5E /* GoogleService-Info.plist */,
@@ -483,6 +488,15 @@
 			path = Universals;
 			sourceTree = "<group>";
 		};
+		C9E28A2A2C3096A20075476A /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				C9E28A2B2C3096BF0075476A /* icon-dark.png */,
+				C9E28A2D2C3096CF0075476A /* icon-light.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
 		CBB2A80C82599A7747D2D8B3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,7 +649,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E28A2E2C3096CF0075476A /* icon-light.png in Resources */,
 				C90375062C2637B5007DCA5E /* GoogleService-Info.plist in Resources */,
+				C9E28A2C2C3096BF0075476A /* icon-dark.png in Resources */,
 				C90374932C25D05E007DCA5E /* Preview Assets.xcassets in Resources */,
 				C903748E2C25D05E007DCA5E /* Assets.xcassets in Resources */,
 			);
@@ -939,6 +955,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES[sdk=*]" = "icon-dark icon-light";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shorter/Shorter.entitlements;

@@ -13,11 +13,17 @@ struct ProfileView: View {
     
 //    MARK: Vars
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
+    
+    @Namespace var profileNameSpace
+    private let iconId: String = "iconID"
     
     let profile: ShorterProfile
     
     @State private var showingProfileEdittingView: Bool = false
     @State private var showingPostCreationView: Bool = false
+    
+    @State private var activeIcon: String = UIApplication.shared.alternateIconName ?? "icon-dark"
     
 //    MARK: Header
     @ViewBuilder
@@ -121,6 +127,56 @@ struct ProfileView: View {
         }
     }
     
+//    MARK: Icon
+    @ViewBuilder
+    private func makeIconSwitcherButton(icon: String) -> some View {
+        Image(icon)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 85)
+            .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
+            .cardWithDepth()
+        
+            .padding()
+            .background {
+                if icon == activeIcon {
+                    RoundedRectangle(cornerRadius: Constants.UILargeTextSize)
+                        .foregroundStyle(Colors.getAccent(from: colorScheme))
+                        .matchedGeometryEffect(id: iconId,
+                                               in: profileNameSpace)
+                }
+            }
+        
+            .padding(Constants.subPadding)
+        
+            .onTapGesture {
+                withAnimation { self.activeIcon = icon }
+                UIApplication.shared.setAlternateIconName(icon) { error in
+                    if let err = error { print( err.localizedDescription ) }
+                }
+            }
+    }
+    
+    @ViewBuilder
+    private func makeIconSwitcher() -> some View {
+        VStack(alignment: .leading) {
+            Text( "Icon" )
+                .font(.callout)
+                .bold()
+                .padding(.leading)
+        
+            HStack {
+                Spacer()
+                
+                makeIconSwitcherButton(icon: "icon-dark")
+                makeIconSwitcherButton(icon: "icon-light")
+                
+                Spacer()
+            }
+            
+        }
+    }
+    
 //    MARK: Signout Button
     @ViewBuilder
     private func makeProfileButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
@@ -169,6 +225,9 @@ struct ProfileView: View {
                     .padding(.bottom)
                 
                 makeSocialPage()
+                    .padding(.bottom)
+                
+                makeIconSwitcher()
                     .padding(.bottom)
                 
                 Divider()
