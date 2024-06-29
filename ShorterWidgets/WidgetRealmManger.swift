@@ -22,11 +22,12 @@ class WidgetRealmManger {
     private func loadRealm() async {
         if let user = self.user {
         
-            let configuration = user.flexibleSyncConfiguration()
+            var configuration = user.flexibleSyncConfiguration()
+            configuration.objectTypes = [ ShorterProfile.self, ShorterPost.self ]
             
             let realm = try! await Realm(configuration: configuration,
                                          downloadBeforeOpen: .never )
-
+            
             self.realm = realm
         }
     }
@@ -43,36 +44,36 @@ class WidgetRealmManger {
     @MainActor
     func retrieveImageData( from profileId: String ) async -> ShorterPost? {
         print("attempting to retreive image data")
-//        
+        
         await self.signIn()
         await self.loadRealm()
-//        await removeSubscriptions()
-//        
-//        await addProfileSubscription(profileId)
-//
-//        if let profile: ShorterProfile = self.realm!.objects(ShorterProfile.self).first {
-//            
-//            if let mostRecentPost = profile.mostRecentPost {
-//
-//                await addPostSubscription(mostRecentPost)
-//                
-////                attempt to find the profile
-//                if let post: ShorterPost = self.realm!.objects(ShorterPost.self).first {
-//                    
-//                    let newPost = ShorterPost()
-//                    newPost.title = post.title
-//                    newPost.emoji = post.emoji
-//                    newPost.imageData = post.imageData
-//                    newPost.postedDate = post.postedDate
-//                    
-//                    await clean()
-//                    
-//                    return newPost
-//                }
-//            }
-//        }
+        await removeSubscriptions()
         
-        await clean()
+        await addProfileSubscription(profileId)
+
+        if let profile: ShorterProfile = self.realm!.objects(ShorterProfile.self).first {
+            
+            if let mostRecentPost = profile.mostRecentPost {
+
+                await addPostSubscription(mostRecentPost)
+                
+//                attempt to find the profile
+                if let post: ShorterPost = self.realm!.objects(ShorterPost.self).first {
+                    
+                    let newPost = ShorterPost()
+                    newPost.title = post.title
+                    newPost.emoji = post.emoji
+                    newPost.imageData = post.imageData
+                    newPost.postedDate = post.postedDate
+                    
+//                    await clean()
+                    
+                    return newPost
+                }
+            }
+        }
+        
+//        await clean()
         return nil
     }
     
@@ -110,7 +111,7 @@ class WidgetRealmManger {
     @MainActor
     private func clean() async {
         
-//        await removeSubscriptions()
+        await removeSubscriptions()
         
         try! await self.user?.remove()
         try! await self.app!.currentUser?.remove()

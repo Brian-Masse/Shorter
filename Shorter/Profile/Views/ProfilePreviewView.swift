@@ -11,6 +11,17 @@ import UIUniversals
 
 struct ProfilePreviewView: View{
     
+    struct LocalConstants {
+        static let deleteHandleSize: CGFloat = 200
+        static let deleteHandleOverflow: CGFloat = 100
+        static let deleteHandleThreshold: CGFloat = 50
+        
+        static let profileBlur: CGFloat = 200
+        static let previewHeight: CGFloat = 100
+    }
+    
+//    MARK: Vars    
+    
     let profile: ShorterProfile
     
     private let removeFriendTitle: String = "Remove Friend?"
@@ -21,20 +32,23 @@ struct ProfilePreviewView: View{
     @State private var previousOffset: CGFloat = 0
     @State private var offset: CGFloat = 0
     
-    private let maxDeleteHandleSize: CGFloat = 200
-    
+//    MARK: Drag Gesture
     private var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
                 if value.translation.width < 0 {
-                    offset = previousOffset + max(-maxDeleteHandleSize - 100, min(value.translation.width, 0))
-                } else if previousOffset == maxDeleteHandleSize {
-                    offset = -maxDeleteHandleSize - min( 0, max(-value.translation.width, -maxDeleteHandleSize))
+                    offset = previousOffset +
+                    max(-LocalConstants.deleteHandleSize - LocalConstants.deleteHandleOverflow,
+                         min(value.translation.width, 0))
+                    
+                } else if previousOffset == LocalConstants.deleteHandleSize {
+                    offset = -LocalConstants.deleteHandleSize -
+                    min( 0, max(-value.translation.width, -LocalConstants.deleteHandleSize))
                 }
             }
             .onEnded { value in
-                if value.translation.width < -50 {
-                    withAnimation { self.offset = -maxDeleteHandleSize }
+                if value.translation.width < -LocalConstants.deleteHandleThreshold {
+                    withAnimation { self.offset = -LocalConstants.deleteHandleSize }
                 } else {
                     withAnimation { self.offset = 0 }
                 }
@@ -83,7 +97,7 @@ struct ProfilePreviewView: View{
                             profile.getImage()
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fill)
-                                .frame(width: 200)
+                                .frame(width: LocalConstants.profileBlur)
                                 .blur(radius: 70)
                                 .opacity(0.3)
                         }
@@ -109,10 +123,10 @@ struct ProfilePreviewView: View{
                 
                 ZStack(alignment: .leading) {
                     Color.red
-                        .frame(width: maxDeleteHandleSize + 200)
+                        .frame(width: LocalConstants.deleteHandleSize * 2)
                     
                     makeDeleteHandle()
-                        .frame(width: maxDeleteHandleSize)
+                        .frame(width: LocalConstants.deleteHandleSize)
                 }
             }
         }
@@ -126,7 +140,7 @@ struct ProfilePreviewView: View{
         
         Rectangle()
             .foregroundStyle(.clear)
-            .frame(height: 100)
+            .frame(height: LocalConstants.previewHeight)
             
             .overlay {
                 makeContent()

@@ -21,10 +21,7 @@ struct MainView: View {
 //    MARK: Body
     var body: some View {
         ZStack(alignment: .top) {
-            Text( "Shorter" )
-                .bold()
-                .opacity(0.5)
-                .padding(.top, 7)
+            ShorterTitle(title: "Shorter")
             
             ShorterPostPage(posts: Array( posts ))
             

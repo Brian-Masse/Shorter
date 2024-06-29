@@ -23,7 +23,11 @@ struct SelectFriendIntent: WidgetConfigurationIntent {
         self.friend = friend
     }
     
-    init() { }
+    init() {
+        self.friend = .init(id: "Sign in",
+                            firstName: "",
+                            lastName: "")
+    }
 }
 
 //MARK: FriendDetail
@@ -43,11 +47,13 @@ struct FriendDetail: AppEntity {
 //    This looks into the shared userDefaults and attempts to find a list of the users friends
 //    if it does, it maps the fetched data into the FriendDetail
     @MainActor
-    static func retreiveFriends() async -> [FriendDetail] {
+    static func retreiveFriends() -> [FriendDetail] {
         var details: [FriendDetail] = []
         
         if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
             let count = max( 0, defaults.integer(forKey: WidgetKeys.totalFriendsKey) )
+            
+            
             
             for i in 0..<count {
                 let ownerId = defaults.string(forKey: WidgetKeys.friendOwnerIdBaseKey + "\(i)") ?? ""
@@ -71,7 +77,7 @@ struct FriendQuery: EntityQuery {
     
     func entities(for identifiers: [FriendDetail.ID]) async throws -> [FriendDetail] {
         let friends = await FriendDetail.retreiveFriends()
-        return friends.filter { identifiers.contains($0.id) }
+        return friends
     }
     
     func suggestedEntities() async throws -> [FriendDetail] {

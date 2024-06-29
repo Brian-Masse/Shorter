@@ -123,7 +123,7 @@ extension UIImage {
         let newSize = CGSize(width: newWidth, height: newHeight)
         let renderer = UIGraphicsImageRenderer(size: newSize)
 
-        return renderer.image { _ in
+            return renderer.image { _ in
             self.draw(in: CGRect(origin: .zero, size: newSize))
         }
     }

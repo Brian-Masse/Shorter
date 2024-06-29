@@ -10,6 +10,7 @@ import RealmSwift
 import Realm
 import AuthenticationServices
 import SwiftUI
+import WidgetKit
 
 extension RealmManager {
     
@@ -149,6 +150,7 @@ extension RealmManager {
                 
                 DispatchQueue.main.async {
                     NotificationManager.shared.clearNotifications()
+                    WidgetCenter.shared.reloadAllTimelines()
                     ShorterModel.shared.profile?.logout()
                     self.setState(.authenticating)
                 }
@@ -165,8 +167,6 @@ extension RealmManager {
     //    MARK: SetConfiguration
     private func setConfiguration() {
         self.configuration = user?.flexibleSyncConfiguration()
-        
-        print(configuration.fileURL)
     }
     
     

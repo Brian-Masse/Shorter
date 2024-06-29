@@ -17,20 +17,19 @@ struct OpenFlexibleSyncRealmView: View {
     // so `@AsyncOpen` here opens a realm using that configuration.
     @AsyncOpen(appId: RealmManager.appID, timeout: 4000) var asyncOpen
     
+    
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
     @State private var showingErrorAlert: Bool = false
     
+    @State private var degrees: CGFloat = 0
+    @State private var xRotation: CGFloat = 0
+    @State private var yRotation: CGFloat = 0
+    
 //    MARK: AsyncStatus
     @ViewBuilder
     private func makeStatusLabel(status: String, icon: String) -> some View {
-        HStack {
-            Text( status )
-            
-            Image(systemName: icon)
-        }
-        .bold()
-        .opacity(0.5)
+        ShorterTitle(title: status, icon: icon)
     }
     
     @ViewBuilder
@@ -65,12 +64,14 @@ struct OpenFlexibleSyncRealmView: View {
             
         // Opening the Realm failed.
         // Show an error view.
-        case .error(_):
+        case .error(let error):
             makeStatusLabel(status: "Error Opening Realm", icon: "wrench.and.screwdriver")
                 .onAppear {
                     self.alertTitle = "Error Opening Realm"
                     self.alertMessage = "return to the sign in screen and try again"
                     self.showingErrorAlert = true
+                    
+                    print( "\(error.localizedDescription)" )
                 }
         }
     }
@@ -79,7 +80,7 @@ struct OpenFlexibleSyncRealmView: View {
     @ViewBuilder
     private func makeIcon() -> some View {
         
-        Image("BigSur")
+        Image("icon")
             .resizable()
             .aspectRatio(1, contentMode: .fill)
             .frame(width: 120, height: 120)
@@ -87,6 +88,19 @@ struct OpenFlexibleSyncRealmView: View {
             .contentShape(Rectangle())
             .allowsTightening(false)
             .cardWithDepth(shadow: true)
+        
+            .rotation3DEffect(
+                .init(degrees: degrees),
+                                      axis: (x: xRotation, y: yRotation, z: xRotation)
+            )
+        
+            .onAppear {
+                withAnimation(.linear(duration: 70)) {
+                    degrees = 180
+                }
+                xRotation = Double.random(in: -1...1)
+                yRotation = Double.random(in: -1...1)
+            }
     }
     
 //    MARK: Body

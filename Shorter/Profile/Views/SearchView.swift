@@ -15,6 +15,10 @@ import UIUniversals
 
 struct SearchView: View {
     
+    struct LocalConstants {
+        static let selectProfileSize: CGFloat = 80
+    }
+    
 //    MARK: Vars
     @ObservedObject var contactManager = ContactManager.shared
     @ObservedObject var viewModel = SearchViewModel.shared
@@ -136,7 +140,8 @@ struct SearchView: View {
             profile.getImage()
                 .resizable()
                 .scaledToFit()
-                .frame(width: 80, height: 80)
+                .frame(width: LocalConstants.selectProfileSize,
+                       height: LocalConstants.selectProfileSize)
                 .clipShape(Circle())
                 .contentShape(Circle())
             

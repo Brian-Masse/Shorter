@@ -40,38 +40,20 @@ struct SocialPageView: View {
     
     @ObservedObject var profile = ShorterModel.shared.profile!
     
-//    MARK: Header
-    @ViewBuilder
-    private func makeHeader() -> some View {
-        HStack {
-         
-            IconButton("chevron.down") { dismiss() }
-            
-            Spacer()
-            
-            Text( "Social" )
-                .bold()
-                .opacity(0.5)
-            
-            Spacer()
-            
-            IconButton("person") { showingProfileView = true }
-        }
-    }
-    
 //    MARK: Body
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .leading) {
                 
-                makeHeader()
+                ShorterHeader(leftIcon: "chevron.down", title: "Social", rightIcon: "person", action1: {
+                    dismiss()
+                }, action2: { showingProfileView = true })
                     .padding(.bottom)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         SearchView(directlyAddFriends: true)
                             .padding(.vertical)
-                            .padding(.horizontal, 5)
                         
                         Text( "My Friends" )
                             .font(.title3)
@@ -80,8 +62,7 @@ struct SocialPageView: View {
                         FriendList( profile: profile )
                     }
                     .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius ))
-//                    .frame(minHeight: geo.size.height * 0.4)
-                    .padding(.bottom, 7)
+                    .padding(.bottom, Constants.subPadding)
                     
                     Spacer()
                 }

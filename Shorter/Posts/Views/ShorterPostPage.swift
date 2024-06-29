@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import UIUniversals
-
+import WidgetKit
 
 struct ShorterPostPage: View {
     
@@ -90,6 +90,9 @@ struct ShorterPostPage: View {
         .background{
             RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius)
                 .foregroundStyle(.background)
+        }
+        .onAppear {
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
     
