@@ -297,7 +297,9 @@ private struct EmojiPickerCategoryView: View {
                         .font(.largeTitle)
                         .onTapGesture {
                             viewModel.selectEmoji( emoji )
-                            viewModel.showingEmojiTray = false
+                            withAnimation {
+                                viewModel.showingEmojiTray = false
+                            }
                         }
                 }
             }

@@ -19,4 +19,7 @@ struct WidgetKeys {
     static let friendRecentImageDataBaseKey = "friendRecentImageDataBaseKey"
        
     static let totalFriendsKey = "friendsCountKey"
+    
+    static let signInKey: String = "SignInKey"
+    
 }

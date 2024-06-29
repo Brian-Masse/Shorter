@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
+import WidgetKit
 
 extension ShorterProfile {
     
@@ -142,7 +143,7 @@ extension ShorterProfile {
     }
     
     func logout() {
-        self.clearFriendListFromDefaults()
+        self.removeFriendsFromDefeaults()
     }
     
 //    Goes throuhg all friends in the profile and saves certain information to userDefaults
@@ -158,34 +159,31 @@ extension ShorterProfile {
                     query.ownerId == self.friendIds[i]
                 }).first {
                     
-                    var imageData = Data()
-                    if let post = ShorterPost.getPost(from: friend.mostRecentPost) {
-                        let uiImage = PhotoManager.decodeUIImage(from: post.imageData)
-                        imageData = PhotoManager.encodeImage(uiImage, compressionQuality: 0.5)
-                    }
-                    
                     defaults.set(friend.ownerId,
                                  forKey: WidgetKeys.friendOwnerIdBaseKey + "\(i)")
                     defaults.set(friend.firstName,
                                  forKey: WidgetKeys.friendFirstNameBaseKey + "\(i)")
                     defaults.set(friend.lastName,
                                  forKey: WidgetKeys.friendLastNameBaseKey + "\(i)")
-                    defaults.set(imageData,
-                                 forKey: WidgetKeys.friendRecentImageDataBaseKey + "\(i)")
                 }
             }
         }
+        
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
-    private func clearFriendListFromDefaults() {
+    func removeFriendsFromDefeaults() {
         if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
+            defaults.set( 0, forKey: WidgetKeys.totalFriendsKey )
+            
             for i in 0..<friendIds.count {
                 defaults.removeObject(forKey: WidgetKeys.friendOwnerIdBaseKey + "\(i)")
                 defaults.removeObject(forKey: WidgetKeys.friendFirstNameBaseKey + "\(i)")
                 defaults.removeObject(forKey: WidgetKeys.friendLastNameBaseKey + "\(i)")
-                defaults.removeObject(forKey: WidgetKeys.friendRecentImageDataBaseKey + "\(i)")
             }
         }
+        
+        WidgetCenter.shared.invalidateConfigurationRecommendations()
+        WidgetCenter.shared.reloadAllTimelines()
     }
-    
 }

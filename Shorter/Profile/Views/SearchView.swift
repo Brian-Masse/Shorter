@@ -200,9 +200,11 @@ struct SearchView: View {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius ))
+            .scrollDismissesKeyboard(.immediately)
 
             Spacer()
         }
+        .onTapGesture { self.hideKeyboard() }
         .onDisappear { viewModel.clear() }
         .task { await contactManager.fetchContacts() }
         .sheet(isPresented: $showingMessages) {

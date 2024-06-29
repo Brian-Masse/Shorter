@@ -66,6 +66,7 @@ struct SocialPageView: View {
                     
                     Spacer()
                 }
+                .scrollDismissesKeyboard(.immediately)
             }
         }
         .ignoresSafeArea(edges: .bottom)

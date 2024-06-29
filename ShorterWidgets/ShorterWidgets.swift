@@ -92,12 +92,15 @@ struct ShorterWidgetsEntryView : View {
     var body: some View {
         if entry.showSignInScreen {
             VStack {
-                Image(systemName: "shippingbox.and.arrow.backward.fill")
+                Image(systemName: "shippingbox.and.arrow.backward")
+                    .font(.title2)
+                    .bold()
                 
-                Text( "Sign In to See your Friends' posts" )
+                Text( "Sign In to Display posts" )
+                    .font(.callout)
+                    .multilineTextAlignment(.center)
+                    .opacity(0.7)
             }
-            .font(.title)
-            .bold()
             
         } else {
             makeRegularContent()
@@ -157,36 +160,15 @@ struct SelectFriendProvider: AppIntentTimelineProvider {
         makePlaceHolderWidgetEntry()
     }
     
-//    MARK: Report Memory
-    func report_memory() -> UInt64 {
-        var info = mach_task_basic_info()
-        let MACH_TASK_BASIC_INFO_COUNT = MemoryLayout<mach_task_basic_info>.stride/MemoryLayout<natural_t>.stride
-        var count = mach_msg_type_number_t(MACH_TASK_BASIC_INFO_COUNT)
-
-        let kerr: kern_return_t = withUnsafeMutablePointer(to: &info) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: MACH_TASK_BASIC_INFO_COUNT) {
-                task_info(mach_task_self_,
-                          task_flavor_t(MACH_TASK_BASIC_INFO),
-                          $0,
-                          &count)
-            }
-        }
-
-        if kerr == KERN_SUCCESS {
-            return info.resident_size
-        }
-        return 0
-    }
-    
     @MainActor
     func timeline(for configuration: SelectFriendIntent, in context: Context) async -> Timeline<FriendWidgetEntry> {
         
         let friend = configuration.friend
         
-//        if friend.id == "sign in" {
-//            let entry = makeSignInEntry()
-//            return Timeline(entries: [entry], policy: .never)
-//        }
+        if friend.id == WidgetKeys.signInKey {
+            let entry = makeSignInEntry()
+            return Timeline(entries: [entry], policy: .never)
+        }
         
         let name = "\(friend.firstName) \(friend.lastName)"
         

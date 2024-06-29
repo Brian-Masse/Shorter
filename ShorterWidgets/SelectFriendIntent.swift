@@ -24,9 +24,9 @@ struct SelectFriendIntent: WidgetConfigurationIntent {
     }
     
     init() {
-        self.friend = .init(id: "Sign in",
-                            firstName: "",
-                            lastName: "")
+//        self.friend = .init(id: WidgetKeys.signInKey,
+//                            firstName: "select friend",
+//                            lastName: "")
     }
 }
 
@@ -53,8 +53,6 @@ struct FriendDetail: AppEntity {
         if let defaults = UserDefaults(suiteName: WidgetKeys.suiteName) {
             let count = max( 0, defaults.integer(forKey: WidgetKeys.totalFriendsKey) )
             
-            
-            
             for i in 0..<count {
                 let ownerId = defaults.string(forKey: WidgetKeys.friendOwnerIdBaseKey + "\(i)") ?? ""
                 let firstName = defaults.string(forKey: WidgetKeys.friendFirstNameBaseKey + "\(i)") ?? ""
@@ -65,6 +63,12 @@ struct FriendDetail: AppEntity {
                                                  firstName: firstName,
                                                  lastName: lastName) )
                 }
+            }
+            
+            if count == 0 {
+                details.append( FriendDetail(id: WidgetKeys.signInKey,
+                                             firstName: "-",
+                                             lastName: "") )
             }
         }
         
@@ -77,6 +81,13 @@ struct FriendQuery: EntityQuery {
     
     func entities(for identifiers: [FriendDetail.ID]) async throws -> [FriendDetail] {
         let friends = await FriendDetail.retreiveFriends()
+        
+        if !friends.contains(where: { detail in
+            detail.id == identifiers.first
+        }) {
+            WidgetCenter.shared.invalidateConfigurationRecommendations()
+        }
+        
         return friends
     }
     
@@ -85,7 +96,8 @@ struct FriendQuery: EntityQuery {
     }
     
     func defaultResult() async -> FriendDetail? {
-        try? await suggestedEntities().first
+        let result = try? await suggestedEntities().first
+        return result
     }
     
     

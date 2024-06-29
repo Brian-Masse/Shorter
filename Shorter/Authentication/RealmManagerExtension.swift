@@ -150,7 +150,6 @@ extension RealmManager {
                 
                 DispatchQueue.main.async {
                     NotificationManager.shared.clearNotifications()
-                    WidgetCenter.shared.reloadAllTimelines()
                     ShorterModel.shared.profile?.logout()
                     self.setState(.authenticating)
                 }
