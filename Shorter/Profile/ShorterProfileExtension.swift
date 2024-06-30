@@ -13,6 +13,7 @@ import WidgetKit
 extension ShorterProfile {
     
 //    MARK: Initialization
+    @MainActor
     func fillProfile( firstName: String, lastName: String, phoneNumber: Int, friendIds: [String], imageData: Data ) {
         RealmManager.updateObject(self) { thawed in
             thawed.firstName = firstName
@@ -21,9 +22,10 @@ extension ShorterProfile {
             thawed.imageData = imageData
         }
         
-        Task { await self.addFriends(friendIds) }
+        self.addFriends(friendIds)
     }
     
+    @MainActor
     func updateProfile( firstName: String, lastName: String, email: String, phoneNumber: Int, imageData: Data ) {
         RealmManager.updateObject(self) { thawed in
             thawed.email = email
@@ -67,12 +69,14 @@ extension ShorterProfile {
     @MainActor
     func addFriends( _ ids: [String] ) {
         for id in ids {
-            addFriend(id)
+            addFriend(id, reloadWidgetTimelines: false)
         }
+        
+        self.saveFriendListToDefaults()
     }
     
     @MainActor
-    func addFriend( _ id: String ) {
+    func addFriend( _ id: String, reloadWidgetTimelines: Bool = true ) {
         if let friend = ShorterProfile.getProfile(for: id) {
             RealmManager.updateObject(self) { thawed in
                 thawed.friendIds.append(id)
@@ -82,7 +86,9 @@ extension ShorterProfile {
             }
         }
         
-        self.saveFriendListToDefaults()
+        if reloadWidgetTimelines {
+            self.saveFriendListToDefaults()
+        }
     }
     
     @MainActor

@@ -30,6 +30,7 @@ struct ProfileEdittingView: View {
         uiImage != nil
     }
     
+    @MainActor
     private func submit() {
         if !validateFields() { return }
         if !validateImage() { return }

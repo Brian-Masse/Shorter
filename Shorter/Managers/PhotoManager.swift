@@ -35,7 +35,7 @@ class PhotoManager: ObservableObject {
         return nil
     }
     
-    static func encodeImage( _ image: UIImage?, compressionQuality: Double = 0.9, in height: CGFloat = 400) -> Data {
+    static func encodeImage( _ image: UIImage?, compressionQuality: Double = 1, in height: CGFloat = 400) -> Data {
         if let image {
             let resizedImage = image.aspectFittedToHeight(height)
             return resizedImage.jpegData(compressionQuality: compressionQuality) ?? Data()

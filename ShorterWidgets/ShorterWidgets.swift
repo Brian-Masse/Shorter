@@ -40,6 +40,15 @@ struct FriendWidgetEntry: TimelineEntry {
 struct ShorterWidgetsEntryView : View {
     var entry: FriendWidgetEntry
     
+    private func formatDate() -> String {
+        let format: Date.FormatStyle = .dateTime
+            .month(.abbreviated)
+            .day()
+            .hour()
+        
+        return entry.postedDate.formatted(format)
+    }
+    
     @ViewBuilder
     private func makeRegularContent() -> some View {
         ZStack(alignment: .bottomLeading) {
@@ -62,7 +71,10 @@ struct ShorterWidgetsEntryView : View {
                     
                     Spacer()
                 }
-                Text( entry.date.formatted(date: .omitted, time: .complete) )
+                Text( formatDate() )
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                
                 Text( entry.fullName )
                     .textCase(.uppercase)
                     .font(.caption2)
@@ -95,8 +107,9 @@ struct ShorterWidgetsEntryView : View {
                 Image(systemName: "shippingbox.and.arrow.backward")
                     .font(.title2)
                     .bold()
+                    .padding(.bottom, 5)
                 
-                Text( "Sign In to Display posts" )
+                Text( "Sign In to view posts" )
                     .font(.callout)
                     .multilineTextAlignment(.center)
                     .opacity(0.7)
@@ -192,8 +205,8 @@ struct ShorterWidgets: Widget {
             ShorterWidgetsEntryView(entry: entry)
             
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Shorter Posts")
+        .description("Display a friend's daily posts on your homescreen")
         .supportedFamilies([.systemSmall, .systemLarge, .systemMedium])
     }
 }

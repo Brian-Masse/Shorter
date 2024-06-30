@@ -15,7 +15,7 @@ import UIUniversals
 struct OpenFlexibleSyncRealmView: View {
     // We've injected a `flexibleSyncConfiguration` as an environment value,
     // so `@AsyncOpen` here opens a realm using that configuration.
-    @AsyncOpen(appId: RealmManager.appID, timeout: 4000) var asyncOpen
+    @AsyncOpen(appId: RealmManager.appID, timeout: 10) var asyncOpen
     @Environment(\.colorScheme) var colorScheme
     
     @State private var alertTitle: String = ""

@@ -80,10 +80,18 @@ struct ShorterPostPage: View {
                 }.menuActionDismissBehavior(.disabled)
             }
             
-            StyledScrollView(height: ShorterPostPreviewView.height,
-                             cards: viewModel.filteredPosts) { post, _ in
+            if !viewModel.filteredPosts.isEmpty {
+                StyledScrollView(height: ShorterPostPreviewView.height,
+                                 cards: viewModel.filteredPosts) { post, _ in
+                    
+                    ShorterPostPreviewView(post: post)
+                }
+            } else {
                 
-                ShorterPostPreviewView(post: post)
+                ShorterPlaceHolderView(icon: "square.grid.3x3.square",
+                                       message: "When your friends post, you'll be able to view them here")
+                
+                Spacer()
             }
         }
         .padding()

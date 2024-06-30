@@ -14,7 +14,7 @@ import RealmSwift
 struct SelectFriendIntent: WidgetConfigurationIntent {
     
     static var title: LocalizedStringResource = "Select a Friend"
-    static var description = IntentDescription( "Selects the friend you want to see daily photos from" )
+    static var description = IntentDescription( "Select the friend's posts you want to display" )
     
     @Parameter(title: "Friend" )
     var friend: FriendDetail

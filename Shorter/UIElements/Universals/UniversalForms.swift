@@ -15,14 +15,16 @@ struct StyledTextField: View {
     let title: String
     let prompt: String
     let binding: Binding<String>
+    let multiLine: Bool
     let privateField: Bool
     let clearable: Bool
     
-    init( title: String, prompt: String = "", binding: Binding<String>, privateField: Bool = false, clearable: Bool = false ) {
+    init( title: String, prompt: String = "", binding: Binding<String>, multiLine: Bool = false, privateField: Bool = false, clearable: Bool = false ) {
         self.title = title
         self.privateField = privateField
         self.binding = binding
         self.prompt = prompt
+        self.multiLine = multiLine
         self.clearable = clearable
     }
     
@@ -31,7 +33,11 @@ struct StyledTextField: View {
         if privateField {
             SecureField(prompt, text: binding)
         } else {
-            TextField(prompt, text: binding, axis: .vertical)
+            if multiLine {
+                TextField(prompt, text: binding, axis: .vertical)
+            } else {
+                TextField(prompt, text: binding)
+            }
         }
     }
     

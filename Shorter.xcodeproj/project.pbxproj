@@ -41,7 +41,6 @@
 		C90375062C2637B5007DCA5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90375052C2637B5007DCA5E /* GoogleService-Info.plist */; };
 		C903750F2C271798007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903750E2C271798007DCA5E /* UIUniversals */; };
 		C90375122C27179F007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; };
-		C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C90375142C2718A9007DCA5E /* FirebaseMessaging */; };
 		C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375192C27447B007DCA5E /* SelectFriendIntent.swift */; };
 		C903751E2C2754BB007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; };
@@ -225,7 +224,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C90375152C2718A9007DCA5E /* FirebaseMessaging in Frameworks */,
 				C90375122C27179F007DCA5E /* RealmSwift in Frameworks */,
 				C903750F2C271798007DCA5E /* UIUniversals in Frameworks */,
 				C9E289CA2C2C4FE80075476A /* MCEmojiPicker in Frameworks */,
@@ -347,7 +345,6 @@
 				C90374C32C25D28B007DCA5E /* ShorterModel.swift */,
 				C903748B2C25D05D007DCA5E /* ShorterView.swift */,
 				C90374BE2C25D12B007DCA5E /* MainView.swift */,
-				C90374B72C25D0FD007DCA5E /* PermissionManager.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -389,6 +386,7 @@
 		C90375252C2761E6007DCA5E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				C90374B72C25D0FD007DCA5E /* PermissionManager.swift */,
 				C9E289DA2C2CA74A0075476A /* TimingManager.swift */,
 				C90374CA2C25E88A007DCA5E /* ContactManager.swift */,
 				C90374C82C25E21B007DCA5E /* PhotoManager.swift */,
@@ -526,7 +524,6 @@
 			packageProductDependencies = (
 				C903750E2C271798007DCA5E /* UIUniversals */,
 				C90375112C27179F007DCA5E /* RealmSwift */,
-				C90375142C2718A9007DCA5E /* FirebaseMessaging */,
 				C9E289C92C2C4FE80075476A /* MCEmojiPicker */,
 			);
 			productName = Shorter;
@@ -629,7 +626,6 @@
 			packageReferences = (
 				C903750D2C271798007DCA5E /* XCRemoteSwiftPackageReference "UIUniversals" */,
 				C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */,
-				C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C9E289C82C2C4FE80075476A /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 			);
 			productRefGroup = C90374852C25D05D007DCA5E /* Products */;
@@ -1213,14 +1209,6 @@
 				kind = branch;
 			};
 		};
-		C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.28.0;
-			};
-		};
 		C9E289C82C2C4FE80075476A /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
@@ -1241,11 +1229,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C90375102C27179F007DCA5E /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		C90375142C2718A9007DCA5E /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C90375132C2718A9007DCA5E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 		C903751D2C2754BB007DCA5E /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -25,7 +25,7 @@ struct FriendList: View {
                     }
                 } else {
                     ShorterPlaceHolderView(icon: "person.line.dotted.person",
-                                           message: "Connect with friends on Shortes")
+                                           message: "When you connect with friends, you'll be able to see them here")
                 }
             }
         }

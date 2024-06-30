@@ -103,6 +103,7 @@ struct SearchView: View {
                 Text( "From Contacts" )
                     .font(.title3)
                     .bold()
+                    .padding(.top, viewModel.filteredProfiles.count == 0 ? 15 : 0)
                 
                 ForEach( 0..<viewModel.filteredContacts.count, id: \.self ) { i in
                     let contactWrapper = viewModel.filteredContacts[i]
@@ -122,11 +123,13 @@ struct SearchView: View {
             VStack(alignment: .leading) {
                 
                 ForEach(viewModel.filteredProfiles) { profile in
-                    ZStack(alignment: .trailing) {
-                        ProfilePreviewView(profile: profile)
-                        
-                        makeToggleButton(for: profile.ownerId)
-                            .padding(.trailing)
+                    if !profile.isInvalidated {
+                        ZStack(alignment: .trailing) {
+                            ProfilePreviewView(profile: profile)
+                            
+                            makeToggleButton(for: profile.ownerId)
+                                .padding(.trailing)
+                        }
                     }
                 }
             }
@@ -160,8 +163,10 @@ struct SearchView: View {
                 
                 ScrollView( .horizontal, showsIndicators: false ) {
                     HStack {
-                        ForEach( viewModel.selectedProfles ) { profile in
-                            makeSelectedProfile(profile)
+                        ForEach( viewModel.selectedProfles ) { profileId in
+                            if let profile = ShorterProfile.getProfile(for: profileId) {
+                                makeSelectedProfile(profile)
+                            }
                         }
                     }
                 }.padding(.vertical)

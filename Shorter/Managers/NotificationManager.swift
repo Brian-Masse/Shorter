@@ -15,6 +15,9 @@ class NotificationManager: ObservableObject {
     static let shared = NotificationManager()
     static let totalNotificationCount: Int = 7
     
+    static let notificationTitle: String = "Time to Conect 🙂‍↕️"
+    static let notificationMessage: String = "Share your status, what your up to today, or anything else with your friends to let them know how you're doing!"
+    
     private struct NotificationsDefaultKeys {
         static let suiteName: String = "notificationsDefault"
         static let notifcationEntryBase: String = "notificationEntryBase"
@@ -128,7 +131,8 @@ class NotificationManager: ObservableObject {
             let components = Calendar.current.dateComponents([ .day, .month, .year, .hour, .minute ],
                                                              from: date)
             
-            let content = makeNotificationContent(title: "Notificaiton \(i)", body: "This notification was supposed to be sent at: \( date.formatted(date: .abbreviated, time: .complete) )")
+            let content = makeNotificationContent(title: NotificationManager.notificationTitle,
+                                                  body: NotificationManager.notificationMessage)
             
             makeCalendarNotificationRequest(components: components,
                                             identifier: key,

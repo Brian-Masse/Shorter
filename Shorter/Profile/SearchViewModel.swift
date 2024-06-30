@@ -22,10 +22,11 @@ class SearchViewModel: ObservableObject {
     private let contactManager = ContactManager.shared
     
     private let searchQueryKey: String = "searchQueryKey"
+    private let selectedSearchQueryKey: String = "selectedSearchQueryKey"
     
     @Published var filteredProfiles: [ShorterProfile] = []
     @Published var filteredContacts: [ContactWrapper] = []
-    @Published var selectedProfles: [ShorterProfile] = []
+    @Published var selectedProfles: [String] = []
     
     private func formatString( _ str: String ) -> String {
         str.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
@@ -60,13 +61,13 @@ class SearchViewModel: ObservableObject {
             return
         }
         
-        if let index = selectedProfles.firstIndex(where: { profile in
-            profile.ownerId == id
+        if let index = selectedProfles.firstIndex(where: { profileId in
+            profileId == id
         }) {
             mutatingProfiles.remove(at: index)
         } else {
-            if let profile = ShorterProfile.getProfile(for: id) {
-                mutatingProfiles.append(profile)
+            if let _ = ShorterProfile.getProfile(for: id) {
+                mutatingProfiles.append(id)
             }
         }
         
@@ -74,8 +75,8 @@ class SearchViewModel: ObservableObject {
     }
     
     func checkProfileIsSelected(_ id: String) -> Bool {
-        selectedProfles.firstIndex { profile in
-            profile.ownerId == id
+        selectedProfles.firstIndex { profileId in
+            profileId == id
         } != nil
     }
     
@@ -83,8 +84,13 @@ class SearchViewModel: ObservableObject {
     @MainActor
     private func retrieveDataBaseProfiles(in searchText: String) async {
         let realmManager = ShorterModel.realmManager
+        
         await realmManager.shorterProfileQuery.addQuery(searchQueryKey) { query in
             query.firstName.contains( searchText )
+        }
+        
+        await realmManager.shorterProfileQuery.addQuery(selectedSearchQueryKey) { query in
+            query.ownerId.in(self.selectedProfles)
         }
         
         var results: [ShorterProfile] = RealmManager.retrieveObjects()
@@ -123,6 +129,7 @@ class SearchViewModel: ObservableObject {
         withAnimation { self.filteredContacts = filteredContacts }
     }
     
+//    MARK: search
     func search(in searchText: String) async {
 
         await self.retrieveDataBaseProfiles(in: searchText)

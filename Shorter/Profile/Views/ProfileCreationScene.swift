@@ -59,10 +59,6 @@ struct ProfileCreationView: View {
     @State private var recipients: [String] = []
     @State private var message = "message"
     
-    @State private var filteredProfiles: [ShorterProfile] = []
-    @State private var filteredContacts: [CNContact] = []
-    @State private var friendIds: [String] = []
-    
     private func validatePhoneNumber() -> Bool {
         "\(phoneNumber)".count >= 10 && "\(phoneNumber)".count < 12
     }
@@ -82,21 +78,10 @@ struct ProfileCreationView: View {
         ShorterModel.shared.profile?.fillProfile(firstName: firstName,
                                                  lastName: lastName,
                                                  phoneNumber: phoneNumber,
-                                                 friendIds: friendIds,
+                                                 friendIds: SearchViewModel.shared.selectedProfles,
                                                  imageData: photoData)
         
         ShorterModel.realmManager.setState(.complete)
-    }
-    
-    private func search() async {
-        await ShorterModel.realmManager.shorterProfileQuery.addQuery("test") { query in
-            return query.firstName.contains( searchText )
-        }
-        
-        let results: [ShorterProfile] = RealmManager.retrieveObjects()
-        self.filteredProfiles = results
-        
-        self.filteredContacts = contactManager.fetchContacts(for: searchText)
     }
     
 //    MARK: Start Screen

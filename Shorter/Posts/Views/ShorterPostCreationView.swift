@@ -88,7 +88,8 @@ struct ShorterPostCreationView: View {
             
             StyledTextField(title: "Any additional notes?",
                             prompt: "notes",
-                            binding: $notes)
+                            binding: $notes,
+                            multiLine: true)
 
             Spacer()
         }
@@ -146,7 +147,7 @@ struct ShorterPostCreationView: View {
             Spacer()
         }
         .sheet(isPresented: $showingImagePicker) {
-            ImagePickerView(sourceType: .photoLibrary) { uiImage in
+            ImagePickerView(sourceType: .camera) { uiImage in
                 self.uiImage = uiImage
             }
         }
