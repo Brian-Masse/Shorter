@@ -147,7 +147,7 @@ struct SelectFriendProvider: AppIntentTimelineProvider {
     }
     
     private func compressImageData(_ data: Data) -> Data {
-        return PhotoManager.encodeImage(PhotoManager.decodeUIImage(from: data), compressionQuality: 1, in: 300)
+        return PhotoManager.encodeImage(PhotoManager.decodeUIImage(from: data), compressionQuality: 1, in: 260)
     }
     
     @MainActor

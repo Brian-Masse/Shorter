@@ -98,8 +98,8 @@ struct OpenFlexibleSyncRealmView: View {
                 withAnimation(.linear(duration: 100)) {
                     degrees = 180
                 }
-                xRotation = Double.random(in: -1...1)
-                yRotation = Double.random(in: -1...1)
+                xRotation = Double.random(in: -0.5...0.5)
+                yRotation = Double.random(in: -0.5...0.5)
             }
     }
     

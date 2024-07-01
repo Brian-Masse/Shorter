@@ -80,8 +80,10 @@ struct FriendQuery: EntityQuery {
     
     func entities(for identifiers: [FriendDetail.ID]) async throws -> [FriendDetail] {
         let friends = await FriendDetail.retreiveFriends(identifiers.first ?? "")
-        
-        return friends
+        let filteredFriends = friends.filter { friend in
+            identifiers.contains(friend.id)
+        }
+        return filteredFriends
     }
     
     func suggestedEntities() async throws -> [FriendDetail] {

@@ -166,6 +166,7 @@ extension RealmManager {
     //    MARK: SetConfiguration
     private func setConfiguration() {
         self.configuration = user?.flexibleSyncConfiguration()
+        self.configuration.objectTypes = [ ShorterPost.self, ShorterProfile.self, TimingManager.self ]
     }
     
     

@@ -126,7 +126,9 @@ struct ShorterPostView: View {
             
             Spacer()
             
-            IconButton("trash") { showDeleteAlert = true }
+            if post.ownerId == ShorterModel.ownerId {
+                IconButton("trash") { showDeleteAlert = true }
+            }
         }
     }
     
