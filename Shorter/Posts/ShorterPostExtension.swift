@@ -18,6 +18,7 @@ extension ShorterPost {
                       title: String,
                       emoji: String,
                       notes: String,
+                      shareList: [String] = [],
                       data: Data ) {
         self.init()
         
@@ -30,7 +31,11 @@ extension ShorterPost {
         self.notes = notes
         
         self.imageData = data
-        self.sharedOwnerIds = ShorterModel.shared.profile?.friendIds ?? List()
+        
+        let sharedOwnerIds = RealmSwift.List<String>()
+        for id in shareList { sharedOwnerIds.append(id) }
+        
+        self.sharedOwnerIds = sharedOwnerIds
         
         self.postedDate = .now
         

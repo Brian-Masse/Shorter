@@ -16,10 +16,12 @@ struct ShorterPostCreationView: View {
             switch self {
             case .overview:     return "overview"
             case .photo:        return "photo"
+            case .social:        return "social"
             }
         }
         case overview
         case photo
+        case social
         
         var id: Int { self.rawValue }
     }
@@ -38,6 +40,9 @@ struct ShorterPostCreationView: View {
     @State private var showingImagePicker: Bool = false
     @State private var showingLibraryPicker: Bool = false
     
+    @State private var showingAllProfiles: Bool = false
+    @State private var selectedProfileIds: [String] = Array(ShorterModel.shared.profile!.friendIds)
+    
     private func validateFields() -> Bool {
         !title.isEmpty && !fullTitle.isEmpty
     }
@@ -47,13 +52,14 @@ struct ShorterPostCreationView: View {
         if title.isEmpty { return }
         
         let imageData = PhotoManager.encodeImage(self.uiImage)
-//
+        
         let post = ShorterPost(ownerId: ShorterModel.ownerId,
                                authorName: ShorterModel.shared.profile!.fullName,
                                fullTitle: fullTitle,
                                title: title,
                                emoji: EmojiPickerViewModel.shared.selectedEmoji,
                                notes: notes,
+                               shareList: selectedProfileIds,
                                data: imageData)
 //        
         RealmManager.addObject( post )
@@ -61,6 +67,13 @@ struct ShorterPostCreationView: View {
         dismiss()
     }
     
+    private func toggleProfileId(_ id: String) {
+        if let index = selectedProfileIds.firstIndex(of: id) {
+            selectedProfileIds.remove(at: index)
+        } else {
+            selectedProfileIds.append(id)
+        }
+    }
 
 //    MARK: ViewBuilder
     @ViewBuilder
@@ -174,6 +187,64 @@ struct ShorterPostCreationView: View {
         }
     }
     
+//    MARK: SocialScene
+    private func getSelectedProfileCountMessage() -> String {
+        if selectedProfileIds.count == ShorterModel.shared.profile?.friendIds.count {
+            return "everyone"
+        } else if selectedProfileIds.count != 0 {
+            return "\(selectedProfileIds.count) profiles selected"
+        } else {
+            return "\(selectedProfileIds.count) profile selected"
+        }
+    }
+    
+    private func isSelected( _ id: String ) -> Bool { selectedProfileIds.contains(id) }
+    
+    @ViewBuilder
+    private func makeSocialScene() -> some View {
+        VStack(alignment: .leading) {
+                
+            Text( "Who would you like to share this with?" )
+                .font(.title2)
+                .bold()
+                .padding([.bottom, .trailing])
+            
+            UniversalButton {
+                
+                HStack {
+                    Image(systemName:  showingAllProfiles ? "chevron.up" : "chevron.down")
+                        .bold()
+                    
+                    Text( "Profiles" )
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Text( getSelectedProfileCountMessage() )
+                        .opacity(Constants.tertiaryTextAlpha)
+                }
+                
+            } action: { showingAllProfiles.toggle() }
+             
+            ScrollView(.vertical) {
+                VStack {
+            
+                    if showingAllProfiles {
+                        ForEach( ShorterModel.shared.profile!.friendIds ) { id in
+                            
+                            if let profile = ShorterProfile.getProfile(for: id) {
+                                ProfilePreviewView(profile: profile)
+                                    .onTapGesture { withAnimation { toggleProfileId(id) } }
+                                    .opacity( isSelected(id) ? 1 : 0.3 )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .onAppear { sceneComplete = true }
+    }
+    
     @ViewBuilder
     private func makeTransitionWrapper<C: View>(_ transitionDirection: Edge, @ViewBuilder contentBuilder: () -> C) -> some View {
         contentBuilder()
@@ -193,6 +264,7 @@ struct ShorterPostCreationView: View {
                     switch scene {
                     case .overview:     makeOverviewScene()
                     case .photo:        makePhotoScene()
+                    case .social:       makeSocialScene()
                     }
                 }
             }
