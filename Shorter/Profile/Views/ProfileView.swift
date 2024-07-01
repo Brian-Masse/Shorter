@@ -286,6 +286,9 @@ struct ProfileView: View {
         .sheet(isPresented: $showingBlockedUsersView, content: {
             BlockedUsersPage(blockedUsers: Array(ShorterModel.shared.profile!.blockedIds))
         })
+        .sheet(isPresented: $showingHiddenPostsView, content: {
+            HiddenPostsPage(hiddenPosts: Array( ShorterModel.shared.profile!.hiddenPosts ))
+        })
     }
 }
 

@@ -170,11 +170,11 @@ extension ShorterProfile {
     func hidePost( _ id: ObjectId, toggle: Bool = false ) {
         RealmManager.updateObject(self) { thawed in
             if let index = self.hiddenPosts.firstIndex(of: id) {
-                self.hiddenPosts.remove(at: index)
-            } else {
                 if toggle {
-                    self.hiddenPosts.append(id)
+                    self.hiddenPosts.remove(at: index)
                 }
+            } else {
+                self.hiddenPosts.append(id)
             }
         }
     }

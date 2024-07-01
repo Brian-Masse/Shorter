@@ -84,7 +84,7 @@ struct ShorterPostPage: View {
                 StyledScrollView(height: ShorterPostPreviewView.height,
                                  cards: viewModel.filteredPosts) { post, _ in
                     
-                    ShorterPostPreviewView(post: post)
+                    ShorterPostPreviewView(post: post, posts: posts)
                 }
             } else {
                 

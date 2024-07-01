@@ -7,7 +7,27 @@
 
 import Foundation
 import SwiftUI
+import RealmSwift
 import UIUniversals
+
+struct PrivacyPageHeader: View {
+    
+    let title: String
+    let message: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text( title )
+                .font(.title2)
+                .bold()
+            
+            Text( message )
+                .font(.caption)
+                .opacity(Constants.tertiaryTextAlpha)
+                .padding(.bottom)
+        }
+    }
+}
 
 //MARK: BlockedUserPage
 struct BlockedUsersPage: View {
@@ -47,14 +67,8 @@ struct BlockedUsersPage: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            Text( "Blocked Users" )
-                .font(.title2)
-                .bold()
-            
-            Text( "Blocked Users cannot see your posts or view your profile, including your name, contact information, and profile photo in any search or post. Their posts and contact photo will be hidden." )
-                .font(.caption)
-                .opacity(Constants.tertiaryTextAlpha)
-                .padding(.bottom)
+            PrivacyPageHeader(title: "Blocked Users",
+                              message: "Blocked Users cannot see your posts or view your profile, including your name, contact information, and profile photo in any search or post. Their posts and contact photo will be hidden.")
             
             HStack { Spacer() }
             
@@ -88,5 +102,80 @@ struct BlockedUsersPage: View {
             await ShorterModel.realmManager.removeBlockedUserSubscription()
             
         } }
+    }
+}
+
+//MARK: HiddenPostsPage
+struct HiddenPostsPage: View {
+    
+    let hiddenPosts: [ObjectId]
+    
+    @State private var showingUnHidePostAlert: Bool = false
+    private let unhideAlertTitle = "unhind post?"
+    private let unhideAlertMessage = "This post will be visible on your home screen. You can hide it again any time."
+    
+    @State private var postId: ObjectId? = nil
+    
+    @MainActor
+    private func unHidePost() async {
+        ShorterModel.shared.profile?.hidePost(postId!, toggle: true)
+        
+        let posts: [ShorterPost] = RealmManager.retrieveObjects()
+        await ShorterPostsPageViewModel.shared.getSharedWithMePosts(from: posts)
+    }
+    
+//    MARK: HiddenPost
+    @MainActor
+    @ViewBuilder
+    private func makeHiddenPost( _ post: ShorterPost ) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text( "post from \(post.ownerName)" )
+                    .bold()
+                Text( "shared on \(post.postedDate.formatted(date: .abbreviated, time: .omitted))" )
+                    .font(.callout)
+                    .opacity(Constants.tertiaryTextAlpha)
+            }
+            
+            Spacer()
+            
+            IconButton("square.slash") { showingUnHidePostAlert = true }
+        }
+        .alert(unhideAlertTitle, isPresented: $showingUnHidePostAlert) {
+            
+            Button("unhide") { Task {
+                postId = post._id
+                await unHidePost()
+            } } 
+            
+        } message: { Text( unhideAlertMessage ) }
+
+    }
+    
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            
+            PrivacyPageHeader(title: "Hidden Posts",
+                              message: "Hidden posts cannot be seen on your home feed. Additionally, you can choose to filter out posts marked with mature content")
+            
+            if hiddenPosts.count == 0 {
+                ShorterPlaceHolderView(icon: "square.slash", message: "You haven't hidden any posts")
+            } else {
+                
+                ForEach( hiddenPosts, id: \.self ) { id in
+                    if let post = ShorterPost.getPost(from: id) {
+                        
+                        makeHiddenPost(post)
+                        
+                        Divider()
+                            .padding(.bottom, 5)
+                    }
+                }
+            }
+            
+            Spacer()
+        }
+        .padding()
     }
 }

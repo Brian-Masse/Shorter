@@ -31,7 +31,7 @@ struct ProfilePreviewView: View{
     private let blockFriendMessage: String = "You won't be able to see thier posts, and they won't show up in any searchs. This can be undone later in settings"
     
     private let reportAndBlockTitle: String = "Report This User?"
-    private let reportAndBlockMessage: String = "If this user has generated innapropriate contend, please let us know and we'll investigate it within 24 hours to keep Shorter safe."
+    private let reportAndBlockMessage: String = "If this user has generated innapropriate content, please let us know and we'll investigate it within 24 hours to keep Shorter safe."
     
     @State private var showingRemoveFriendAlert: Bool = false
     @State private var showingBlockFriendAlert: Bool = false

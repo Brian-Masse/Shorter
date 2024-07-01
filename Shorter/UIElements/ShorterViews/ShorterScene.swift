@@ -145,7 +145,10 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
             .opacity(sceneComplete ? 1 : 0.45)
             .bold()
             
-        } action: { progressScene() }
+        } action: {
+            if !sceneComplete { return }
+            progressScene()
+        }
     }
     
     var body: some View {

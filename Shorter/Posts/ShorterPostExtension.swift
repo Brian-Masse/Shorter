@@ -68,8 +68,10 @@ extension ShorterPost {
         let uiImage = PhotoManager.decodeUIImage(from: self.imageData)
         
         if self.imageData.count < 600000 {
-            self.image = Image(uiImage: uiImage!)
-            return self.image
+            if let uiImage = uiImage {
+                self.image = Image(uiImage: uiImage)
+                return self.image
+            }
         }
 
         let data = PhotoManager.encodeImage(uiImage)

@@ -17,6 +17,7 @@ struct ShorterPostPreviewView: View {
     }
     
     let post: ShorterPost
+    let posts: [ShorterPost]
     
     static var height: CGFloat { LocalConstants.cardHeigt }
     
@@ -26,9 +27,13 @@ struct ShorterPostPreviewView: View {
     
     @State private var showingFullScreen: Bool = false
     @State private var showingHidePostAlert: Bool = false
+    @State private var showingReportAndHideAlert: Bool = false
     
     private let hidePostAlertTitle: String = "Hide Post"
     private let hidePostAlertMessage: String = "You won't be able to see this post on your home feed anymore. You can undo this action later in settings. "
+    
+    private let reportAndHideTitle = "Report and Hide Post?"
+    private let reportAndHideMessage = "If this post has innapropriate content, please let us know and we'll investigate it within 24 hours to keep Shorter safe."
     
 //    MARK: ViewBuilders
     @ViewBuilder
@@ -79,16 +84,23 @@ struct ShorterPostPreviewView: View {
         
             .contextMenu(ContextMenu(menuItems: {
                 Button("Hide Post", systemImage: "square.slash") { showingHidePostAlert = true }
+                Button("Report and Hide Post", systemImage: "exclamationmark.shield", role: .destructive) { showingReportAndHideAlert = true }
             }))
 
             .alert(hidePostAlertTitle, isPresented: $showingHidePostAlert) {
+                Button("Hide post") { Task {
+                    ShorterModel.shared.profile?.hidePost(post._id)
+                    await ShorterPostsPageViewModel.shared.getSharedWithMePosts(from: posts)
+                } }
+            } message: { Text( hidePostAlertMessage ) }
+        
+            .alert(reportAndHideTitle, isPresented: $showingReportAndHideAlert) {
+                Button("Report and Hide") { Task {
+                    ShorterModel.shared.profile?.hidePost(post._id)
+                    await ShorterPostsPageViewModel.shared.getSharedWithMePosts(from: posts)
+                } }
                 
-                Button("Hide post") { ShorterModel.shared.profile?.hidePost(post._id) }
-                
-            } message: {
-                Text( hidePostAlertMessage )
-            }
-
+            } message: { Text( reportAndHideMessage ) }
     }
 }
 
