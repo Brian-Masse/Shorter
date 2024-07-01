@@ -209,6 +209,7 @@ struct ProfileView: View {
                 Spacer()
             }
             .rectangularBackground(style: style)
+            .if(style == .accent && colorScheme == .light) { view in view.foregroundStyle(.white) }
             
         } action: { action() }
     }

@@ -29,6 +29,7 @@ final class ShorterProfile: Object, Identifiable {
     @Persisted var blockingIds: RealmSwift.List<String> = List()
     @Persisted var blockedIds: RealmSwift.List<String> = List()
     
+    @Persisted var allowsMatureContent: Bool = false 
     @Persisted var hiddenPosts: RealmSwift.List<ObjectId> = List()
     
     @Persisted var mostRecentPost: ObjectId? = nil

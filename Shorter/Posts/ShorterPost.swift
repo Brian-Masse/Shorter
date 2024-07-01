@@ -25,6 +25,9 @@ final class ShorterPost: Object, Identifiable {
     @Persisted var emoji: String        = "🫥"
     @Persisted var notes: String        = ""
     
+    @Persisted var hasMatureContent: Bool = false
+    
     @Persisted var imageData: Data = Data()
     internal var image: Image? = nil
+
 }

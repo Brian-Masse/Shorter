@@ -80,6 +80,9 @@ class ShorterPostsPageViewModel: ObservableObject {
     func getSharedWithMePosts(from posts: [ShorterPost]) async {
         let filteredPosts = Array(posts
             .filter { post in
+                ShorterModel.shared.profile!.allowsMatureContent || !post.hasMatureContent
+            }
+            .filter { post in
                 !ShorterModel.shared.profile!.hiddenPosts.contains(where: { id in
                     post._id == id
                 })

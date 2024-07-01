@@ -106,7 +106,10 @@ struct BlockedUsersPage: View {
 }
 
 //MARK: HiddenPostsPage
+@MainActor
 struct HiddenPostsPage: View {
+    
+    @Environment(\.colorScheme) var colorScheme
     
     let hiddenPosts: [ObjectId]
     
@@ -115,6 +118,7 @@ struct HiddenPostsPage: View {
     private let unhideAlertMessage = "This post will be visible on your home screen. You can hide it again any time."
     
     @State private var postId: ObjectId? = nil
+    @State private var allowsMatureContent: Bool = ShorterModel.shared.profile!.allowsMatureContent
     
     @MainActor
     private func unHidePost() async {
@@ -122,6 +126,23 @@ struct HiddenPostsPage: View {
         
         let posts: [ShorterPost] = RealmManager.retrieveObjects()
         await ShorterPostsPageViewModel.shared.getSharedWithMePosts(from: posts)
+    }
+    
+    @ViewBuilder
+    private func makeMatureContentToggle() -> some View {
+        HStack {
+            Image(systemName: "hand.raised")
+            Text( "Hide Mature Content" )
+            
+            Spacer()
+            
+            Toggle("", isOn: $allowsMatureContent)
+                .tint(Colors.getAccent(from: colorScheme))
+        }
+        .rectangularBackground(style: .secondary)
+        .onChange(of: allowsMatureContent) { Task {
+            await ShorterModel.shared.profile?.toggleMatureContent()
+        } }
     }
     
 //    MARK: HiddenPost
@@ -159,6 +180,14 @@ struct HiddenPostsPage: View {
             PrivacyPageHeader(title: "Hidden Posts",
                               message: "Hidden posts cannot be seen on your home feed. Additionally, you can choose to filter out posts marked with mature content")
             
+            makeMatureContentToggle()
+            Text( "Choose whether you want to view posts marked with sensitive content on your homescreen" )
+                .font(.caption)
+                .padding(.leading, Constants.subPadding)
+                .opacity(Constants.tertiaryTextAlpha)
+                .padding(.bottom)
+            
+            
             if hiddenPosts.count == 0 {
                 ShorterPlaceHolderView(icon: "square.slash", message: "You haven't hidden any posts")
             } else {
@@ -170,6 +199,12 @@ struct HiddenPostsPage: View {
                         
                         Divider()
                             .padding(.bottom, 5)
+                    } else {
+                        ProgressView()
+                            .task {
+                                postId = id
+                                await unHidePost()
+                            }
                     }
                 }
             }

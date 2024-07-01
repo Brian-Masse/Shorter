@@ -28,6 +28,7 @@ struct ShorterPostCreationView: View {
     
 //    MARK: Vars
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var activeScene: CreationPostScene = .overview
     @State private var sceneComplete: Bool = false
@@ -42,6 +43,8 @@ struct ShorterPostCreationView: View {
     
     @State private var showingAllProfiles: Bool = false
     @State private var selectedProfileIds: [String] = Array(ShorterModel.shared.profile!.friendIds)
+    
+    @State private var hasMatureContent: Bool = false
     
     private func validateFields() -> Bool {
         !title.isEmpty && !fullTitle.isEmpty
@@ -60,6 +63,7 @@ struct ShorterPostCreationView: View {
                                emoji: EmojiPickerViewModel.shared.selectedEmoji,
                                notes: notes,
                                shareList: selectedProfileIds,
+                               hasMatureContent: hasMatureContent,
                                data: imageData)
 //        
         RealmManager.addObject( post )
@@ -201,6 +205,20 @@ struct ShorterPostCreationView: View {
     private func isSelected( _ id: String ) -> Bool { selectedProfileIds.contains(id) }
     
     @ViewBuilder
+    private func makeMatureContentToggle() -> some View {
+        HStack {
+            Image(systemName: "hand.raised")
+            Text( "This post has mature content" )
+            
+            Spacer()
+            
+            Toggle("", isOn: $hasMatureContent)
+                .tint(Colors.getAccent(from: colorScheme))
+        }
+        .rectangularBackground(style: .secondary)
+    }
+    
+    @ViewBuilder
     private func makeSocialScene() -> some View {
         VStack(alignment: .leading) {
                 
@@ -241,6 +259,15 @@ struct ShorterPostCreationView: View {
                     }
                 }
             }
+            
+            Spacer()
+            
+            makeMatureContentToggle()
+            Text( "Help keep Shorter safe by marking mature content. This will only display for users that allow mature content" )
+                .font(.caption)
+                .padding(.leading, Constants.subPadding)
+                .opacity(Constants.secondaryTextAlpha)
+                .padding(.bottom)
         }
         .onAppear { sceneComplete = true }
     }

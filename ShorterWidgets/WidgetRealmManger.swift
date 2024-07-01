@@ -60,6 +60,9 @@ class WidgetRealmManger {
 //                attempt to find the profile
                 if let post: ShorterPost = self.realm!.objects(ShorterPost.self).first {
                     
+                    
+                    if !profile.allowsMatureContent && post.hasMatureContent { return nil }
+                    
                     let newPost = ShorterPost()
                     newPost.title = post.title
                     newPost.emoji = post.emoji

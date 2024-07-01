@@ -19,11 +19,13 @@ extension ShorterPost {
                       emoji: String,
                       notes: String,
                       shareList: [String] = [],
+                      hasMatureContent: Bool = false,
                       data: Data ) {
         self.init()
         
         self.ownerId = ownerId
         self.ownerName = authorName
+        self.postedDate = .now
         
         self.fullTitle = fullTitle
         self.title = title
@@ -34,10 +36,9 @@ extension ShorterPost {
         
         let sharedOwnerIds = RealmSwift.List<String>()
         for id in shareList { sharedOwnerIds.append(id) }
-        
         self.sharedOwnerIds = sharedOwnerIds
         
-        self.postedDate = .now
+        self.hasMatureContent = hasMatureContent
         
         if ShorterModel.realmManager.authenticationState != .complete { return }
         

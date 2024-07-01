@@ -180,6 +180,16 @@ extension ShorterProfile {
     }
     
 //    MARK: ClassMethods
+    @MainActor
+    func toggleMatureContent() async {
+        RealmManager.updateObject(self) { thawed in
+            thawed.allowsMatureContent.toggle()
+        }
+        
+        let posts: [ShorterPost] = RealmManager.retrieveObjects()
+        await ShorterPostsPageViewModel.shared.getSharedWithMePosts(from: posts)
+    }
+    
     private func loadImage() -> Image? {
         self.profileImage = PhotoManager.decodeImage(from: self.imageData)
         return self.profileImage
