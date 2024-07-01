@@ -238,6 +238,7 @@ struct ProfileView: View {
                 Text( ShorterModel.ownerId )
                     .font(.caption2)
                     .opacity(0.7)
+                    .padding(.bottom)
                     .onTapGesture {
                         print( ShorterModel.ownerId )
                         NotificationManager.shared.readFiringDates()

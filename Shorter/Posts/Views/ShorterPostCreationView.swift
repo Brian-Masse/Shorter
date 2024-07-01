@@ -30,13 +30,13 @@ struct ShorterPostCreationView: View {
     @State private var activeScene: CreationPostScene = .overview
     @State private var sceneComplete: Bool = false
     
-    @State private var showingImagePicker: Bool = false
-    
     @State private var title: String = ""
     @State private var fullTitle: String = ""
     @State private var notes: String = ""
     
     @State var uiImage: UIImage? = nil
+    @State private var showingImagePicker: Bool = false
+    @State private var showingLibraryPicker: Bool = false
     
     private func validateFields() -> Bool {
         !title.isEmpty && !fullTitle.isEmpty
@@ -139,17 +139,35 @@ struct ShorterPostCreationView: View {
                             .font(.title2)
                             .bold()
                     }
-                } action: {
-                    self.showingImagePicker = true
-                }
+                } action: { self.showingImagePicker = true }
+                
+                Spacer()
+                
+                UniversalButton {
+                    HStack {
+                        Image(systemName: "photo.on.rectangle")
+                        
+                        Text( "or upload a photo" )
+                    }
+                    .padding()
+                    .opacity(Constants.secondaryTextAlpha)
+                    .font(.callout)
+                    .bold()
+                    
+                } action: { self.showingLibraryPicker = true }
             }
-            
-            Spacer()
         }
         .sheet(isPresented: $showingImagePicker) {
             ImagePickerView(sourceType: .camera) { uiImage in
                 self.uiImage = uiImage
             }
+            .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showingLibraryPicker) {
+            ImagePickerView(sourceType: .photoLibrary) { uiImage in
+                self.uiImage = uiImage
+            }
+            .ignoresSafeArea()
         }
         .onChange(of: uiImage) {
             sceneComplete = uiImage != nil

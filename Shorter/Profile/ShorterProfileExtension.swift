@@ -10,6 +10,8 @@ import SwiftUI
 import RealmSwift
 import WidgetKit
 
+//667b6e15206efff8406a8029
+
 extension ShorterProfile {
     
 //    MARK: Initialization
@@ -65,7 +67,7 @@ extension ShorterProfile {
         return profile
     }
     
-//    MARK: Social Functions
+//    MARK: Add Friends
     @MainActor
     func addFriends( _ ids: [String] ) {
         for id in ids {
@@ -91,6 +93,7 @@ extension ShorterProfile {
         }
     }
     
+//    MARK: Removing Friends
     @MainActor
     func removeFriend( _ id: String ) async {
         if let index = self.friendIds.firstIndex(of: id) {
@@ -107,20 +110,20 @@ extension ShorterProfile {
                 }
             }
             
-            await profile.removeFriendFromPosts( self.ownerId )
+            await profile.removeFriendFromPosts(from: id, self.ownerId )
         }
         
-        await removeFriendFromPosts(id)
+        await removeFriendFromPosts(from: self.ownerId, id)
         await ShorterModel.realmManager.refreshSubscriptions()
         
         self.saveFriendListToDefaults()
     }
     
     @MainActor
-    func removeFriendFromPosts(_ id: String) async {
+    func removeFriendFromPosts(from profileId: String, _ id: String) async {
         
         let posts: [ShorterPost] = RealmManager.retrieveObjects { post in
-            post.sharedOwnerIds.contains( id )
+            post.sharedOwnerIds.contains( id ) && post.ownerId == profileId
         }
         
         for post in posts {
@@ -129,6 +132,31 @@ extension ShorterProfile {
                     thawed.sharedOwnerIds.remove(at: index)
                 }
             }
+        }
+    }
+    
+//    MARK: Block User
+    @MainActor
+    func blockUser( _ id: String, toggle: Bool ) async {
+        if let profile = ShorterProfile.getProfile(for: id) {
+            
+            RealmManager.updateObject(self) { thawed in
+                if let index = thawed.blockedIds.firstIndex(of: id) {
+                    if toggle {
+                        thawed.blockedIds.remove(at: index)
+                    }
+                } else { thawed.blockedIds.append(id) }
+            }
+            
+            RealmManager.updateObject(profile) { thawed in
+                if let index = thawed.blockedIds.firstIndex(of: self.ownerId) {
+                    if toggle {
+                        thawed.blockedIds.remove(at: index)
+                    }
+                } else { thawed.blockedIds.append(self.ownerId) }
+            }
+            
+            await removeFriend(id)
         }
     }
     

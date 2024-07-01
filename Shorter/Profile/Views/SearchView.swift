@@ -37,7 +37,7 @@ struct SearchView: View {
     
     private func composeMessage(to contact: CNContact) {
         recipients = [ contact.phoneNumbers.first?.value.stringValue ?? "" ]
-        message = "you should download this great app!"
+        message = "Howdy \(contact.givenName), come connect with me on Shorter! 🙂‍↕️ https://apps.apple.com/app/shorter/id6505039882"
         
         if !recipients.first!.isEmpty { showingMessages = true }
     }

@@ -38,13 +38,11 @@
 		C90375012C262A48007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
 		C90375022C262A91007DCA5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375002C262A48007DCA5E /* Utilities.swift */; };
 		C90375042C263227007DCA5E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375032C263227007DCA5E /* NotificationManager.swift */; };
-		C90375062C2637B5007DCA5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90375052C2637B5007DCA5E /* GoogleService-Info.plist */; };
 		C903750F2C271798007DCA5E /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C903750E2C271798007DCA5E /* UIUniversals */; };
 		C90375122C27179F007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; };
 		C90375162C27256A007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C90375112C27179F007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C903751B2C27463F007DCA5E /* SelectFriendIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375192C27447B007DCA5E /* SelectFriendIntent.swift */; };
 		C903751E2C2754BB007DCA5E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; };
-		C903751F2C2754BB007DCA5E /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C903751D2C2754BB007DCA5E /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */; };
 		C90375242C2761CD007DCA5E /* ShorterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374CF2C25F551007DCA5E /* ShorterProfile.swift */; };
 		C90375272C2761FF007DCA5E /* ShorterPostExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */; };
@@ -139,7 +137,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C903751F2C2754BB007DCA5E /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,7 +180,6 @@
 		C90374FC2C2624A0007DCA5E /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C90375002C262A48007DCA5E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C90375032C263227007DCA5E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		C90375052C2637B5007DCA5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C90375192C27447B007DCA5E /* SelectFriendIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendIntent.swift; sourceTree = "<group>"; };
 		C90375222C27618A007DCA5E /* ShorterProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterProfileExtension.swift; sourceTree = "<group>"; };
 		C90375262C2761FF007DCA5E /* ShorterPostExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostExtension.swift; sourceTree = "<group>"; };
@@ -296,7 +292,6 @@
 				C9E28A2A2C3096A20075476A /* icons */,
 				C903748D2C25D05E007DCA5E /* Assets.xcassets */,
 				C903748F2C25D05E007DCA5E /* Info.plist */,
-				C90375052C2637B5007DCA5E /* GoogleService-Info.plist */,
 				C90374902C25D05E007DCA5E /* Shorter.entitlements */,
 				C90374912C25D05E007DCA5E /* Preview Content */,
 			);
@@ -646,7 +641,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9E28A2E2C3096CF0075476A /* icon-light.png in Resources */,
-				C90375062C2637B5007DCA5E /* GoogleService-Info.plist in Resources */,
 				C9E28A2C2C3096BF0075476A /* icon-dark.png in Resources */,
 				C90374932C25D05E007DCA5E /* Preview Assets.xcassets in Resources */,
 				C903748E2C25D05E007DCA5E /* Assets.xcassets in Resources */,
@@ -912,7 +906,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shorter/Shorter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"Shorter/Preview Content\"";
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -940,10 +934,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.BrianMasse.Shorter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -956,7 +951,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shorter/Shorter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"Shorter/Preview Content\"";
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -984,10 +979,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.BrianMasse.Shorter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

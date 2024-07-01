@@ -20,14 +20,22 @@ struct ProfilePreviewView: View{
         static let previewHeight: CGFloat = 100
     }
     
-//    MARK: Vars    
+//    MARK: Vars
     
     let profile: ShorterProfile
     
     private let removeFriendTitle: String = "Remove Friend?"
     private let removeFriendMessage: String = "You won't be able to see any of their older posts, even when you re-add them"
     
+    private let blockFriendTitle: String = "Block User?"
+    private let blockFriendMessage: String = "You won't be able to see thier posts, and they won't show up in any searchs. This can be undone later in settings"
+    
+    private let reportAndBlockTitle: String = "Report This User?"
+    private let reportAndBlockMessage: String = "If this user has generated innapropriate contend, please let us know and we'll investigate it within 24 hours to keep Shorter safe."
+    
     @State private var showingRemoveFriendAlert: Bool = false
+    @State private var showingBlockFriendAlert: Bool = false
+    @State private var showingReportAndBlockFriendAlert: Bool = false
     
     @State private var previousOffset: CGFloat = 0
     @State private var offset: CGFloat = 0
@@ -120,14 +128,6 @@ struct ProfilePreviewView: View{
                 .padding()
                 .padding(.trailing, 7)
                 .frame(width: geo.size.width)
-                
-                ZStack(alignment: .leading) {
-                    Color.red
-                        .frame(width: LocalConstants.deleteHandleSize * 2)
-                    
-                    makeDeleteHandle()
-                        .frame(width: LocalConstants.deleteHandleSize)
-                }
             }
         }
         .background(.ultraThinMaterial)
@@ -148,20 +148,44 @@ struct ProfilePreviewView: View{
     
             .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
             .cardWithDepth()
-        
+            .contextMenu(ContextMenu(menuItems: {
+                Button( "remove friend", systemImage: "person.badge.minus" ) {
+                    showingRemoveFriendAlert = true
+                }
+                
+                Button("block", systemImage: "person.slash", role: .destructive) {
+                    showingBlockFriendAlert = true
+                }
+                
+                Button( "report and block", systemImage: "exclamationmark.shield", role: .destructive ) {
+                    showingReportAndBlockFriendAlert = true
+                }
+            }))
         
             .alert(removeFriendTitle,
-                   isPresented: $showingRemoveFriendAlert,
-                   actions: {
+                   isPresented: $showingRemoveFriendAlert) {
                 
                 Button("remove", role: .destructive) {
                     let id = profile.ownerId
                     Task { await ShorterModel.shared.profile?.removeFriend( id ) }
                 }
                 
-            }, message: {
-                Text( removeFriendMessage )
-            })
+            } message: { Text( removeFriendMessage ) }
+        
+            .alert(blockFriendTitle, isPresented: $showingBlockFriendAlert) {
+                Button("block", role: .destructive) {
+                    Task { await ShorterModel.shared.profile?.blockUser( profile.ownerId, toggle: false ) }
+                }
+            } message: { Text( blockFriendMessage ) }
+
+            .alert(reportAndBlockTitle, isPresented: $showingReportAndBlockFriendAlert) {
+                Button("report and block", role: .destructive) {
+                    Task {
+                        await ShorterModel.shared.profile?.blockUser( profile.ownerId, toggle: false)
+                    }
+                }
+                
+            } message: { Text( reportAndBlockMessage ) }
     }
 }
 
