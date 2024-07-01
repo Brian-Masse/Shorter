@@ -25,6 +25,7 @@ class ContactManager: ObservableObject {
     @MainActor
     private func requestPermission() async {
         do {
+            
             let result = try await store.requestAccess(for: .contacts)
             self.contactsAllowed = result
         } catch {

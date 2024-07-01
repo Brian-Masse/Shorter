@@ -23,6 +23,12 @@ struct ProfilePreviewView: View{
 //    MARK: Vars
     
     let profile: ShorterProfile
+    let allowsEditting: Bool
+    
+    init( profile: ShorterProfile, allowsEditting: Bool = true ) {
+        self.profile = profile
+        self.allowsEditting = allowsEditting
+    }
     
     private let removeFriendTitle: String = "Remove Friend?"
     private let removeFriendMessage: String = "You won't be able to see any of their older posts, even when you re-add them"
@@ -148,19 +154,22 @@ struct ProfilePreviewView: View{
     
             .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
             .cardWithDepth()
-            .contextMenu(ContextMenu(menuItems: {
-                Button( "remove friend", systemImage: "person.badge.minus" ) {
-                    showingRemoveFriendAlert = true
-                }
-                
-                Button("block", systemImage: "person.slash", role: .destructive) {
-                    showingBlockFriendAlert = true
-                }
-                
-                Button( "report and block", systemImage: "exclamationmark.shield", role: .destructive ) {
-                    showingReportAndBlockFriendAlert = true
-                }
-            }))
+            .if(allowsEditting) { view in
+                view
+                    .contextMenu(ContextMenu(menuItems: {
+                        Button( "remove friend", systemImage: "person.badge.minus" ) {
+                            showingRemoveFriendAlert = true
+                        }
+                        
+                        Button("block", systemImage: "person.slash", role: .destructive) {
+                            showingBlockFriendAlert = true
+                        }
+                        
+                        Button( "report and block", systemImage: "exclamationmark.shield", role: .destructive ) {
+                            showingReportAndBlockFriendAlert = true
+                        }
+                    }))
+            }
         
             .alert(removeFriendTitle,
                    isPresented: $showingRemoveFriendAlert) {

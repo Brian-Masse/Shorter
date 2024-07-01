@@ -209,7 +209,7 @@ struct ProfileView: View {
                 Spacer()
             }
             .rectangularBackground(style: style)
-            .if(style == .accent && colorScheme == .light) { view in view.foregroundStyle(.white) }
+            .if(style == .accent) { view in view.foregroundStyle(.background) }
             
         } action: { action() }
     }
@@ -289,6 +289,9 @@ struct ProfileView: View {
         })
         .sheet(isPresented: $showingHiddenPostsView, content: {
             HiddenPostsPage(hiddenPosts: Array( ShorterModel.shared.profile!.hiddenPosts ))
+        })
+        .sheet(isPresented: $showingPrivacySummary, content: {
+            PrivacyReport().padding()
         })
     }
 }

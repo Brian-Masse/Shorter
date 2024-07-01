@@ -26,6 +26,7 @@ struct ShorterPostsCarousel: View {
 //    MARK: InformationNode
     private struct InformationNode<C: View>: View {
         
+        
 //        MARK: Line
         private struct Line: Shape {
             var x: CGFloat
@@ -106,7 +107,7 @@ struct ShorterPostsCarousel: View {
         }
         
         private var xDir: CGFloat {
-            let magnitude = globalFinalOffset.width - fullGeo.size.width / 2
+            let magnitude = globalFinalOffset.width - (fullGeo.size.width / 2)
             return magnitude / abs(magnitude)
         }
         
@@ -115,16 +116,8 @@ struct ShorterPostsCarousel: View {
             return magnitude / abs(magnitude)
         }
         
-        private func toggleExpansion( _ value: Bool ) {
-            withAnimation( .easeInOut(duration: 0.45) ) {
-                if value {
-                    self.offset = finalOffset
-                    self.alpha = 1
-                } else {
-                    self.offset = globalStartingOffset
-                    self.alpha = 0
-                }
-            }
+        private func checkInPosition() -> Bool {
+            abs(scrollPosition + (fullGeo.size.width + 8) * Double(id)) < 100
         }
         
 //        MARK: InformationNode Vars
@@ -132,25 +125,31 @@ struct ShorterPostsCarousel: View {
         let alignment: Alignment
         let finalOffset: CGSize
         
+        let id: Int
+        
         let content: C
         
-        @Binding var expanded: Bool
+        @State var expanded: Bool = true
         @State var alpha: Double = 0
+        
+        @State var refreshStartPosition: Bool = false
         
         @State var size: CGSize = .zero
         @State var offset: CGSize = .zero
+        @Binding var scrollPosition: CGFloat
         
         @State var globalStartingOffset: CGSize = .zero
         @State var globalFinalOffset: CGSize = .zero
         
-        init( geo: GeometryProxy, alignment: Alignment, offset: CGPoint, binding: Binding<Bool>, @ViewBuilder contentBuilder: () -> C) {
+        init( geo: GeometryProxy, id: Int, alignment: Alignment, offset: CGPoint, scrollPos: Binding<CGFloat>, @ViewBuilder contentBuilder: () -> C) {
             
             self.fullGeo = geo
             self.alignment = alignment
             self.finalOffset = .init(width: offset.x, height: offset.y)
             self.offset = finalOffset
+            self.id = id
+            self._scrollPosition = scrollPos
             
-            self._expanded = binding
             self.content = contentBuilder()
         }
         
@@ -160,7 +159,8 @@ struct ShorterPostsCarousel: View {
                 Rectangle()
                     .foregroundStyle(.clear)
                             
-                let x = xDir * (fullGeo.size.width / 2 - abs( offset.width ) - (size.width / 2))
+                let negativeOffset = abs( offset.width ) + (size.width / 2)
+                let x = xDir * (fullGeo.size.width / 2 - negativeOffset )
                 let y = yDir * (fullGeo.size.height / 2 - abs( offset.height ) - (size.height / 2) - 10)
                 
                 Line(x: x, y: y, size: size)
@@ -168,45 +168,64 @@ struct ShorterPostsCarousel: View {
                 
                 content
                     .overlay { GeometryReader { localGeo in
-                        Rectangle()
-                            .foregroundStyle(.clear)
-                            .onAppear {
-                                self.offset = makeStartingOffset(in: localGeo)
-                                self.globalStartingOffset = offset
-                                self.size = localGeo.size
-                                
-                                let globalCoords = localToGlobalCoordinates(in: localGeo)
-                                self.globalFinalOffset = .init(width: globalCoords.x,
-                                                               height: globalCoords.y)
-                                
-                                toggleExpansion(expanded)
-                            }
+                        if refreshStartPosition {
+                            Rectangle()
+                                .foregroundStyle(.clear)
+                                .onAppear {
+                                    
+                                    alpha = 1
+                                    
+                                    if !checkInPosition() { return }
+                                    
+                                    self.offset = makeStartingOffset(in: localGeo)
+                                    self.globalStartingOffset = offset
+                                    self.size = localGeo.size
+
+                                    let globalCoords = localToGlobalCoordinates(in: localGeo)
+                                    self.globalFinalOffset = .init(width: globalCoords.x,
+                                                                   height: globalCoords.y)
+                                    
+                                    alpha = 1
+                                    withAnimation { self.offset = finalOffset }
+                                }
+                        }
                     } }
-                    .opacity(alpha)
                     .offset(offset)
-                    .onChange(of: expanded) { oldValue, newValue in
-                        toggleExpansion(newValue)
+                    .onAppear {
+                        if checkInPosition() { refreshStartPosition = true }
+                    }
+                    .onChange(of: scrollPosition) {
+                        if checkInPosition() { refreshStartPosition = true }
+                    }
+                    .onDisappear {
+                        alpha = 0
                     }
             }
+            .opacity(alpha)
         }
     }
     
 //    MARK: InformationNodes
     @ViewBuilder
-    private func makeInformationNodes(in geo: GeometryProxy) -> some View {
+    private func makeInformationNodes(in geo: GeometryProxy, for post: ShorterPost, id: Int) -> some View {
         ZStack {
             InformationNode(geo: geo,
+                            id: id,
                             alignment: .topLeading,
-                            offset: .init(x: 20 , y: 20),
-                            binding: $expanded) {
-                Text("\(activePost.title) \(activePost.emoji)")
+                            offset: .init(x: 0 , y: 20),
+                            scrollPos: $scrollPosition.x) {
+                Text("\(post.title) \(id)")
                     .font(.title3)
                     .bold()
             }
 
-            InformationNode(geo: geo, alignment: .bottomTrailing, offset: .init(x: 0, y: -15), binding: $expanded ) {
+            InformationNode(geo: geo,
+                            id: id,
+                            alignment: .bottomTrailing,
+                            offset: .init(x: 0, y: -15),
+                            scrollPos: $scrollPosition.x) {
                 VStack(alignment: .leading) {
-                    Text( activePost.notes )
+                    Text( post.notes )
                         .font(.caption)
                         .multilineTextAlignment(.trailing)
                         .lineLimit(3, reservesSpace: true)
@@ -215,169 +234,122 @@ struct ShorterPostsCarousel: View {
             }
 
             InformationNode(geo: geo,
+                            id: id,
                             alignment: .bottomLeading,
                             offset: .init(x: 20, y: -30),
-                            binding: $expanded) {
-                Text( "\(activePost.postedDate.formatted(date: .abbreviated, time: .omitted))\n\(activePost.postedDate.formatted(date: .omitted, time: .shortened))" )
+                            scrollPos: $scrollPosition.x) {
+                Text( "\(post.postedDate.formatted(date: .abbreviated, time: .omitted))\n\(post.postedDate.formatted(date: .omitted, time: .shortened))" )
                     .font(.callout)
             }
         }
     }
     
-    @ViewBuilder
-    private func makeSharedWithInformation() -> some View {
-        VStack {
-            ForEach( ShorterModel.shared.profile!.friendIds, id: \.self ) { id in
-            
-                if let profile = ShorterProfile.getProfile(for: id) {
-                    ProfilePreviewView(profile: profile)
-                }
-            }
-        }
+//    MARK: CenterWidget    
+    @State private var scrollPosition: CGPoint = .zero
+    
+    private struct ScrollOffsetPreferenceKey: PreferenceKey {
+        
+        static var defaultValue: CGPoint = .zero
+        
+        static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
     }
     
-//    MARK: CenterWidget
-    @State private var nextPostOffset: CGFloat = -300
-    @State private var currentPostOffset: CGFloat = 0
-    @State private var previousPostOffset: CGFloat = 300
-    
+    @MainActor
     @ViewBuilder
     private func makeCenterWidgetWrapper() -> some View {
         ZStack {
             
-            makeCenterWidget( from: previousPost )
-                .offset(x: nextPostOffset)
-            
-            makeCenterWidget( from: activePost )
-                .offset(x: currentPostOffset)
-                .scaleEffect( 1 - abs(currentPostOffset) / 600 )
-            
-            makeCenterWidget( from: nextPost )
-                .offset(x: previousPostOffset)
-        }
-        .onChange(of: activePostIndex) { oldValue, newValue in
-            let direction: Double = newValue > oldValue ? -1 : 1
-            
-            currentPostOffset = direction * 300
-            withAnimation { currentPostOffset = 0 }
-            
-            if direction == -1 {
-                previousPostOffset = 0
-                withAnimation { previousPostOffset = 300 }
-            } else {
-                nextPostOffset = 0
-                withAnimation { nextPostOffset = -300 }
+            GeometryReader { geo in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack {
+                        ForEach( posts.indices, id: \.self ) { id in
+                            let post = posts[id]
+                            makeCenterWidget(from: post, id: posts.count - 1 - id, in: geo)
+                                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: 1.0, y: -1.0, anchor: .center)
+                        }
+                    }
+                    .background(GeometryReader { geo in
+                        Color.clear
+                            .preference(key: ScrollOffsetPreferenceKey.self,
+                                        value: geo.frame(in: .named(ShorterPostsCarousel.coordinateSpaceName)).origin)
+                    })
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                        self.scrollPosition = value
+                        
+                    }
+                    .scrollTargetLayout()
+                }
+                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: 1.0, y: -1.0, anchor: .center)
+                .scrollTargetBehavior(.viewAligned)
+                .coordinateSpace(name: ShorterPostsCarousel.coordinateSpaceName)
+                .background {
+                    posts[activePostIndex].getCompressedImage()
+                        .antialiased(false)
+                        .resizable()
+                        .imageScale(.small)
+                        .frame(height: geo.size.height)
+                        .blur(radius: 100)
+                }
             }
         }
     }
     
     @ViewBuilder
-    private func makeCenterWidget(from post: ShorterPost) -> some View {
-        Rectangle()
-            .aspectRatio(1, contentMode: .fit)
-            .overlay {
-                post.getImage()
-                    .resizable()
-                    .scaledToFill()
-                    .clipped()
+    private func makeCenterWidget(from post: ShorterPost, id: Int, in geo: GeometryProxy) -> some View {
+        
+        ZStack {
+            
+            post.getImage()
+                .resizable()
+                .clipped()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 200, height: 200)
+            
+                .clipShape(RoundedRectangle(cornerRadius: Constants.UILargeTextSize))
+                .shadow(color: .black.opacity(0.3), radius: 10, y: 10)
+            
+                .onTapGesture { showingPostView = true }
+            
+            makeInformationNodes(in: geo, for: post, id: id)
+        }
+        .frame(width: geo.size.width)
+        .contentShape(Rectangle())
+        .onChange(of: scrollPosition) {
+            if abs(scrollPosition.x + (geo.size.width + 8) * Double(id)) < 100 {
+                withAnimation { activePostIndex = posts.count - 1 -  id }
             }
-            .clipShape(RoundedRectangle(cornerRadius: Constants.UILargeTextSize))
-            .shadow(color: .black.opacity(0.3), radius: 10, y: 10)
-            .background {
-                post.getImage()
-                    .resizable()
-                    .scaledToFill()
-                    .blur(radius: 100)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture { showingPostView = true }
-    }
-    
-    private let widgetId = "WidgetId"
-    private let informationNodeId = "InformationNodeId"
-    
-//    MARK: Vars
-    private func toggleExpansion() {
-        withAnimation {
-            self.expanded.toggle()
         }
     }
-    @Namespace var shorterPostCreationViewNameSpace
+    
+//    MARK: Vars
     
     let posts: [ShorterPost]
     
-    private var activePost: ShorterPost { posts[activePostIndex] }
-    private var previousPost: ShorterPost { posts[incrementIndex()] }
-    private var nextPost: ShorterPost { posts[decrementIndex()] }
-    
     @State var activePostIndex: Int = 0
-    @State var expanded: Bool = true
     
     @State private var showingPostView: Bool = false
     
-    private func incrementIndex() -> Int { min(activePostIndex + 1, posts.count - 1) }
-    private func decrementIndex() -> Int { max(activePostIndex - 1, 0) }
-    
-    private var swipeGesture: some Gesture {
-        DragGesture(minimumDistance: 20)
-            .onEnded { value in
-                let direction = value.translation.width / abs( value.translation.width )
-                self.activePostIndex = direction == 1 ? incrementIndex() : decrementIndex()
-            }
-    }
- 
-//    MARK: RegularLayout
-    @ViewBuilder
-    private func makeRegularLayout() -> some View {
-        VStack(alignment: .leading) {
-            HStack {
-             
-                VStack() {
-                    makeCenterWidgetWrapper()
-                        .matchedGeometryEffect(id: widgetId, in: shorterPostCreationViewNameSpace)
-                        .frame(width: expanded ? LocalConstants.previewSize : LocalConstants.smallPreviewSize)
-                        .padding(.vertical)
-                    
-                    Spacer()
-                }
-                
-                VStack(alignment: .leading) {
-//                    makeSharedWithInformation()
-                    
-                    Spacer()
-                }
-            }
-        }
-    }
-    
 //    MARK: ExpandedLayout
+    @MainActor
     @ViewBuilder
-    private func makeExpandedLayout(in geo: GeometryProxy) -> some View {
+    private func makeExpandedLayout() -> some View {
         ZStack {
             makeCenterWidgetWrapper()
-                .matchedGeometryEffect(id: widgetId, in: shorterPostCreationViewNameSpace)
-                .frame(width: expanded ? LocalConstants.previewSize : LocalConstants.smallPreviewSize)
                 .offset(y: LocalConstants.previewVerticalOffset)
-            
-            makeInformationNodes(in: geo)
             
             HStack {
                 Image(systemName: "chevron.left")
                     .padding()
-                    .onTapGesture { activePostIndex = incrementIndex() }
-                    .opacity( activePostIndex < posts.count - 1 ? 1 : 0.5 )
-//            }
+                    .opacity( 0.5 )
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .padding()
-                    .onTapGesture { activePostIndex = decrementIndex() }
-                    .opacity( activePostIndex > 0 ? 1 : 0.5 )
+                    .opacity( 0.5 )
             }
         }
         .contentShape(Rectangle())
-        .gesture(swipeGesture)
     }
     
     
@@ -386,16 +358,7 @@ struct ShorterPostsCarousel: View {
         
         VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .topLeading) {
-                GeometryReader { geo in
-                    ZStack(alignment: .center) {
-                        if expanded {
-                            makeExpandedLayout(in: geo)
-                        } else {
-                            makeRegularLayout()
-                        }
-                    }
-                }
-                .coordinateSpace(name: ShorterPostsCarousel.coordinateSpaceName)
+                makeExpandedLayout()
             }
         }
         .fullScreenCover(isPresented: $showingPostView) {
@@ -444,7 +407,6 @@ struct ShorterPostsCarousel: View {
     return VStack {
         ShorterPostsCarousel(posts: posts)
             .frame(height: 400)
-            .border(.red)
         
         Spacer()
     }

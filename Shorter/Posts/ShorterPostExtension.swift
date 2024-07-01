@@ -33,6 +33,7 @@ extension ShorterPost {
         self.notes = notes
         
         self.imageData = data
+        self.compressedImageData = loadCompressedImage()
         
         let sharedOwnerIds = RealmSwift.List<String>()
         for id in shareList { sharedOwnerIds.append(id) }
@@ -94,6 +95,26 @@ extension ShorterPost {
         }
         
         return self.image ?? Image("BigSur")
+    }
+    
+    @MainActor
+    private func loadCompressedImage() -> Data {
+        let uiImage = PhotoManager.decodeUIImage(from: imageData)
+        return PhotoManager.encodeImage(uiImage!, compressionQuality: 0, in: 10)
+    }
+    
+    @MainActor
+    func getCompressedImage() -> Image {
+        if self.compressedImageData == nil {
+            let compressedImageData = loadCompressedImage()
+            
+            RealmManager.updateObject(self) { thawed in
+                thawed.compressedImageData = compressedImageData
+            }
+            
+            return PhotoManager.decodeImage(from: compressedImageData)!
+        }
+        return PhotoManager.decodeImage(from: compressedImageData!)!
     }
     
 //    when a user deletes the most recent post on a profile this function ensures that

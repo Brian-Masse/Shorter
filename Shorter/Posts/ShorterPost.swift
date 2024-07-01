@@ -28,6 +28,8 @@ final class ShorterPost: Object, Identifiable {
     @Persisted var hasMatureContent: Bool = false
     
     @Persisted var imageData: Data = Data()
+    @Persisted var compressedImageData: Data? = nil
+    
     internal var image: Image? = nil
 
 }

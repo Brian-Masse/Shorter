@@ -21,6 +21,7 @@ struct ProfileCreationView: View {
             case .contact:  return "contact"
             case .photo:    return "profile picture"
             case .social:   return "find friends"
+            case .privacy:  return "privacy"
             }
         }
         
@@ -29,6 +30,7 @@ struct ProfileCreationView: View {
         case contact
         case photo
         case social
+        case privacy
         
         var id: Int {
             self.rawValue
@@ -151,6 +153,7 @@ struct ProfileCreationView: View {
     private func makeTransitionWrapper<C: View>(_ transitionDirection: Edge, @ViewBuilder contentBuilder: () -> C) -> some View {
         contentBuilder()
             .slideTransition( transitionDirection )
+            
     }
     
 //    MARK: Body
@@ -188,6 +191,12 @@ struct ProfileCreationView: View {
                 case .social:       
                     makeTransitionWrapper(dir) {
                         makeFriendsScene()
+                    }
+                    
+                case .privacy:
+                    makeTransitionWrapper(dir) {
+                        PrivacyReport()
+                            .onAppear { sceneComplete = true }
                     }
                 }
             }

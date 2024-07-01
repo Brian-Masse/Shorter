@@ -125,7 +125,7 @@ struct SearchView: View {
                 ForEach(viewModel.filteredProfiles) { profile in
                     if !profile.isInvalidated {
                         ZStack(alignment: .trailing) {
-                            ProfilePreviewView(profile: profile)
+                            ProfilePreviewView(profile: profile, allowsEditting: false)
                             
                             makeToggleButton(for: profile.ownerId)
                                 .padding(.trailing)

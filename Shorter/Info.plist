@@ -9,6 +9,8 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Shorter needs to access your camera to uplaod pictures associated with your status</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Shorter would like to access your contacts to help find and connect with friends</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>

@@ -199,12 +199,12 @@ struct StyledPhotoPicker: View {
             }
             .ignoresSafeArea()
         }
-//        .fullScreenCover(isPresented: $showCropView) {
-//            let image = Image(uiImage: photoManager.storedImage!)
-//            CropView(image: image) { image in
-//                self.croppedImage = image
-//            }
-//        }
+        .fullScreenCover(isPresented: $showCropView) {
+            let image = Image(uiImage: photoManager.storedImage!)
+            CropView(image: image) { image in
+                self.croppedImage = image
+            }
+        }
     }
 }
 
