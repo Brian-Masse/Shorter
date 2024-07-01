@@ -94,10 +94,15 @@ class SearchViewModel: ObservableObject {
         }
         
         var results: [ShorterProfile] = RealmManager.retrieveObjects()
-        results = results.filter { profile in
-            profile.ownerId != ShorterModel.ownerId
-            && (profile.firstName.contains(searchText) || profile.lastName.contains(searchText))
-        }
+        results = results
+            .filter { profile in
+                !ShorterModel.shared.profile!.blockedIds.contains( profile.ownerId ) &&
+                !ShorterModel.shared.profile!.blockingIds.contains( profile.ownerId )
+            }
+            .filter { profile in
+                profile.ownerId != ShorterModel.ownerId
+                && (profile.firstName.contains(searchText) || profile.lastName.contains(searchText))
+            }
         
         withAnimation { self.filteredProfiles = results }
     }

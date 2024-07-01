@@ -25,7 +25,11 @@ final class ShorterProfile: Object, Identifiable {
     @Persisted var imageData: Data = Data()
     
     @Persisted var friendIds: RealmSwift.List<String> = List()
+    
+    @Persisted var blockingIds: RealmSwift.List<String> = List()
     @Persisted var blockedIds: RealmSwift.List<String> = List()
+    
+    @Persisted var hiddenPosts: RealmSwift.List<ObjectId> = List()
     
     @Persisted var mostRecentPost: ObjectId? = nil
     

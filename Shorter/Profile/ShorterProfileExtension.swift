@@ -149,11 +149,11 @@ extension ShorterProfile {
             }
             
             RealmManager.updateObject(profile) { thawed in
-                if let index = thawed.blockedIds.firstIndex(of: self.ownerId) {
+                if let index = thawed.blockingIds.firstIndex(of: self.ownerId) {
                     if toggle {
-                        thawed.blockedIds.remove(at: index)
+                        thawed.blockingIds.remove(at: index)
                     }
-                } else { thawed.blockedIds.append(self.ownerId) }
+                } else { thawed.blockingIds.append(self.ownerId) }
             }
             
             await removeFriend(id)
@@ -163,7 +163,20 @@ extension ShorterProfile {
     @MainActor
     func unblockUser(_ id: String) async {
         await blockUser(id, toggle: true)
-        addFriend(id)
+    }
+    
+//    MARK: Hide Post
+    @MainActor
+    func hidePost( _ id: ObjectId, toggle: Bool = false ) {
+        RealmManager.updateObject(self) { thawed in
+            if let index = self.hiddenPosts.firstIndex(of: id) {
+                self.hiddenPosts.remove(at: index)
+            } else {
+                if toggle {
+                    self.hiddenPosts.append(id)
+                }
+            }
+        }
     }
     
 //    MARK: ClassMethods

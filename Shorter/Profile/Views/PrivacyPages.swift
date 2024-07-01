@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import UIUniversals
 
+//MARK: BlockedUserPage
 struct BlockedUsersPage: View {
     
     let blockedUsers: [String]
@@ -20,6 +21,7 @@ struct BlockedUsersPage: View {
     private let unblockAlertMessage = "You still won't be able to see their old posts, but when they share new content, it will show up on your home feed"
     
 //    MARK: BlockedUser
+    @MainActor
     @ViewBuilder
     private func makeBlockedUserView( profile: ShorterProfile ) -> some View {
         
@@ -29,7 +31,7 @@ struct BlockedUsersPage: View {
             
             Spacer()
             
-            IconButton("person.badge.plus") { showingUnblockAlert = true }
+            IconButton("person.slash") { showingUnblockAlert = true }
         }
         .alert("Unblock \(profile.firstName)", isPresented: $showingUnblockAlert) {
             Button("unblock", role: .destructive) {
@@ -66,10 +68,10 @@ struct BlockedUsersPage: View {
                     ForEach( blockedUsers ) { id in
                         if let profile = ShorterProfile.getProfile(for: id) {
                             makeBlockedUserView(profile: profile)
+                            
+                            Divider()
+                                .padding(.bottom, 5)
                         }
-                        
-                        Divider()
-                            .padding(.bottom, 5)
                     }
                 }
             }

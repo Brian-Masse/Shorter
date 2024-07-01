@@ -80,6 +80,11 @@ class ShorterPostsPageViewModel: ObservableObject {
     func getSharedWithMePosts(from posts: [ShorterPost]) async {
         let filteredPosts = Array(posts
             .filter { post in
+                !ShorterModel.shared.profile!.hiddenPosts.contains(where: { id in
+                    post._id == id
+                })
+            }
+            .filter { post in
                 let defaultOwnerId = ShorterModel.ownerId
                 return (allowMyPosts || post.ownerId != defaultOwnerId) && (allowSharedPosts || post.ownerId == defaultOwnerId)
             }

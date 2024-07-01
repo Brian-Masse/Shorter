@@ -253,7 +253,7 @@ extension RealmManager {
     
     func addBlockedUserSubscription() async {
         let _ : ShorterProfile? = await self.addGenericSubcriptions(name: QuerySubKey.blockedUsersQuery.rawValue) { query in
-            query.blockedIds.contains( ShorterModel.ownerId )
+            query.blockingIds.contains( ShorterModel.ownerId )
         }
     }
     

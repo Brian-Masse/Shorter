@@ -25,6 +25,10 @@ struct ShorterPostPreviewView: View {
     }
     
     @State private var showingFullScreen: Bool = false
+    @State private var showingHidePostAlert: Bool = false
+    
+    private let hidePostAlertTitle: String = "Hide Post"
+    private let hidePostAlertMessage: String = "You won't be able to see this post on your home feed anymore. You can undo this action later in settings. "
     
 //    MARK: ViewBuilders
     @ViewBuilder
@@ -35,8 +39,6 @@ struct ShorterPostPreviewView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: 150 )
                 .clipped()
-            
-                
             
             VStack(alignment: .leading) {
                 Text( post.title + " " + post.emoji )
@@ -68,11 +70,25 @@ struct ShorterPostPreviewView: View {
             .overlay { makeContent() }
             .clipShape(RoundedRectangle(cornerRadius: 25))
             .frame(maxHeight: LocalConstants.cardHeigt)
+        
             .onTapGesture { showingFullScreen = true }
         
             .fullScreenCover(isPresented: $showingFullScreen) {
                 ShorterPostsView(posts: ShorterPostsPageViewModel.shared.filteredPosts)
             }
+        
+            .contextMenu(ContextMenu(menuItems: {
+                Button("Hide Post", systemImage: "square.slash") { showingHidePostAlert = true }
+            }))
+
+            .alert(hidePostAlertTitle, isPresented: $showingHidePostAlert) {
+                
+                Button("Hide post") { ShorterModel.shared.profile?.hidePost(post._id) }
+                
+            } message: {
+                Text( hidePostAlertMessage )
+            }
+
     }
 }
 
