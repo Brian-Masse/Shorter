@@ -250,5 +250,15 @@ extension RealmManager {
                                     query: shorterPostQuery.baseQuery)
         
     }
+    
+    func addBlockedUserSubscription() async {
+        let _ : ShorterProfile? = await self.addGenericSubcriptions(name: QuerySubKey.blockedUsersQuery.rawValue) { query in
+            query.blockedIds.contains( ShorterModel.ownerId )
+        }
+    }
+    
+    func removeBlockedUserSubscription() async {
+        await self.removeSubscription(name: QuerySubKey.blockedUsersQuery.rawValue)
+    }
 }
 

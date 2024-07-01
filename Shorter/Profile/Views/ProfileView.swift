@@ -23,29 +23,32 @@ struct ProfileView: View {
     @State private var showingProfileEdittingView: Bool = false
     @State private var showingPostCreationView: Bool = false
     
+    @State private var showingBlockedUsersView: Bool = false
+    @State private var showingHiddenPostsView: Bool = false
+    @State private var showingPrivacySummary: Bool = false
+    
     @State private var activeIcon: String = UIApplication.shared.alternateIconName ?? "icon-dark"
     
 //    MARK: Header
     @ViewBuilder
     private func makeHeader() -> some View {
         
-        HStack {
-            IconButton("chevron.down") {
-                dismiss()
-            }
-            
-            Spacer()
-            
-            Text( "Profile" )
-                .bold()
-                .opacity(0.5)
-            
-            Spacer()
-            
-            IconButton("pencil") {
-                showingProfileEdittingView = true
-            }
+        ShorterHeader(leftIcon: "chevron.down", title: "Profile", rightIcon: "pencil") {
+            dismiss()
+        } action2: {
+            showingProfileEdittingView = true
         }
+    }
+    
+    @ViewBuilder
+    private func makeSectionLabel( icon: String, title: String ) -> some View {
+        HStack {
+            Image(systemName: icon)
+            Text( title )
+        }
+        .font(.callout)
+        .bold()
+        .padding(.leading)
     }
     
 //    MARK: ProfileImage
@@ -58,7 +61,7 @@ struct ProfileView: View {
             profile.getImage()
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 150, height: 150)
+                .frame(width: 112, height: 112)
                 .clipShape(Circle())
                 .background {
                     profile.getImage()
@@ -99,10 +102,7 @@ struct ProfileView: View {
     @ViewBuilder
     private func makeContactSection() -> some View {
         VStack(alignment: .leading) {
-            Text( "Contact" )
-                .font(.callout)
-                .bold()
-                .padding(.leading)
+            makeSectionLabel(icon: "phone", title: "Contact")
             
             VStack {
                 makeContactNode(title: "email", content: profile.email)
@@ -118,10 +118,7 @@ struct ProfileView: View {
     @ViewBuilder
     private func makeSocialPage() -> some View {
         VStack(alignment: .leading) {
-            Text( "Friends" )
-                .font(.callout)
-                .bold()
-                .padding(.leading)
+            makeSectionLabel(icon: "person.2", title: "Friends")
             
             FriendList(profile: profile)
         }
@@ -133,7 +130,7 @@ struct ProfileView: View {
         Image(icon)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 85)
+            .frame(width: 65)
             .clipShape(RoundedRectangle(cornerRadius: Constants.UIDefaultCornerRadius))
             .cardWithDepth()
         
@@ -160,10 +157,7 @@ struct ProfileView: View {
     @ViewBuilder
     private func makeIconSwitcher() -> some View {
         VStack(alignment: .leading) {
-            Text( "Icon" )
-                .font(.callout)
-                .bold()
-                .padding(.leading)
+            makeSectionLabel(icon: "square.grid.3x3.square", title: "Preferences")
         
             HStack {
                 Spacer()
@@ -173,13 +167,40 @@ struct ProfileView: View {
                 
                 Spacer()
             }
+            .rectangularBackground(style: .transparent)
+            .cardWithDepth()
+        }
+    }
+    
+//    MARK: Privacy
+    @ViewBuilder
+    private func makePrivacySection() -> some View {
+        VStack(alignment: .leading) {
             
+            makeSectionLabel(icon: "hand.raised", title: "Privacy")
+            
+            Text( "All User Data stored on our servers is explicitly user generated, and does not leave our servers for any tracking, advertising, or 3rd party reason." )
+                .font(.caption)
+                .opacity(Constants.tertiaryTextAlpha)
+                .padding(.horizontal)
+            
+            makeProfileButton(icon: "newspaper", label: "Full Privacy Summary") {
+                showingPrivacySummary = true
+            }
+            
+            makeProfileButton(icon: "person.2.slash", label: "Blocked users") {
+                showingBlockedUsersView = true
+            }
+            
+            makeProfileButton(icon: "square.slash", label: "Hidden posts") {
+                showingHiddenPostsView = true
+            }
         }
     }
     
 //    MARK: Signout Button
     @ViewBuilder
-    private func makeProfileButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
+    private func makeProfileButton(icon: String, label: String, style: UniversalStyle = .secondary, action: @escaping () -> Void) -> some View {
         UniversalButton {
             HStack {
                 Spacer()
@@ -187,7 +208,7 @@ struct ProfileView: View {
                 Image(systemName: icon)
                 Spacer()
             }
-            .rectangularBackground(style: .secondary)
+            .rectangularBackground(style: style)
             
         } action: { action() }
     }
@@ -200,7 +221,7 @@ struct ProfileView: View {
                 .bold()
                 .padding(.leading)
             
-            makeProfileButton(icon: "ipad.and.arrow.forward", label: "sign out") {
+            makeProfileButton(icon: "ipad.and.arrow.forward", label: "sign out", style: .accent) {
                 Task { await ShorterModel.realmManager.logoutUser() }
             }
             makeProfileButton(icon: "macpro.gen3.server", label: "delete accont") {
@@ -230,7 +251,11 @@ struct ProfileView: View {
                 makeIconSwitcher()
                     .padding(.bottom)
                 
+                makePrivacySection()
+                    .padding(.bottom)
+                
                 Divider()
+                    .padding(.bottom, 30)
                 
                 makeButtons()
                     .padding(.bottom, 30)
@@ -257,6 +282,9 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showingPostCreationView, content: {
             ShorterPostCreationView()
+        })
+        .sheet(isPresented: $showingBlockedUsersView, content: {
+            BlockedUsersPage(blockedUsers: Array(ShorterModel.shared.profile!.blockedIds))
         })
     }
 }

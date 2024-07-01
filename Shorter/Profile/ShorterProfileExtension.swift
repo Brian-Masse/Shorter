@@ -160,6 +160,12 @@ extension ShorterProfile {
         }
     }
     
+    @MainActor
+    func unblockUser(_ id: String) async {
+        await blockUser(id, toggle: true)
+        addFriend(id)
+    }
+    
 //    MARK: ClassMethods
     private func loadImage() -> Image? {
         self.profileImage = PhotoManager.decodeImage(from: self.imageData)

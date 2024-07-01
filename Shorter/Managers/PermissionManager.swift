@@ -14,6 +14,7 @@ enum QuerySubKey: String, CaseIterable {
     case shorterPostQuery
     case shorterProfileQuery
     case timingManager
+    case blockedUsersQuery
 }
 
 //MARK: QueryPermission

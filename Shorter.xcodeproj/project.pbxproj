@@ -82,6 +82,7 @@
 		C9E28A292C2EC84D0075476A /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
 		C9E28A2C2C3096BF0075476A /* icon-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E28A2B2C3096BF0075476A /* icon-dark.png */; };
 		C9E28A2E2C3096CF0075476A /* icon-light.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E28A2D2C3096CF0075476A /* icon-light.png */; };
+		C9E28A302C32E4CF0075476A /* PrivacyPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E28A2F2C32E4CF0075476A /* PrivacyPages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +214,7 @@
 		C9E289E92C2E203B0075476A /* ShorterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterExtensions.swift; sourceTree = "<group>"; };
 		C9E28A2B2C3096BF0075476A /* icon-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dark.png"; sourceTree = "<group>"; };
 		C9E28A2D2C3096CF0075476A /* icon-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-light.png"; sourceTree = "<group>"; };
+		C9E28A2F2C32E4CF0075476A /* PrivacyPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,6 +438,7 @@
 				C91032C32C28FE2A00A226BE /* ProfilePreviewView.swift */,
 				C90374D12C25F9A0007DCA5E /* ProfileCreationScene.swift */,
 				C9E289DD2C2CBD800075476A /* ProfileView.swift */,
+				C9E28A2F2C32E4CF0075476A /* PrivacyPages.swift */,
 				C9E289E12C2CCB000075476A /* ProfileEdittingView.swift */,
 			);
 			path = Views;
@@ -713,6 +716,7 @@
 				C90375232C27618B007DCA5E /* ShorterProfileExtension.swift in Sources */,
 				C9E289E02C2CC3780075476A /* ShorterPlaceHolderView.swift in Sources */,
 				C903753E2C288E23007DCA5E /* ScrollingCardWrapper.swift in Sources */,
+				C9E28A302C32E4CF0075476A /* PrivacyPages.swift in Sources */,
 				C90374B92C25D0FD007DCA5E /* RealmOpeningView.swift in Sources */,
 				C9E289DB2C2CA74B0075476A /* TimingManager.swift in Sources */,
 				C91032BF2C28A8F500A226BE /* ShorterPostPage.swift in Sources */,
