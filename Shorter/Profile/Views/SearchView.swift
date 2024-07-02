@@ -20,6 +20,7 @@ struct SearchView: View {
     }
     
 //    MARK: Vars
+    @ObservedObject var profile: ShorterProfile = ShorterModel.shared.profile!
     @ObservedObject var contactManager = ContactManager.shared
     @ObservedObject var viewModel = SearchViewModel.shared
     
@@ -49,6 +50,13 @@ struct SearchView: View {
             StyledTextField(title: "",
                             prompt: "Joe M...",
                             binding: $searchText)
+            .onSubmit {
+                withAnimation { self.searching = true }
+                Task {
+                    await viewModel.search(in: searchText )
+                    withAnimation { self.searching = false }
+                }
+            }
             
             IconButton("magnifyingglass") {
                 withAnimation { self.searching = true }
@@ -61,9 +69,16 @@ struct SearchView: View {
         }
     }
     
+    private func checkProfileIsSelected(_ id: String) -> Bool {
+        let inSelectedProfile = viewModel.selectedProfles.contains(id)
+        let inFriends = profile.friendIds.contains( id )
+        
+        return inSelectedProfile || inFriends
+    }
+    
     @ViewBuilder
     private func makeToggleButton( for id: String ) -> some View {
-        IconButton( viewModel.checkProfileIsSelected(id) ? "minus" : "plus") {
+        IconButton( checkProfileIsSelected(id) ? "minus" : "plus") {
             Task { await viewModel.toggleProfile(id, directlyAddProfile: directlyAddFriends) }
         }
     }
@@ -129,6 +144,9 @@ struct SearchView: View {
                             
                             makeToggleButton(for: profile.ownerId)
                                 .padding(.trailing)
+                        }
+                        .onTapGesture {
+                            print(checkProfileIsSelected(profile.ownerId))
                         }
                     }
                 }

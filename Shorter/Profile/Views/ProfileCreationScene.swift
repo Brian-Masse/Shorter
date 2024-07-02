@@ -55,7 +55,7 @@ struct ProfileCreationView: View {
     @State private var showingImagePicker: Bool = false
     
 //    contacts
-    @State private var searchText: String = ""
+    @State private var selectedFriendIds: [String] = []
     
     @State private var showingMessages: Bool = false
     @State private var recipients: [String] = []
@@ -71,16 +71,14 @@ struct ProfileCreationView: View {
     
 //    MARK: Methods
     private func submit() {
-        if firstName.isEmpty ||
-            lastName.isEmpty ||
-            "\(phoneNumber)".count < 11 { return }
+        if firstName.isEmpty || lastName.isEmpty { return }
         
         let photoData = PhotoManager.encodeImage(uiImage)
         
         ShorterModel.shared.profile?.fillProfile(firstName: firstName,
                                                  lastName: lastName,
                                                  phoneNumber: phoneNumber,
-                                                 friendIds: SearchViewModel.shared.selectedProfles,
+                                                 friendIds: selectedFriendIds,
                                                  imageData: photoData)
         
         ShorterModel.realmManager.setState(.complete)
@@ -114,20 +112,26 @@ struct ProfileCreationView: View {
         VStack(alignment: .leading) {
             
             let phoneBinding: Binding<String> = {
-               
+                
                 Binding {
                     phoneNumber.formatIntoPhoneNumber()
                 } set: { (newValue, _) in
                     phoneNumber = Int( newValue.removeNonNumbers() ) ?? phoneNumber
                 }
             }()
-         
+            
             StyledTextField(title: "Whats your Phone Number?",
                             prompt: "",
                             binding: phoneBinding)
             .keyboardType(.numberPad)
-        }.onChange(of: phoneNumber) {
-            sceneComplete = validatePhoneNumber()
+            
+            Text( "Optional" )
+                .font(.caption)
+                .opacity(Constants.tertiaryTextAlpha)
+                .padding(.trailing)
+            
+        }.onAppear {
+            sceneComplete = true
         }
     }
     
@@ -147,6 +151,9 @@ struct ProfileCreationView: View {
     private func makeFriendsScene() -> some View {
         SearchView(directlyAddFriends: false)
             .onAppear { sceneComplete = true }
+            .onChange(of: SearchViewModel.shared.selectedProfles) {
+                self.selectedFriendIds = SearchViewModel.shared.selectedProfles
+            }
     }
     
     @ViewBuilder

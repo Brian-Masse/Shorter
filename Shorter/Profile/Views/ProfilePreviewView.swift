@@ -46,56 +46,6 @@ struct ProfilePreviewView: View{
     @State private var previousOffset: CGFloat = 0
     @State private var offset: CGFloat = 0
     
-//    MARK: Drag Gesture
-    private var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                if value.translation.width < 0 {
-                    offset = previousOffset +
-                    max(-LocalConstants.deleteHandleSize - LocalConstants.deleteHandleOverflow,
-                         min(value.translation.width, 0))
-                    
-                } else if previousOffset == LocalConstants.deleteHandleSize {
-                    offset = -LocalConstants.deleteHandleSize -
-                    min( 0, max(-value.translation.width, -LocalConstants.deleteHandleSize))
-                }
-            }
-            .onEnded { value in
-                if value.translation.width < -LocalConstants.deleteHandleThreshold {
-                    withAnimation { self.offset = -LocalConstants.deleteHandleSize }
-                } else {
-                    withAnimation { self.offset = 0 }
-                }
-                
-                self.previousOffset = offset
-            }
-    }
-    
-//    MARK: DeleteHandle
-    @MainActor
-    @ViewBuilder
-    private func makeDeleteHandle() -> some View {
-        UniversalButton {
-            ZStack {
-                Rectangle()
-                    .foregroundStyle(.red)
-                
-                VStack {
-                    Image(systemName: "person.badge.minus")
-                        .font(.title)
-                    
-                    Text( "Remove Friend" )
-                        .font(.callout)
-                        .bold()
-                }
-                .foregroundStyle(.black)
-            }
-            
-        } action: {
-            showingRemoveFriendAlert = true
-        }
-    }
-    
 //    MARK: Content
     @MainActor
     @ViewBuilder
@@ -138,7 +88,6 @@ struct ProfilePreviewView: View{
         }
         .background(.ultraThinMaterial)
         .offset(x: offset)
-        .gesture(dragGesture)
     }
     
 //    MARK: Body

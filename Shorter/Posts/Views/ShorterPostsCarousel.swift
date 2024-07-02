@@ -214,23 +214,25 @@ struct ShorterPostsCarousel: View {
                             alignment: .topLeading,
                             offset: .init(x: 0 , y: 20),
                             scrollPos: $scrollPosition.x) {
-                Text("\(post.title) \(id)")
+                Text("\(post.title) \(post.emoji)")
                     .font(.title3)
                     .bold()
             }
 
-            InformationNode(geo: geo,
-                            id: id,
-                            alignment: .bottomTrailing,
-                            offset: .init(x: 0, y: -15),
-                            scrollPos: $scrollPosition.x) {
-                VStack(alignment: .leading) {
-                    Text( post.notes )
-                        .font(.caption)
-                        .multilineTextAlignment(.trailing)
-                        .lineLimit(3, reservesSpace: true)
+            if !post.notes.isEmpty {
+                InformationNode(geo: geo,
+                                id: id,
+                                alignment: .bottomTrailing,
+                                offset: .init(x: 0, y: -15),
+                                scrollPos: $scrollPosition.x) {
+                    VStack(alignment: .leading) {
+                        Text( post.notes )
+                            .font(.caption)
+                            .multilineTextAlignment(.trailing)
+                            .lineLimit(3, reservesSpace: true)
+                    }
+                    .frame(width: 125)
                 }
-                .frame(width: 125)
             }
 
             InformationNode(geo: geo,

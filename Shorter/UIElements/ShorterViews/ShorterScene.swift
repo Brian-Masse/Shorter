@@ -165,6 +165,10 @@ struct ShorterScene<Content: View, Scene: ShorterSceneEnum>: View {
             VStack(spacing: 0) {
                 
                 contentBuilder( sceneState, slideDirection)
+                    .onSubmit { withAnimation {
+                        if !sceneComplete { return }
+                        progressScene()
+                    } }
                 
                 Spacer()
                 

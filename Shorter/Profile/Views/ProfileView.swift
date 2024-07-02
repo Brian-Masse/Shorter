@@ -106,7 +106,10 @@ struct ProfileView: View {
             
             VStack {
                 makeContactNode(title: "email", content: profile.email)
-                makeContactNode(title: "phone number", content: profile.phoneNumber.formatIntoPhoneNumber())
+                
+                if "\(profile.phoneNumber)".count >= 10 {
+                    makeContactNode(title: "phone number", content: profile.phoneNumber.formatIntoPhoneNumber())
+                }
             }
             .padding(.horizontal, 7)
             .rectangularBackground(style: .transparent)
@@ -217,10 +220,8 @@ struct ProfileView: View {
     @ViewBuilder
     private func makeButtons() -> some View {
         VStack(alignment: .leading) {
-            Text( "Profile Modification" )
-                .font(.callout)
-                .bold()
-                .padding(.leading)
+            
+            makeSectionLabel(icon: "gearshape.2", title: "Profile Modification")
             
             makeProfileButton(icon: "ipad.and.arrow.forward", label: "sign out", style: .accent) {
                 Task { await ShorterModel.realmManager.logoutUser() }

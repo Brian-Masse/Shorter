@@ -54,30 +54,20 @@ class SearchViewModel: ObservableObject {
     //    MARK: selectProfile
     @MainActor
     func toggleProfile( _ id: String, directlyAddProfile: Bool ) async {
-        var mutatingProfiles = selectedProfles
-        
         if directlyAddProfile {
-            withAnimation { ShorterModel.shared.profile?.addFriend( id ) }
+            Task { await ShorterModel.shared.profile?.toggleFriend(id: id ) }
             return
         }
+            
+        var mutatingProfiles = selectedProfles
         
-        if let index = selectedProfles.firstIndex(where: { profileId in
-            profileId == id
-        }) {
+        if let index = selectedProfles.firstIndex(of: id) {
             mutatingProfiles.remove(at: index)
         } else {
-            if let _ = ShorterProfile.getProfile(for: id) {
-                mutatingProfiles.append(id)
-            }
+            mutatingProfiles.append(id)
         }
         
         withAnimation { self.selectedProfles = mutatingProfiles }
-    }
-    
-    func checkProfileIsSelected(_ id: String) -> Bool {
-        selectedProfles.firstIndex { profileId in
-            profileId == id
-        } != nil
     }
     
 //    MARK: GetDataBaseProfiles

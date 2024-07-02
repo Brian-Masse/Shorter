@@ -38,9 +38,7 @@ extension ShorterProfile {
     }
     
     var isComplete: Bool {
-        !self.firstName.isEmpty &&
-        !self.lastName.isEmpty &&
-        "\(phoneNumber)".count >= 11
+        !self.firstName.isEmpty && !self.lastName.isEmpty
     }
     
 //    MARK: Convenience Functions
@@ -69,6 +67,15 @@ extension ShorterProfile {
     
 //    MARK: Add Friends
     @MainActor
+    func toggleFriend( id: String ) async {
+        if self.friendIds.contains(id) {
+            await self.removeFriend(id)
+        } else {
+            self.addFriend(id)
+        }
+    }
+    
+    @MainActor
     func addFriends( _ ids: [String] ) {
         for id in ids {
             addFriend(id, reloadWidgetTimelines: false)
@@ -80,8 +87,10 @@ extension ShorterProfile {
     @MainActor
     func addFriend( _ id: String, reloadWidgetTimelines: Bool = true ) {
         if let friend = ShorterProfile.getProfile(for: id) {
-            RealmManager.updateObject(self) { thawed in
-                thawed.friendIds.append(id)
+            withAnimation {
+                RealmManager.updateObject(self) { thawed in
+                    thawed.friendIds.append(id)
+                }
             }
             RealmManager.updateObject(friend) { thawed in
                 thawed.friendIds.append(ShorterModel.ownerId)
@@ -98,9 +107,7 @@ extension ShorterProfile {
     func removeFriend( _ id: String ) async {
         if let index = self.friendIds.firstIndex(of: id) {
             RealmManager.updateObject(self) { thawed in
-                withAnimation {
-                    thawed.friendIds.remove(at: index)
-                }
+                withAnimation { thawed.friendIds.remove(at: index) }
             }
         }
         if let profile = ShorterProfile.getProfile(for: id) {
