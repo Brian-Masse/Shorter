@@ -11,3 +11,8 @@
 
 - Realm is a mobile database that runs directly inside phones, tablets or wearables. This repository holds the source code for the iOS, macOS, tvOS & watchOS versions of Realm Swift & Realm Objective-C.
 - Realm is the primary database manager in Recall. It connects to a MongoDB backend when online, and stores user data locally when offline
+
+
+## **Change Log**
+- Added a manual refresh to the post list
+- Changed the maximum rotation angle for the realm loading view

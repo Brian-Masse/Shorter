@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WidgetKit
 
 //MARK: ShorterPostsPageViewModel
 class ShorterPostsPageViewModel: ObservableObject {
@@ -41,6 +42,12 @@ class ShorterPostsPageViewModel: ObservableObject {
             self.ownerId = ownerId
             Task { await filterPostsByPerson(from: posts, id: ownerId)}
         }
+    }
+    
+    func refreshData( from posts: [ShorterPost]) async {
+        await getSharedWithMePosts(from: posts)
+        ShorterModel.shared.profile?.saveFriendListToDefaults()
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func loadAndFilterPosts( from posts: [ShorterPost] ) async {

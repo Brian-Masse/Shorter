@@ -155,6 +155,7 @@ struct ShorterPostPage: View {
                 }
             }
         }
+        .refreshable { await viewModel.loadAndFilterPosts(from: posts) }
         .gesture(swipeGesture)
         .fullScreenCover(isPresented: $showingProfileView) {
             ProfileView(profile: ShorterModel.shared.profile!)
