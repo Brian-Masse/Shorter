@@ -48,6 +48,8 @@ class ShorterPostsPageViewModel: ObservableObject {
         await getSharedWithMePosts(from: posts)
         ShorterModel.shared.profile?.saveFriendListToDefaults()
         WidgetCenter.shared.reloadAllTimelines()
+        
+        await checkShouldShowPrompt()
     }
     
     func loadAndFilterPosts( from posts: [ShorterPost] ) async {
