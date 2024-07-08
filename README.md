@@ -1,5 +1,8 @@
 # Shorter
 
+Capture and send daily moments directly to your friends home / lock screne to stay in touch over long distances
+> [iOS App, Swift + SwiftUI, MongoDB + Realm DeviceSync]
+
 ## **Package Dependencies**
 
 [**UIUniversals**](https://github.com/Brian-Masse/UIUniversals)
