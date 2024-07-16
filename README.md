@@ -17,5 +17,6 @@ Capture and send daily moments directly to your friends home / lock screne to st
 
 
 ## **Change Log**
+- decreased the load time of the realm
 - Added a manual refresh to the post list
 - Changed the maximum rotation angle for the realm loading view
