@@ -12,6 +12,7 @@ import UIUniversals
 
 
 /// This view opens a synced realm.
+@MainActor
 struct OpenFlexibleSyncRealmView: View {
     // We've injected a `flexibleSyncConfiguration` as an environment value,
     // so `@AsyncOpen` here opens a realm using that configuration.
@@ -32,6 +33,7 @@ struct OpenFlexibleSyncRealmView: View {
         ShorterTitle(title: status, icon: icon)
     }
     
+    @MainActor
     @ViewBuilder
     private func makeAsyncStatus() -> some View {
         switch asyncOpen {
@@ -104,6 +106,7 @@ struct OpenFlexibleSyncRealmView: View {
     }
     
 //    MARK: Body
+    @MainActor
     var body: some View {
         
         VStack {

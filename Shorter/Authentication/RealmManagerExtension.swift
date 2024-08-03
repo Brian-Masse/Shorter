@@ -16,16 +16,23 @@ extension RealmManager {
     
     //    MARK: Subscriptions
     //    These can add, remove, and return compounded queries. During the app lifecycle, they'll need to change based on the current view
-    @MainActor var shorterPostQuery: (QueryPermission<ShorterPost>) { QueryPermission { query in
-        query.ownerId == ShorterModel.ownerId || query.sharedOwnerIds.contains( ShorterModel.ownerId )
-    }}
-    @MainActor var shorterProfileQuery: (QueryPermission<ShorterProfile>) { QueryPermission { query in
-        query.ownerId == ShorterModel.ownerId || query.friendIds.contains(ShorterModel.ownerId)
-    }}
-    @MainActor var timingManagerQuery: (QueryPermission<TimingManager>) { QueryPermission { query in
-        query.author == RealmManager.defaultId
-    }}
+    var shorterPostQuery: (QueryPermission<ShorterPost>) {
+        .init(named: QuerySubKey.shorterPostQuery.rawValue) { query in
+            query.ownerId == ShorterModel.ownerId || query.sharedOwnerIds.contains( ShorterModel.ownerId )
+        }
+    }
     
+    var shorterProfileQuery: (QueryPermission<ShorterProfile>) {
+        .init(named: QuerySubKey.shorterProfileQuery.rawValue) { query in
+            query.ownerId == ShorterModel.ownerId || query.friendIds.contains(ShorterModel.ownerId)
+        }
+    }
+    
+    var timingManagerQuery: (QueryPermission<TimingManager>) {
+        .init(named: QuerySubKey.timingManager.rawValue) { query in
+            query.author == RealmManager.defaultId
+        }
+    }
     
     //    MARK: Convenience Functions
     static func stripEmail(_ email: String) -> String {
@@ -164,8 +171,23 @@ extension RealmManager {
     }
     
     //    MARK: SetConfiguration
+    
+    private func addInitialSubscription<T: Object>(_ query: QueryPermission<T>, to subs: SyncSubscriptionSet ) {
+        let subscription = query.getSubscription()
+        
+        if subs.first(named: query.name) == nil {
+            subs.append(subscription)
+        }
+    }
+    
+    @MainActor
     private func setConfiguration() {
-        self.configuration = user?.flexibleSyncConfiguration()
+        self.configuration = user?.flexibleSyncConfiguration(initialSubscriptions: { subs in
+            self.addInitialSubscription(self.shorterProfileQuery, to: subs)
+            self.addInitialSubscription(self.shorterPostQuery, to: subs)
+            self.addInitialSubscription(self.timingManagerQuery, to: subs)
+        })
+        
         self.configuration.objectTypes = [ ShorterPost.self, ShorterProfile.self, TimingManager.self ]
     }
     
@@ -213,25 +235,10 @@ extension RealmManager {
     //    Called once the realm is loaded in OpenSyncedRealmView
     @MainActor
     func authRealm(realm: Realm) async {
-        self.realm = realm
-        await self.addSubcriptions()
         
+        self.realm = realm
         self.setState(.creatingProfile)
         await self.checkProfile()
-    }
-    
-    //    MARK: Subscription Functions
-    //    Subscriptions are only used when the app is online
-    //    otherwise you are able to retrieve all the data from the Realm by default
-    private func addSubcriptions() async {
-        await self.removeAllNonBaseSubscriptions()
-        
-        let _ : ShorterPost? = await addGenericSubcriptions(name: QuerySubKey.shorterPostQuery.rawValue,
-                                                                         query: shorterPostQuery.baseQuery)
-        let _ : ShorterProfile? = await addGenericSubcriptions(name: QuerySubKey.shorterProfileQuery.rawValue,
-                                                                         query: shorterProfileQuery.baseQuery)
-        let _ : TimingManager? = await addGenericSubcriptions(name: QuerySubKey.timingManager.rawValue,
-                                                                         query: timingManagerQuery.baseQuery)
     }
     
     @MainActor
@@ -243,12 +250,11 @@ extension RealmManager {
     func refreshSubscriptions() async {
         await removeSubscription(name: QuerySubKey.shorterPostQuery.rawValue)
         
-        let shorterPostQuery: (QueryPermission<ShorterPost>) = QueryPermission { query in
+        let shorterPostQuery: (QueryPermission<ShorterPost>) = .init(named: QuerySubKey.shorterPostQuery.rawValue) { query in
             query.ownerId == ShorterModel.ownerId || query.sharedOwnerIds.contains( ShorterModel.ownerId )
         }
      
-        let _ = await self.addGenericSubcriptions(name: QuerySubKey.shorterPostQuery.rawValue,
-                                    query: shorterPostQuery.baseQuery)
+        let _ = await self.addGenericSubcriptions(name: shorterPostQuery.name, query: shorterPostQuery.query)
         
     }
     
