@@ -11,10 +11,27 @@ import UIKit
 import Messages
 import MessageUI
 
+import FirebaseMessaging
+
+//MARK: MesssagingManager
+///handles the logic of subscribing to and receiving firebase notifications
+class MessagingManager {
+    
+    static let shared: MessagingManager = MessagingManager()
+    
+    func captureRemoteMessagingToken() -> String? {
+        Messaging.messaging().fcmToken
+    }
+    
+}
+
+//MARK: MessagessViewDelegate
 protocol MessagessViewDelegate {
     func messageCompletion (result: MessageComposeResult)
 }
 
+
+//MARK: Coordintaor
 class Coordinator: NSObject, UINavigationControllerDelegate, MessagessViewDelegate {
     var parent: MessageUIView
     
@@ -28,6 +45,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, MessagessViewDelega
     }
 }
 
+//MARK: MessagesViewController
 class MessagesViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     var delegate: MessagessViewDelegate?
@@ -62,7 +80,7 @@ class MessagesViewController: UIViewController, MFMessageComposeViewControllerDe
 }
             
             
-            
+//     MARK: MessageUIView
 struct MessageUIView: UIViewControllerRepresentable {
     
     // To be able to dismiss itself after successfully finishing with the MessagesUI

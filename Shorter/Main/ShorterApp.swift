@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 import UserNotifications
 import UIUniversals
+import FirebaseCore
 
 //MARK: ProxyAppDelegate
 //This registers the app for remote notifications
@@ -20,6 +21,8 @@ class ProxyAppDelegate: NSObject, UIApplicationDelegate, ObservableObject, UNUse
         UNUserNotificationCenter.current().delegate = self
         
         application.registerForRemoteNotifications()
+        
+        FirebaseApp.configure()
 
         return true
     }
