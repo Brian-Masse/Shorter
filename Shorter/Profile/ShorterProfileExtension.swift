@@ -186,6 +186,21 @@ extension ShorterProfile {
         }
     }
     
+//    MARK: Token
+    @MainActor
+    func loadFCMToken(_ token: String?) {
+        if let token = token {
+            updateFCMToken(to: token)
+        } else { updateFCMToken(to: "") }
+    }
+    
+    @MainActor
+    private func updateFCMToken(to token: String) {
+        RealmManager.updateObject(self) { thawed in
+            thawed.currentFCMToken = token
+        }
+    }
+    
 //    MARK: ClassMethods
     @MainActor
     func toggleMatureContent() async {

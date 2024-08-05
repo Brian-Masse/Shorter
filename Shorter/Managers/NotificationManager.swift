@@ -115,7 +115,7 @@ class NotificationManager: ObservableObject {
 //    this will be read by MongoDB server side for sending notifications when posts are published
     @MainActor
     private func loadNotificationToken() {
-        print( MessagingManager.shared.captureRemoteMessagingToken() )
+        ShorterModel.shared.profile?.loadFCMToken(MessagingManager.shared.captureRemoteMessagingToken())
     }
     
 //    MARK: SetupFiringDates

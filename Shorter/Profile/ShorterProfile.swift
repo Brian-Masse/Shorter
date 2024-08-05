@@ -33,6 +33,7 @@ final class ShorterProfile: Object, Identifiable {
     @Persisted var hiddenPosts: RealmSwift.List<ObjectId> = List()
     
     @Persisted var mostRecentPost: ObjectId? = nil
+    @Persisted var currentFCMToken: String = ""
     
     convenience init( ownerId: String, email: String ) {
         self.init()
