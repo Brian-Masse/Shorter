@@ -17,6 +17,13 @@ Capture and send daily moments directly to your friends home / lock screne to st
 
 
 ## **Change Log**
-- Drastically decreased the load time of the realm
-- Added a manual refresh to the post list
-- Changed the maximum rotation angle for the realm loading view
+
+### **New Features**
+- Added a pull down to refresh on the home page post list
+- Added notifications for when your friends post
+
+### **CHANGES**
+
+- Decreased the launch time of the app
+- Updated the app icon
+- Removed the rotation animation during app launch
