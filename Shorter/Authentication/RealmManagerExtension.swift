@@ -12,6 +12,7 @@ import AuthenticationServices
 import SwiftUI
 import WidgetKit
 
+
 extension RealmManager {
     
     //    MARK: Subscriptions
@@ -148,6 +149,15 @@ extension RealmManager {
     }
     
     //    MARK: Logout
+    @MainActor
+    func removeRealmFile() {
+        do {
+            try FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL!)
+        } catch {
+            print("error deleting realm file: \(error.localizedDescription)")
+        }
+    }
+    
     @MainActor
     func logoutUser(onMain: Bool = false){
         

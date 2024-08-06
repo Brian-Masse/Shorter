@@ -120,6 +120,7 @@ struct OpenFlexibleSyncRealmView: View {
         
         .alert(alertTitle, isPresented: $showingErrorAlert) {
             Button("return to sign in", role: .cancel) {
+                ShorterModel.realmManager.removeRealmFile()
                 ShorterModel.realmManager.setState(.authenticating)
             }
         } message: {
