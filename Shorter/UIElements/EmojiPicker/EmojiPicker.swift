@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import UIKit
-import MCEmojiPicker
 import UIUniversals
 
 struct TestView2: View {
