@@ -90,19 +90,6 @@ struct OpenFlexibleSyncRealmView: View {
             .contentShape(Rectangle())
             .allowsTightening(false)
             .cardWithDepth(shadow: true)
-        
-            .rotation3DEffect(
-                .init(degrees: degrees),
-                                      axis: (x: xRotation, y: yRotation, z: xRotation)
-            )
-        
-            .onAppear {
-                withAnimation(.linear(duration: 100)) {
-                    degrees = 180
-                }
-                xRotation = Double.random(in: -0.5...0.5)
-                yRotation = Double.random(in: -0.5...0.5)
-            }
     }
     
 //    MARK: Body
