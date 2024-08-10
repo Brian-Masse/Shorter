@@ -22,11 +22,7 @@ struct OpenFlexibleSyncRealmView: View {
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
     @State private var showingErrorAlert: Bool = false
-    
-    @State private var degrees: CGFloat = 0
-    @State private var xRotation: CGFloat = 0
-    @State private var yRotation: CGFloat = 0
-    
+
 //    MARK: AsyncStatus
     @ViewBuilder
     private func makeStatusLabel(status: String, icon: String) -> some View {

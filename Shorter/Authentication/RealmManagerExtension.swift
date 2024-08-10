@@ -159,8 +159,7 @@ extension RealmManager {
     }
     
     @MainActor
-    func logoutUser(onMain: Bool = false){
-        
+    func logoutUser() {
         if let user = self.user {
             user.logOut { error in
                 if let err = error { print("error logging out: \(err.localizedDescription)") }
@@ -172,16 +171,12 @@ extension RealmManager {
                 }
             }
         }
-        Task {
-            await self.removeAllNonBaseSubscriptions()
-        }
+        Task { await self.removeAllNonBaseSubscriptions() }
         
         self.user = nil
-        
     }
     
     //    MARK: SetConfiguration
-    
     private func addInitialSubscription<T: Object>(_ query: QueryPermission<T>, to subs: SyncSubscriptionSet ) {
         let subscription = query.getSubscription()
         
@@ -205,7 +200,7 @@ extension RealmManager {
     //    MARK: Profile Functions
     @MainActor
     func deleteProfile() async {
-        self.logoutUser(onMain: true)
+        self.logoutUser()
     }
     
     //    This checks the user has created a profile with Recall already
@@ -245,7 +240,6 @@ extension RealmManager {
     //    Called once the realm is loaded in OpenSyncedRealmView
     @MainActor
     func authRealm(realm: Realm) async {
-        
         self.realm = realm
         self.setState(.creatingProfile)
         await self.checkProfile()

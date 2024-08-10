@@ -47,7 +47,6 @@ class WidgetRealmManger {
         
         await self.signIn()
         await self.loadRealm()
-        await removeSubscriptions()
         
         await addProfileSubscription(profileId)
 
@@ -60,7 +59,6 @@ class WidgetRealmManger {
 //                attempt to find the profile
                 if let post: ShorterPost = self.realm!.objects(ShorterPost.self).first {
                     
-                    
                     if !profile.allowsMatureContent && post.hasMatureContent { return nil }
                     
                     let newPost = ShorterPost()
@@ -68,9 +66,7 @@ class WidgetRealmManger {
                     newPost.emoji = post.emoji
                     newPost.imageData = post.imageData
                     newPost.postedDate = post.postedDate
-                    
-//                    await clean()
-                    
+
                     return newPost
                 }
             }
@@ -84,6 +80,8 @@ class WidgetRealmManger {
     private func addProfileSubscription(_ profileId: String) async {
         let subs = self.realm!.subscriptions
         
+        if subs.first(named: "profile") != nil { return }
+        
         try? await subs.update {
             let query: QuerySubscription<ShorterProfile> = QuerySubscription(name: "profile") { query in
                 query.ownerId == profileId
@@ -95,6 +93,8 @@ class WidgetRealmManger {
     private func addPostSubscription(_ id: ObjectId) async {
         let subs = self.realm!.subscriptions
         
+        if subs.first(named: "posts") != nil { return }
+        
         try? await subs.update {
             let query: QuerySubscription<ShorterPost> = QuerySubscription(name: "posts") { query in
                 query._id == id
@@ -102,19 +102,12 @@ class WidgetRealmManger {
             subs.append(query)
         }
     }
-    
-    private func removeSubscriptions() async {
-        let subs =  self.realm!.subscriptions
-        
-        try! await subs.update { subs.removeAll() }
-    }
+
     
     //MARK: Clean
     
     @MainActor
     private func clean() async {
-        
-        await removeSubscriptions()
         
         try! await self.user?.remove()
         try! await self.app!.currentUser?.remove()

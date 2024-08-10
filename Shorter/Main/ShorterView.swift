@@ -24,6 +24,7 @@ struct ShorterView: View {
                 
             case .creatingProfile:
                 ProfileCreationView()
+                    .environment(\.realmConfiguration, realmManager.configuration)
                 
             case .error:
                 Text("An error occoured")

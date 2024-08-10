@@ -163,7 +163,10 @@ struct ShorterPostPage: View {
         .fullScreenCover(isPresented: $showingSocialPageView, content: {
             SocialPageView()
         })
-        .task { await viewModel.loadAndFilterPosts(from: posts) }
+        .task {
+            WidgetCenter.shared.reloadAllTimelines()
+            await viewModel.loadAndFilterPosts(from: posts)
+        }
         .onChange(of: posts) {
             Task { await viewModel.loadAndFilterPosts(from: posts ) }
         }
