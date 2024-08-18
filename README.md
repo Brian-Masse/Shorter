@@ -20,6 +20,10 @@ Capture and send daily moments directly to your friends home / lock screne to st
 
 ## **Change Log**
 
+### **v1.1.1**
+
+- Fixed a bug that prevented update notifcations from sending to physical devices
+
 ### **New Features**
 - Added a pull down to refresh on the home page post list
 - Added notifications for when your friends post
