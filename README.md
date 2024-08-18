@@ -1,6 +1,6 @@
 # Shorter
 
-v1.1.0
+v1.2.0
 
 Capture and send daily moments directly to your friends home / lock screne to stay in touch over long distances
 > [iOS App, Swift + SwiftUI, MongoDB + Realm DeviceSync]
