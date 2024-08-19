@@ -18,38 +18,48 @@ struct ShorterPostsView: View {
         }
     }
     
+    private let initialIndex: Int
     let posts: [ShorterPost]
+    
+    init( posts: [ShorterPost], initialIndex: Int = 0 ) {
+        self.initialIndex = initialIndex
+        self.posts = posts
+    }
     
     var body: some View {
             
         GeometryReader { geo in
             ScrollViewReader { proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
+                    
                     LazyHStack {
-                        
                         ForEach(posts.indices, id: \.self) { i in
                             let post = posts[i]
                             
                             ShorterPostView(post: post,
                                             inScrollView: true,
                                             currentPostIndex: $currentPostIndex)
-                                .frame(width: geo.size.width)
-                                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: 1.0, y: -1.0, anchor: .center)
-                                .id(i)
+                            .frame(width: geo.size.width)
+                            .rotationEffect(Angle(degrees: 180)).scaleEffect(x: 1.0, y: -1.0, anchor: .center)
+                            .id(i)
                         }
                     }
                     .scrollTargetLayout()
                 }
                 .scrollTargetBehavior(.viewAligned)
+                .onAppear {
+                    proxy.scrollTo(initialIndex)
+                }
                 .rotationEffect(Angle(degrees: 180)).scaleEffect(x: 1.0, y: -1.0, anchor: .center)
-                .onChange(of: currentPostIndex) { withAnimation {
-                    proxy.scrollTo(currentPostIndex)
-                } }
             }
         }
         .ignoresSafeArea(edges: .top)
     }
 }
+
+#Preview(body: {
+    ShorterPostsView(posts: [])
+})
 
 struct ShorterPostView: View {
     

@@ -79,7 +79,13 @@ struct ShorterPostPreviewView: View {
             .onTapGesture { showingFullScreen = true }
         
             .fullScreenCover(isPresented: $showingFullScreen) {
-                ShorterPostsView(posts: ShorterPostsPageViewModel.shared.filteredPosts)
+                
+                let filteredPosts = ShorterPostsPageViewModel.shared.filteredPosts
+                let index = filteredPosts.firstIndex(where: { post in
+                    post.title == self.post.title
+                })
+                
+                ShorterPostsView(posts: filteredPosts, initialIndex: index ?? 0)
             }
         
             .contextMenu(ContextMenu(menuItems: {

@@ -364,7 +364,11 @@ struct ShorterPostsCarousel: View {
             }
         }
         .fullScreenCover(isPresented: $showingPostView) {
-            ShorterPostsView(posts: posts)
+            let index = posts.firstIndex(where: { post in
+                post.title == posts[activePostIndex].title
+            })
+            
+            ShorterPostsView(posts: posts, initialIndex: index ?? 0)
         }
     }
 }
