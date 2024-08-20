@@ -23,6 +23,7 @@ Capture and send daily moments directly to your friends home / lock screne to st
 ### **v1.1.1**
 
 - Fixed a bug that prevented update notifcations from sending to physical devices
+- Added a Scroll Gesture to access long Shorter Post Notes
 
 ### **New Features**
 - Added a pull down to refresh on the home page post list
