@@ -22,15 +22,21 @@ Capture and send daily moments directly to your friends home / lock screne to st
 
 ### **v1.1.1**
 
-- Fixed a bug that prevented update notifcations from sending to physical devices
+NEW FEATURES
 - Added a Scroll Gesture to access long Shorter Post Notes
 
-### **New Features**
+CHANGES
+- Fixed a bug that prevented update notifcations from sending to physical devices
+- Removed the Additional Status Section on Posts
+
+### **v1.1.0**
+
+NEW FEATURES
 - Added a pull down to refresh on the home page post list
 - Added notifications for when your friends post
 
-### **CHANGES**
 
+CAHNGES
 - Decreased the launch time of the app
 - Updated the app icon
 - Removed the rotation animation during app launch

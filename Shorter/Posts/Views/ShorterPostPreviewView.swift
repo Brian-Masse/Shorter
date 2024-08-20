@@ -13,7 +13,7 @@ import UIKit
 struct ShorterPostPreviewView: View {
     
     private struct LocalConstants {
-        static let cardHeigt: Double = 100
+        static let cardHeigt: Double = 140
     }
     
     let post: ShorterPost
@@ -42,7 +42,7 @@ struct ShorterPostPreviewView: View {
             post.getImage()
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: 150 )
+                .frame(maxWidth: LocalConstants.cardHeigt )
                 .clipped()
             
             VStack(alignment: .leading) {
