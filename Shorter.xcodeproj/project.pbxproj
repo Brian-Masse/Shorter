@@ -84,6 +84,7 @@
 		C9E28A282C2EC8450075476A /* TimingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E289DA2C2CA74A0075476A /* TimingManager.swift */; };
 		C9E28A292C2EC84D0075476A /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90374B62C25D0FD007DCA5E /* RealmManager.swift */; };
 		C9E28A302C32E4CF0075476A /* PrivacyPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E28A2F2C32E4CF0075476A /* PrivacyPages.swift */; };
+		C9FDDCB32C74F9CC008C28D6 /* ShorterPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDDCB22C74F9CC008C28D6 /* ShorterPostsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +218,7 @@
 		C9E289E72C2DEE270075476A /* SocialPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPageView.swift; sourceTree = "<group>"; };
 		C9E289E92C2E203B0075476A /* ShorterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterExtensions.swift; sourceTree = "<group>"; };
 		C9E28A2F2C32E4CF0075476A /* PrivacyPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPages.swift; sourceTree = "<group>"; };
+		C9FDDCB22C74F9CC008C28D6 /* ShorterPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShorterPostsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -426,6 +428,7 @@
 				C91032BE2C28A8F500A226BE /* ShorterPostPage.swift */,
 				C90375352C279010007DCA5E /* ShorterPostPreviewView.swift */,
 				C9E289E32C2CF3FA0075476A /* ShorterPostView.swift */,
+				C9FDDCB22C74F9CC008C28D6 /* ShorterPostsView.swift */,
 				C9E289C62C2C4ACD0075476A /* ShorterPostCreationView.swift */,
 				C91032C12C28AEB400A226BE /* ShorterPostsCarousel.swift */,
 				C9E289D42C2C9B180075476A /* ShorterPostPromptView.swift */,
@@ -699,6 +702,7 @@
 				C9E289CC2C2C50FC0075476A /* EmojiPicker.swift in Sources */,
 				C90374BB2C25D0FD007DCA5E /* PermissionManager.swift in Sources */,
 				C9E289DE2C2CBD800075476A /* ProfileView.swift in Sources */,
+				C9FDDCB32C74F9CC008C28D6 /* ShorterPostsView.swift in Sources */,
 				C90374BC2C25D0FD007DCA5E /* AuthenticationScene.swift in Sources */,
 				C90374BA2C25D0FD007DCA5E /* RealmManager.swift in Sources */,
 				C9E289C52C2BB74F0075476A /* ShorterSplashScreen.swift in Sources */,

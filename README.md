@@ -27,6 +27,7 @@ NEW FEATURES
 
 CHANGES
 - Fixed a bug that prevented update notifcations from sending to physical devices
+- Made Post previews larger
 - Removed the Additional Status Section on Posts
 
 ### **v1.1.0**
