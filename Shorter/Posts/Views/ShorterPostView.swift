@@ -183,9 +183,11 @@ struct ShorterPostView: View {
                 .opacity(0.6)
                 .padding(.bottom)
             
-            Text( "\(post.notes)" )
-                .font(.callout)
-                .padding(.horizontal)
+            ScrollView(.vertical, showsIndicators: false) {
+                Text( "\(post.notes)" )
+                    .font(.callout)
+                    .padding([.horizontal, .bottom])
+            }
         }
     }
     
