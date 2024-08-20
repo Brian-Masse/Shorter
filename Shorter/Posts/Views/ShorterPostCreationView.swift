@@ -98,11 +98,6 @@ struct ShorterPostCreationView: View {
             }
                 .padding(.bottom)
             
-            StyledTextField(title: "What are you up to?",
-                            prompt: "going to a beach with my friends",
-                            binding: $fullTitle)
-            .padding(.bottom)
-            
             StyledTextField(title: "Any additional notes?",
                             prompt: "notes",
                             binding: $notes,

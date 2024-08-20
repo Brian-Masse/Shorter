@@ -228,6 +228,7 @@ private struct EmojiPickerCategoryView: View {
     
     let category: EmojiCategory
     
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject private var viewModel = EmojiPickerViewModel.shared
     
     @Binding var scrollPosition: CGFloat
@@ -276,7 +277,7 @@ private struct EmojiPickerCategoryView: View {
                 }
             }
             .id(category.type.rawValue)
-            .background()
+            .background( colorScheme == .dark ? .black : .white )
             .zIndex(1)
             .offset(y: lockTitle ? -scrollPosition - lockPos : 0)
             
