@@ -43,14 +43,18 @@ class WidgetRealmManger {
 //    called when a widget is checking if another user might have posted
     @MainActor
     func retrieveImageData( from profileId: String ) async -> ShorterPost? {
-        print("attempting to retreive image data")
+        print("attempting to retreive image data: \(profileId)")
         
         await self.signIn()
         await self.loadRealm()
         
+        await removeSubs()
         await addProfileSubscription(profileId)
-
+        
         if let profile: ShorterProfile = self.realm!.objects(ShorterProfile.self).first {
+            
+            print("found ownerId: \(profile.ownerId)")
+            print( "most recent post id: \(profile.mostRecentPost)" )
             
             if let mostRecentPost = profile.mostRecentPost {
 
@@ -67,16 +71,25 @@ class WidgetRealmManger {
                     newPost.imageData = post.imageData
                     newPost.postedDate = post.postedDate
 
+                    print("retrieved image Data")
+                    
                     return newPost
                 }
             }
         }
         
-//        await clean()
         return nil
     }
     
 //    MARK: Subscriptions
+    private func removeSubs() async {
+        let subs = self.realm!.subscriptions
+        
+        try? await subs.update {
+            subs.removeAll()
+        }
+    }
+    
     private func addProfileSubscription(_ profileId: String) async {
         let subs = self.realm!.subscriptions
         
