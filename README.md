@@ -20,6 +20,10 @@ Capture and send daily moments directly to your friends home / lock screne to st
 
 ## **Change Log**
 
+### **v1.1.2**
+
+- Fixed a bug that prevents users from submittng posts
+
 ### **v1.1.1**
 
 NEW FEATURES

@@ -47,7 +47,7 @@ struct ShorterPostCreationView: View {
     @State private var hasMatureContent: Bool = false
     
     private func validateFields() -> Bool {
-        !title.isEmpty && !fullTitle.isEmpty
+        !title.isEmpty
     }
     
     @MainActor
